@@ -1,5 +1,9 @@
 use v6.c;
 
+use NativeCall;
+
+use GTK::Raw::Utils;
+
 use GTK::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::Color;
@@ -7,8 +11,18 @@ use COGL::Raw::Color;
 class COGL::Color {
   has CoglColor $!cc;
   
+  submethod BUILD (:$color) {
+    $!cc = $color;
+  }
+  
+  method COGL::Raw::Types::CoglColor 
+  { $!cc }
+  
+  multi method new (CoglColor $color) {
+    self.bless(:$color);
+  }
   method new {
-    cogl_color_new();
+    self.bless( color => cogl_color_new() );
   }
   
   method alpha is rw {
@@ -16,8 +30,9 @@ class COGL::Color {
       FETCH => sub ($) {
         cogl_color_get_alpha($!cc);
       },
-      STORE => sub ($, $alpha is copy) {
-        cogl_color_set_alpha($!cc, $alpha);
+      STORE => sub ($, Num() $alpha is copy) {
+        my gfloat $a = $alpha
+        cogl_color_set_alpha($!cc, $a);
       }
     );
   }
@@ -27,8 +42,9 @@ class COGL::Color {
       FETCH => sub ($) {
         cogl_color_get_alpha_byte($!cc);
       },
-      STORE => sub ($, $alpha is copy) {
-        cogl_color_set_alpha_byte($!cc, $alpha);
+      STORE => sub ($, Int() $alpha is copy) {
+        my uint8 $a = resolve-uint8($alpha);
+        cogl_color_set_alpha_byte($!cc, $a);
       }
     );
   }
@@ -38,8 +54,9 @@ class COGL::Color {
       FETCH => sub ($) {
         cogl_color_get_blue($!cc);
       },
-      STORE => sub ($, $blue is copy) {
-        cogl_color_set_blue($!cc, $blue);
+      STORE => sub ($, Num() $blue is copy) {
+        my gfloat $b = $blue;
+        cogl_color_set_blue($!cc, $b);
       }
     );
   }
@@ -49,7 +66,8 @@ class COGL::Color {
       FETCH => sub ($) {
         cogl_color_get_blue_byte($!cc);
       },
-      STORE => sub ($, $blue is copy) {
+      STORE => sub ($, Int() $blue is copy) {
+        my uint8 $b = resolve-uint8($blue);
         cogl_color_set_blue_byte($!cc, $blue);
       }
     );
@@ -60,8 +78,9 @@ class COGL::Color {
       FETCH => sub ($) {
         cogl_color_get_green($!cc);
       },
-      STORE => sub ($, $green is copy) {
-        cogl_color_set_green($!cc, $green);
+      STORE => sub ($, Num() $green is copy) {
+        my gfloat $g = $green;
+        cogl_color_set_green($!cc, $g);
       }
     );
   }
@@ -72,6 +91,7 @@ class COGL::Color {
         cogl_color_get_green_byte($!cc);
       },
       STORE => sub ($, $green is copy) {
+        my uint8 $g = resolve-uint8($green);
         cogl_color_set_green_byte($!cc, $green);
       }
     );
@@ -82,8 +102,9 @@ class COGL::Color {
       FETCH => sub ($) {
         cogl_color_get_red($!cc);
       },
-      STORE => sub ($, $red is copy) {
-        cogl_color_set_red($!cc, $red);
+      STORE => sub ($, Num() $red is copy) {
+        my gfloat $r = $red
+        cogl_color_set_red($!cc, $r);
       }
     );
   }
@@ -93,8 +114,9 @@ class COGL::Color {
       FETCH => sub ($) {
         cogl_color_get_red_byte($!cc);
       },
-      STORE => sub ($, $red is copy) {
-        cogl_color_set_red_byte($!cc, $red);
+      STORE => sub ($, Int() $red is copy) {
+        my uint8 $r = resolve-uint8($red);
+        cogl_color_set_red_byte($!cc, $r);
       }
     );
   }
@@ -103,7 +125,7 @@ class COGL::Color {
     cogl_color_copy($!cc);
   }
 
-  method equal (void $v2) {
+  method equal (CoglColor() $v2) {
     cogl_color_equal($!cc, $v2);
   }
 
@@ -127,40 +149,62 @@ class COGL::Color {
     cogl_color_get_blue_float($!cc);
   }
   
-  method set_alpha_float (gfloat $f) {
+  method set_alpha_float (Num() $float) {
+    my gfloat $f = $float;
     cogl_color_get_alpha_float($!cc, $f);
   }
   
-  method set_red_float (gfloat $f) {
+  method set_red_float (Num() $float) {
+    my gfloat $f = $float;
     cogl_color_get_alpha_float($!cc, $f);
   }
   
-  method set_green_float (gfloat $f) {
+  method set_green_float (Num() $float) {
+    my gfloat $f = $float;
     cogl_color_get_green_float($!cc, $f);
   }
 
-  method set_blue_float (gfloat $f) {
+  method set_blue_float (Num() $float) {
+    my gfloat $f = $float;
     cogl_color_get_blue_float($!cc, $f);
   }
 
   method get_gtype {
-    cogl_color_get_gtype($!cc);
+    state ($n, $t);
+    unstable_get_type( self.^name, &cogl_color_get_gtype, $n, $t );
   }
 
-  method init_from_4f (gfloat $red, gfloat $green, gfloat $blue, gfloat $alpha) {
-    cogl_color_init_from_4f($!cc, $red, $green, $blue, $alpha);
+  method init_from_4f (Num() $red, Num() $green, Num() $blue, Num() $alpha) {
+    my gfloat ($r, $g, $b, $a) = ($red, $green, $blue, $alpha);
+    cogl_color_init_from_4f($!cc, $r, $g, $b, $a);
   }
 
-  method init_from_4fv (gfloat $color_array) {
+  multi method init_from_4fv(Num @colors) {
+    die "COGL::Color.init_from_4fv will only take an array with 4 { ''
+         }floating point values."
+      unless @colors.elems == 4;
+     
+    my $ca = CArray[gfloat].new;
+    $ca[$_] = @colors[$_] for @colors;
+    samewith($ca);
+  }
+  multi method init_from_4fv (CArray[gfloat] $color_array) {
     cogl_color_init_from_4fv($!cc, $color_array);
   }
 
-  method init_from_4ub (uint8_t $red, uint8_t $green, uint8_t $blue, uint8_t $alpha) {
-    cogl_color_init_from_4ub($!cc, $red, $green, $blue, $alpha);
+  method init_from_4ub (
+    Int() $red, 
+    Int() $green, 
+    Int() $blue, 
+    Int() $alpha
+  ) {
+    my uint8 ($r, $g, $b, $a) = resolve-uint8($red, $green, $blue, $alpha);
+    cogl_color_init_from_4ub($!cc, $r, $g, $b, $a);
   }
 
-  method init_from_hsl (gfloat $hue, gfloat $saturation, gfloat $luminance) {
-    cogl_color_init_from_hsl($!cc, $hue, $saturation, $luminance);
+  method init_from_hsl (Num() $hue, Num() $saturation, Num() $luminance) {
+    my gfloat ($h, $s, $l) = ($hue, $saturation, $luminance);
+    cogl_color_init_from_hsl($!cc, $h, $s, $l);
   }
 
   method premultiply {
@@ -168,15 +212,23 @@ class COGL::Color {
   }
 
   method set_from_4f (gfloat $red, gfloat $green, gfloat $blue, gfloat $alpha) {
-    cogl_color_set_from_4f($!cc, $red, $green, $blue, $alpha);
+    my gfloat ($r, $g, $b, $a) = ($red, $green, $blue, $alpha);
+    cogl_color_set_from_4f($!cc, $r, $g, $b, $a);
   }
 
-  method set_from_4ub (uint8_t $red, uint8_t $green, uint8_t $blue, uint8_t $alpha) {
-    cogl_color_set_from_4ub($!cc, $red, $green, $blue, $alpha);
+  method set_from_4ub (
+    Int() $red, 
+    Int() $green, 
+    Int() $blue, 
+    Int() $alpha
+  ) {
+    my uint8 ($r, $g, $b, $a) = resolve-uint8($red, $green, $blue, $alpha);
+    cogl_color_set_from_4ub($!cc, $r, $g, $b, $a);
   }
 
-  method to_hsl (gfloat $hue, gfloat $saturation, gfloat $luminance) {
-    cogl_color_to_hsl($!cc, $hue, $saturation, $luminance);
+  method to_hsl (Num() $hue, Num() $saturation, Num() $luminance) {
+    my gfloat ($h, $s, $l) = ($hue, $saturation, $luminance);
+    cogl_color_to_hsl($!cc, $h, $s, $l);
   }
 
   method unpremultiply {
