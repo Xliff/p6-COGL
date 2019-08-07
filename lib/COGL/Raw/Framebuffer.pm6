@@ -7,7 +7,10 @@ use COGL::Raw::Types;
 
 unit package COGL::Raw::Framebuffer;
 
-sub cogl_framebuffer_allocate (CoglFramebuffer $framebuffer, CoglError $error)
+sub cogl_framebuffer_allocate (
+  CoglFramebuffer $framebuffer,
+  CArray[Pointer[CoglError]] $error
+)
   returns CoglBool
   is native(cogl)
   is export
@@ -202,7 +205,10 @@ sub cogl_framebuffer_get_red_bits (CoglFramebuffer $framebuffer)
   is export
 { * }
 
-sub cogl_framebuffer_get_viewport4fv (CoglFramebuffer $framebuffer, gfloat $viewport)
+sub cogl_framebuffer_get_viewport4fv (
+  CoglFramebuffer $framebuffer,
+  gfloat $viewport
+)
   is native(cogl)
   is export
 { * }
