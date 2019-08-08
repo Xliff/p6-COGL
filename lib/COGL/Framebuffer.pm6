@@ -4,8 +4,38 @@ use GTK::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::FrameBuffer;
 
+use COGL::Roles::Buffer;
+
+our subset FrameAncestry of Mu
+  where CoglFramebuffer | CoglBuffer | CoglObject;
+
 class COGL::FrameBuffer {
+  also does COGL::Roles::Buffer;
+  
   has CoglFramebuffer $!cf;
+  
+  method setFrameBuffer(FrameAncestry $_) {
+    my $to-parent;
+    $!cf = do {
+      when CoglFrameBuffer { 
+        $to-parent = cast(CoglObject, $_);
+        $_;
+      }
+      
+      when CoglBuffer {
+        $to-parent = cast(CoglObject, $_);
+        $!cb = cast(CoglBuffer, $_);          # COGL::Roles::Buffer
+        cast(CoglFramebuffer, $_);
+      }
+      
+      default {
+        $to-parent = $_;
+        cast(CoglFramebuffer, $_);
+      }
+    };
+    self.setObject($_);      
+    $!cb //= cast(CoglBuffer, $!cf);          # COGL::Roles::Buffer
+  }
 
   method color_mask is rw {
     Proxy.new(
