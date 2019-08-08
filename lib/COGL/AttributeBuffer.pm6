@@ -2,18 +2,39 @@ use v6.c;
 
 use NativeCall;
 
+use GTK::Raw::Utils;
+
 use GTK::Compat::Types;
 use COGL::Raw::Types;
 
+use COGL::Roles::Buffer;
+
 class COGL::AttributeBuffer {
+  also does COGL::Roles::Buffer;
+  
   has CoglAttributeBuffer $!cab;
   
-  method new (CoglContext $context, size_t $bytes, Pointer $data) {
-    cogl_attribute_buffer_new($context, $bytes, $data);
+  submethod BUILD (:$attribute) {
+    $!cb = cast(CoglBuffer, $!cab = $attribute);  # COGL::Roles::Buffer
+  }
+  
+  method new (
+    CoglContext() $context, 
+    Int() $bytes,
+    gpointer $data = gpointer
+  ) {
+    my gulong $b = resolve-ulong($b);
+    self.bless( attribute => cogl_attribute_buffer_new($context, $b, $data) );
   }
 
-  method new_with_size (CoglContext $context, size_t $bytes) {
-    cogl_attribute_buffer_new_with_size($context, $bytes);
+  method new_with_size (
+    CoglContext() $context, 
+    Int() $bytes
+  ) {
+    my gulong $b = resolve-ulong($b);
+    self.bless( 
+      attribute => cogl_attribute_buffer_new_with_size($context, $b)
+    );
   }
   
   method cogl_is_attribute_buffer {
@@ -21,7 +42,8 @@ class COGL::AttributeBuffer {
   }
 
   method get_gtype {
-    cogl_attribute_buffer_get_gtype();
+    state ($n, $t);
+    unstable_get_type( self.^name, &cogl_attribute_buffer_get_gtype, $n, $t );
   }
 
 }

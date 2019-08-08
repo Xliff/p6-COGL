@@ -6,7 +6,7 @@ use GTK::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::Buffer;
 
-class COGL::Buffer {
+role COGL::Buffer {
   has CoglBuffer $!cb;
   
   method update_hint is rw {
