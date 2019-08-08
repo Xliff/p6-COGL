@@ -164,4 +164,36 @@ sub paint (%data) {
 }
           
 sub create-primatives (%data) {
+  %data<attribute-buffer> = COGL::AttributeBuffer.new_with_size(
+    %data<context>, nativesizeof(%data<sparks>)
+  );
+  %data<attribute-buffer>.set_update_hint(COGL_BUFFER_UPDATE_HINT_DYNAMIC);
+  
+  ( my $attributes = CArray[CoglAttribute].new ).allocate(2);
+  $attributes[0] = COGL::Attribute.new(
+    %data<attribute-buffer>, 
+    'cogl_position_in', 
+    nativesizeof(Spark),
+    0,                                # Position of 'x' in Spark
+    2,                                # Number of components in position: (x, y)
+    COGL_ATTRIBUTE_TYPE_FLOAT         # Type of each component
+  );
+  
+  $attributes[1] = COGL::Attribute.new(
+    %data<attribute-buffer>, 
+    'cogl_color_in', 
+    nativesizeof(Spark),      
+    8,                                # Position of 'color' in Spark
+    4,                                # Number of components in color: (r, g, b, a)
+    COGL_ATTIBUTE_TYPE_UNSIGNED_BYTE  # Type of each component
+  );
+  
+  %data<primative> = COGL::Primative.new_with_attributes(
+    COGL_VERTICIES_MODE_POINTS,
+    N_SPARKS,
+    $attributes,
+    2
+  );
+  
+  $attributes[$_].unref for (0, 1);
 }
