@@ -80,6 +80,8 @@ sub generate-round-texture($context) {
 }
      
 sub paint (%data) {
+  my $diff-time;
+  
   loop (my $i; $i < N_FIREWORKS; $i++) {
     my $firework := %data<firework>[$i];
       if 
@@ -105,9 +107,18 @@ sub paint (%data) {
           $firework.initial-x-velocity *= -1;
         }
       }
+      
+      $diff-time = %data<last-spark-time>.elapsed;
+      
+      $firework.x = $firework.start-x +
+                    $firework.initial-x-velocity * $diff-time;
+                    
+      $firework.y = $firework.start-y +
+                    $firework.initial-y-velocity * $diff-time +
+                    0.5 * GRAVITY * $diff-time²;
     }
         
-    my $diff_time = GTK::Compat::Timer.elapsed($data<last-spark-time>);
+    $diff-time = %data<last-spark-time>.elapsed;
     unless $diff_time ~~ 0..TIME_PER_SPARK {
       loop (my $i = 0; $i < N_FIREWORKS, $i++) {
         my $spark := %data<sparks>[%data<next-spark-num>];
@@ -116,7 +127,7 @@ sub paint (%data) {
         $spark.x = 
           ($firework.x + (-$firework.size/2e0 ..^ $firework.size/2e0).rand;
         $spark<y> = 
-          ($firework.x + (-$firework.size/2e0 ..^ $firework.size/2e0).rand;
+          ($firework.y + (-$firework.size/2e0 ..^ $firework.size/2e0).rand;
           
         $spark.base-color := $firework.color;
         
@@ -140,8 +151,7 @@ sub paint (%data) {
       %data<last-spark-time>.reset();
     }
     
-    # %data<sparks> MUST be a CStruct!
-    %data<attribute_buffer>.set_data(
+    %data<attribute-buffer>.set_data(
       0,
       %data<sparks>,
       nativesizeof(%data<sparks>),
