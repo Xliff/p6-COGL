@@ -9,8 +9,8 @@ use COGL::Raw::Objects;
 class COGL::Object {
   has CoglObject $!co;
   
-  method setObject ($o) {
-    $!co = cast(CoglObject, $o);
+  method setObject (CoglObject $o) {
+    $!co = $o;
   } 
    
   method debug_object_foreach_type (gpointer $user_data = gpointer) {

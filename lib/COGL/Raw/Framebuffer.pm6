@@ -528,3 +528,52 @@ sub cogl_framebuffer_set_stereo_mode (
   is native(cogl)
   is export
 { * }
+
+sub cogl_framebuffer_clear(
+  CoglFramebuffer $framebuffer,
+  gulong $buffer_mask,
+  CoglColor $color
+) 
+  is native(cogl)
+  is export 
+{ * }
+
+sub cogl_framebuffer_clear4f (
+  CoglFramebuffer $framebuffer,
+  gulong $buffers,
+  gfloat $red,
+  gfloat $green,
+  gfloat $blue,
+  gfloat $alpha
+)
+  is native(cogl)
+  is export
+{ * }
+
+sub cogl_framebuffer_draw_rectangles (
+  CoglFramebuffer $framebuffer,
+  CoglPipeline $pipeline,
+  CArray[gfloat] $coordinates,
+  guint $n_rectangles
+)
+  is native(cogl)
+  is export 
+{ * }
+
+sub cogl_framebuffer_draw_textured_rectangles (
+  CoglFramebuffer $framebuffer,
+  CoglPipeline $pipeline,
+  CArray[gfloat] $coordinates,
+  guint $n_rectangles
+)
+  is native(cogl)
+  is export
+{ * }
+
+sub cogl_framebuffer_discard_buffers (
+  CoglFramebuffer $framebuffer,
+  gulong $buffer_mask
+)
+  is native(cogl)
+  is export
+{ * }

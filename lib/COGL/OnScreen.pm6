@@ -4,11 +4,44 @@ use GTK::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::OnScreen;
 
-class COGL::OnScreen {
+use COGL::Framebuffer;
+
+our subset OnscreenAncestry of Mu
+  where CoglOnscreen | FramebufferAncestry;
+
+class COGL::OnScreen is COGL::Framebuffer {
   has CoglOnScreen $!co;
   
+  submethod BUILD (:$onscreen) {
+    
+    given $onscreen {
+      when OnscreenAncestry {
+        my $to-parent;
+        $!co = do {
+          when CoglOnScreen {
+            $to-parent = cast(CoglFrameBuffer, $_);
+            $_;
+          }
+          default {
+            $to-parent = $_;
+            cast(CoglOnScreen, $_);
+          }
+        }
+        self.setFramebuffer($to-parent);
+      }
+      
+      when COGL::OnScreen {
+      }
+      
+      default {
+      }
+      
+    }
+    
+  }
+  
   method new (CoglContext $context, gint $width, gint $height) {
-    cogl_onscreen_new($cotext, $width, $height);
+    self.bless( onscreen => cogl_onscreen_new($cotext, $width, $height) )
   }
   
   method resizable is rw {
