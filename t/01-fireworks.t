@@ -84,82 +84,84 @@ sub paint (%data) {
   
   loop (my $i; $i < N_FIREWORKS; $i++) {
     my $firework := %data<firework>[$i];
-      if 
-        abs($firework.x - $firework.start-x) > 2 ||
-        $firework.y < 1
-      {
-        $firework.size = (0.001e0 ..^ 0.1e0).rand;
-        $firework.start-x = 1 + $firework.size;
-        $firework.start-y = -1;
-        $firework.initial-x-velocity = (-2e0 ^.. -0.1e0).rand;
-        $firework.initial-y-velocity = (0.1e0 ..^ 4e0).rand;
-        $firework.timer.reset();
-        
-        my $range = ^(^3.pick);
-        my $c = <red green blue>;
-        for $range {
-          %firework.color."$c[$_]"() = Bool.pick ?? 255 !! 0;
-        }
-        $firework.color.alpha = 255;
-          
-        if Bool.pick {
-          $firework.start-x *= -1;
-          $firework.initial-x-velocity *= -1;
-        }
+    
+    if 
+      abs($firework.x - $firework.start-x) > 2 ||
+      $firework.y < 1
+    {
+      $firework.size = (0.001e0 ..^ 0.1e0).rand;
+      $firework.start-x = 1 + $firework.size;
+      $firework.start-y = -1;
+      $firework.initial-x-velocity = (-2e0 ^.. -0.1e0).rand;
+      $firework.initial-y-velocity = (0.1e0 ..^ 4e0).rand;
+      $firework.timer.reset();
+      
+      my $range = ^(^3.pick);
+      my $c = <red green blue>;
+      for $range {
+        %firework.color."$c[$_]"() = Bool.pick ?? 255 !! 0;
       }
-      
-      $diff-time = %data<last-spark-time>.elapsed;
-      
-      $firework.x = $firework.start-x +
-                    $firework.initial-x-velocity * $diff-time;
-                    
-      $firework.y = $firework.start-y +
-                    $firework.initial-y-velocity * $diff-time +
-                    0.5 * GRAVITY * $diff-time²;
-    }
+      $firework.color.alpha = 255;
         
+      if Bool.pick {
+        $firework.start-x *= -1;
+        $firework.initial-x-velocity *= -1;
+      }
+    }
+    
     $diff-time = %data<last-spark-time>.elapsed;
-    unless $diff_time ~~ 0..TIME_PER_SPARK {
-      loop (my $i = 0; $i < N_FIREWORKS, $i++) {
-        my $spark := %data<sparks>[%data<next-spark-num>];
-        my $firework := %data<firework>[$i];
-        
-        $spark.x = 
-          ($firework.x + (-$firework.size/2e0 ..^ $firework.size/2e0).rand;
-        $spark<y> = 
-          ($firework.y + (-$firework.size/2e0 ..^ $firework.size/2e0).rand;
-          
-        $spark.base-color := $firework.color;
-        
-        %data<next-spark-num> = %data<next-spark-num> +& (N_SPARKS - 1);
-      }
     
-      # Update the colour of each spark
-      loop (my $i = 0; $i < N_SPARKS; $i++) {
-        my $spark := %data<sparks>[
-          %data<next-spark-num> + $i +& (N_SPARKS - 1)
-        ];
-        
-        my $cv = $i / (N_SPARKS - 1);
-        $spark.base-color.red   *= $cv;
-        $spark.base-color.green *= $cv;
-        $spark.base-color.blue  *= $cv;
-        
-        $spark.base-color.alpha = 255 * $cv;
-      }
+    $firework.x = $firework.start-x +
+                  $firework.initial-x-velocity * $diff-time;
+                  
+    $firework.y = $firework.start-y +
+                  $firework.initial-y-velocity * $diff-time +
+                  0.5 * GRAVITY * $diff-time²;
+  }
       
-      %data<last-spark-time>.reset();
+  $diff-time = %data<last-spark-time>.elapsed;
+  unless $diff_time ~~ 0..TIME_PER_SPARK {
+    loop (my $i = 0; $i < N_FIREWORKS, $i++) {
+      my $spark := %data<sparks>[%data<next-spark-num>];
+      my $firework := %data<firework>[$i];
+      
+      $spark.x = 
+        ($firework.x + (-$firework.size/2e0 ..^ $firework.size/2e0).rand;
+      $spark<y> = 
+        ($firework.y + (-$firework.size/2e0 ..^ $firework.size/2e0).rand;
+        
+      $spark.base-color := $firework.color;
+      
+      %data<next-spark-num> = %data<next-spark-num> +& (N_SPARKS - 1);
+    }
+  
+    # Update the colour of each spark
+    loop (my $i = 0; $i < N_SPARKS; $i++) {
+      my $spark := %data<sparks>[
+        %data<next-spark-num> + $i +& (N_SPARKS - 1)
+      ];
+      
+      my $cv = $i / (N_SPARKS - 1);
+      $spark.base-color.red   *= $cv;
+      $spark.base-color.green *= $cv;
+      $spark.base-color.blue  *= $cv;
+      
+      $spark.base-color.alpha = 255 * $cv;
     }
     
-    %data<attribute-buffer>.set_data(
-      0,
-      %data<sparks>,
-      nativesizeof(%data<sparks>),
-    );
-
-    %data<fb>.clear4f(COGL_BUFFER_BIT_COLOR, 0, 0, 0, 1);
-    %data<primitive>.draw(%data<fb>, %data<pipeline>);
-    %data<fb>.swap_buffers;
+    %data<last-spark-time>.reset();
   }
+  
+  %data<attribute-buffer>.set_data(
+    0,
+    %data<sparks>,
+    nativesizeof(%data<sparks>),
+  );
+
+  %data<fb>.clear4f(COGL_BUFFER_BIT_COLOR, 0, 0, 0, 1);
+  %data<primitive>.draw(%data<fb>, %data<pipeline>);
+  %data<fb>.swap_buffers;
+}
           
-        
+sub create-primatives (%data) {
+}
