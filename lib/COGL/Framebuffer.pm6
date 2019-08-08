@@ -429,5 +429,45 @@ class COGL::FrameBuffer {
   method translate (gfloat $x, gfloat $y, gfloat $z) {
     cogl_framebuffer_translate($!cf, $x, $y, $z);
   }
+  
+  method clear (Int() $buffer_mask, CoglColor() $color) {
+    my gulong $bm = resolve-ulong($buffer-mask);
+    cogl_color_clear($!cf, $bm, $color)
+  }
+
+  method clear4f (
+    Int() $buffer-mask,
+    Num() $red,
+    Num() $green,
+    Num() $blue,
+    Num() $alpha
+  ) {
+    my gulong $bm = resolve-ulong($buffer-mask);
+    my gfloat ($r, $g, $b, $a) = ($red, $green, $blue, $alpha);
+    cogl_framebuffer_clear4f($!cf, $bm, $r, $g, $b, $a);
+  }
+
+  method draw_rectangles (
+    CoglPipeline() $pipeline,
+    CArray[gfloat] $coordinates,
+    Int() $n_rectangles
+  ) {
+    my guint $nr = resolve-uint($n_rectangles);
+    cogl_framebuffer_draw_rectangles($!cf, $pipeline, $coordinates, $nr);
+  }
+
+  method draw_textured_rectangles (
+    CoglPipeline() $pipeline,
+    CArray[gfloat] $coordinates,
+    Int() $n_rectangles
+  ) {
+    my guint $nr = resolve-uint($n_rectangles);
+    cogl_framebuffer_draw_textured_rectangles($!cf, $coordinates, $nr);
+  }
+
+  method discard_buffers (Int() $buffer_mask) {
+    my gulong $bm = resolve-ulong($buffer_mask);
+    cogl_framebuffer_discard_buffers($!cf, $bm);
+  }
 
 }
