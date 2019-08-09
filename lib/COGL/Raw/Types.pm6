@@ -23,6 +23,7 @@ class CoglOnScreen        is repr('CPointer') is export does GTK::Roles::Pointer
 class CoglPipeline        is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglPrimative       is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglQuaternion      is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglSnippet         is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglTexture         is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglTexture2D       is repr('CPointer') is export does GTK::Roles::Pointers { }
 
