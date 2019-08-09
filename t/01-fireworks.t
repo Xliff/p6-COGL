@@ -11,6 +11,8 @@ use COGL::Texture2d;
 constant N_FIREWORKS    = 32;
 constant TEXTURE_SIZE   = 32;
 constant TIME_PER_SPARK = 0.1;
+constant GRAVITY        = -1.5;
+constant FLT_MAX        = 3.402823e38;   # C define value
 
 class Color is repr('CStruct') {
   has uint8 $.red   is rw;
@@ -83,7 +85,7 @@ sub paint (%data) {
   my $diff-time;
   
   loop (my $i; $i < N_FIREWORKS; $i++) {
-    my $firework := %data<firework>[$i];
+    my $firework := %data<fireworks>[$i];
     
     if 
       abs($firework.x - $firework.start-x) > 2 ||
@@ -123,7 +125,7 @@ sub paint (%data) {
   unless $diff_time ~~ 0..TIME_PER_SPARK {
     loop (my $i = 0; $i < N_FIREWORKS, $i++) {
       my $spark := %data<sparks>[%data<next-spark-num>];
-      my $firework := %data<firework>[$i];
+      my $firework := %data<fireworks>[$i];
       
       $spark.x = 
         ($firework.x + (-$firework.size/2e0 ..^ $firework.size/2e0).rand;
@@ -163,7 +165,7 @@ sub paint (%data) {
   %data<fb>.swap_buffers;
 }
           
-sub create-primatives (%data) {
+sub create-primative (%data) {
   %data<attribute-buffer> = COGL::AttributeBuffer.new_with_size(
     %data<context>, nativesizeof(%data<sparks>)
   );
@@ -197,3 +199,57 @@ sub create-primatives (%data) {
   
   $attributes[$_].unref for (0, 1);
 }
+
+sub MAIN {
+  my %data;
+  
+  %data<context> = COGL::Context.new;
+  create-primatives(%data)
+  
+  %data<pipeline> = COGL::Pipeline.new(%data<context>);
+  %data<last-spark-time> = GTK::Compat::Timer.new;
+  %data<next-spark-num> = 0;
+  %data<pipeline>.set_point_size(TEXTURE_SIZE);
+  
+  my $tex = generate-round-texture(%data<context>);
+  %data<pipeline>.set_layer_texture(0, $tex);
+  $tex.unref;
+  
+  %data<pipeline>.set_layer_point_sprite_coords_enabled(0, True);
+  
+  for ^N_FIREWORKS {
+    %data<fireworks>[$_].x     = -FLT_MAX;
+    %data<fireworks>[$_].y     = FLT_MAX;
+    %data<fireworks>[$_].size  = 0;
+    %data<fireworks>[$_].timer = GTK::Compat::Timer.new;
+  }
+  for ^N_SPARKS {
+    %data<sparks>[$_].x = %data<sparks>[$_].y = 2;
+  }
+    
+  %data<fb> = COGL::Onscreen.new(%data<context>, 800, 600);
+  %data<fb>.show;
+  %data<fb>.add_frame_callback(-> *@a { 
+    paint(%data) if CoglFrameEvent( @a[1] ) == COGL_FRAME_EVENT_SYNC
+  });
+   
+  my $source = COGL::Source.new(%data<context>);
+  $source.attach;
+ 
+  my $loop = GTK::Compat::Main.new(GMainContext, True);
+  paint(%data);
+  
+  $loop.run;
+  $loop.unref;
+  
+  %data{$_}.unref for <pipeline attribute_buffer primative fb context>;
+  %data<last-spark-time>.destroy;
+  .destroy for %data<fireworks>;
+}
+  
+  
+  
+  
+    
+    
+  
