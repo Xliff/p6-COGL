@@ -1,5 +1,7 @@
 use v6.c;
 
+use Method::Also;
+
 use NativeCall;
 
 use GTK::Raw::Utils;
@@ -37,7 +39,7 @@ class COGL::Color {
     );
   }
 
-  method alpha_byte is rw {
+  method alpha_byte is rw is also<alpha-byte> {
     Proxy.new(
       FETCH => sub ($) {
         cogl_color_get_alpha_byte($!cc);
@@ -61,7 +63,7 @@ class COGL::Color {
     );
   }
 
-  method blue_byte is rw {
+  method blue_byte is rw is also<blue-byte> {
     Proxy.new(
       FETCH => sub ($) {
         cogl_color_get_blue_byte($!cc);
@@ -85,7 +87,7 @@ class COGL::Color {
     );
   }
 
-  method green_byte is rw {
+  method green_byte is rw is also<green-byte> {
     Proxy.new(
       FETCH => sub ($) {
         cogl_color_get_green_byte($!cc);
@@ -109,7 +111,7 @@ class COGL::Color {
     );
   }
 
-  method red_byte is rw {
+  method red_byte is rw is also<red-byte> {
     Proxy.new(
       FETCH => sub ($) {
         cogl_color_get_red_byte($!cc);
@@ -133,52 +135,56 @@ class COGL::Color {
     cogl_color_free($!cc);
   }
 
-  method get_alpha_float {
+  method get_alpha_float is also<get-alpha-float> {
     cogl_color_get_alpha_float($!cc);
   }
   
-  method get_red_float {
+  method get_red_float is also<get-red-float> {
     cogl_color_get_alpha_float($!cc);
   }
   
-  method get_green_float {
+  method get_green_float is also<get-green-float> {
     cogl_color_get_blue_float($!cc);
   }
 
-  method get_blue_float {
+  method get_blue_float is also<get-blue-float> {
     cogl_color_get_blue_float($!cc);
   }
   
-  method set_alpha_float (Num() $float) {
+  method set_alpha_float (Num() $float) is also<set-alpha-float> {
     my gfloat $f = $float;
     cogl_color_get_alpha_float($!cc, $f);
   }
   
-  method set_red_float (Num() $float) {
+  method set_red_float (Num() $float) is also<set-red-float> {
     my gfloat $f = $float;
     cogl_color_get_alpha_float($!cc, $f);
   }
   
-  method set_green_float (Num() $float) {
+  method set_green_float (Num() $float) is also<set-green-float> {
     my gfloat $f = $float;
     cogl_color_get_green_float($!cc, $f);
   }
 
-  method set_blue_float (Num() $float) {
+  method set_blue_float (Num() $float) is also<set-blue-float> {
     my gfloat $f = $float;
     cogl_color_get_blue_float($!cc, $f);
   }
 
-  method get_gtype {
+  method get_gtype is also<get-gtype> {
     state ($n, $t);
     unstable_get_type( self.^name, &cogl_color_get_gtype, $n, $t );
   }
 
-  method init_from_4f (Num() $red, Num() $green, Num() $blue, Num() $alpha) {
+  method init_from_4f (Num() $red, Num() $green, Num() $blue, Num() $alpha) is also<init-from-4f> {
     my gfloat ($r, $g, $b, $a) = ($red, $green, $blue, $alpha);
     cogl_color_init_from_4f($!cc, $r, $g, $b, $a);
   }
 
+  proto method init_from_4fv (|) 
+    is also<init-from-4fv>
+  { * }
+  
   multi method init_from_4fv(Num @colors) {
     die "COGL::Color.init_from_4fv will only take an array with 4 { ''
          }floating point values."
@@ -197,12 +203,16 @@ class COGL::Color {
     Int() $green, 
     Int() $blue, 
     Int() $alpha
-  ) {
+  ) 
+    is also<init-from-4ub> 
+  {
     my uint8 ($r, $g, $b, $a) = resolve-uint8($red, $green, $blue, $alpha);
     cogl_color_init_from_4ub($!cc, $r, $g, $b, $a);
   }
 
-  method init_from_hsl (Num() $hue, Num() $saturation, Num() $luminance) {
+  method init_from_hsl (Num() $hue, Num() $saturation, Num() $luminance) 
+    is also<init-from-hsl> 
+  {
     my gfloat ($h, $s, $l) = ($hue, $saturation, $luminance);
     cogl_color_init_from_hsl($!cc, $h, $s, $l);
   }
@@ -211,7 +221,9 @@ class COGL::Color {
     cogl_color_premultiply($!cc);
   }
 
-  method set_from_4f (gfloat $red, gfloat $green, gfloat $blue, gfloat $alpha) {
+  method set_from_4f (gfloat $red, gfloat $green, gfloat $blue, gfloat $alpha) 
+    is also<set-from-4f> 
+  {
     my gfloat ($r, $g, $b, $a) = ($red, $green, $blue, $alpha);
     cogl_color_set_from_4f($!cc, $r, $g, $b, $a);
   }
@@ -221,12 +233,16 @@ class COGL::Color {
     Int() $green, 
     Int() $blue, 
     Int() $alpha
-  ) {
+  ) 
+    is also<set-from-4ub> 
+  {
     my uint8 ($r, $g, $b, $a) = resolve-uint8($red, $green, $blue, $alpha);
     cogl_color_set_from_4ub($!cc, $r, $g, $b, $a);
   }
 
-  method to_hsl (Num() $hue, Num() $saturation, Num() $luminance) {
+  method to_hsl (Num() $hue, Num() $saturation, Num() $luminance) 
+    is also<to-hsl> 
+  {
     my gfloat ($h, $s, $l) = ($hue, $saturation, $luminance);
     cogl_color_to_hsl($!cc, $h, $s, $l);
   }
