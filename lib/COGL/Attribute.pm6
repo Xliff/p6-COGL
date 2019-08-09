@@ -1,5 +1,7 @@
 use v6.c;
 
+use Method::Also;
+
 use GTK::Raw::Utils;
 
 use GTK::Compat::Types;
@@ -7,6 +9,7 @@ use COGL::Raw::Types;
 use COGL::Raw::Attribute;
 
 use COGL::Object;
+use COGL::AttributeBuffer;
 
 our subset AttributeAncestry is export of Mu
   where CoglAttribute | CoglObject
@@ -42,19 +45,20 @@ class COGL::Attribute is COGL::Object {
   method new (
     CoglAttributeBuffer() $ab,
     Str() $name,
-    size_t $stride,
-    size_t $offset,
-    gint $components,
-    CoglAttributeType $type
+    Int() $stride,
+    Int() $offset,
+    Int() $components,
+    Int() $type
   ) {
-    self.bless(
-      attribute => cogl_attribute_new(
-        $ab, $name, $stride, $offset, $components, $type
-      )
-    );
+    my uint64 $s, $o = resolve-uint64($stride, $offset);
+    my gint $c = resolve-int($components);
+    my guint $t = resolve-uint($type);
+    self.bless( attribute => cogl_attribute_new($ab, $name, $s, $o, $c, $t) );
   }
 
-  method new_const_1f (CoglContext() $context, Str() $name, Num() $value) {
+  method new_const_1f (CoglContext() $context, Str() $name, Num() $value) 
+    is also<new-const-1f> 
+  {
     my gfloat $v = $value;
     
     self.bless( 
@@ -67,7 +71,9 @@ class COGL::Attribute is COGL::Object {
     Str() $name,
     Num() $component0,
     Num() $component1
-  ) {
+  ) 
+    is also<new-const-2f> 
+  {
     my gfloat ($c0, $c1) = ($component0, $component1);
     
     self.bless(
@@ -75,7 +81,9 @@ class COGL::Attribute is COGL::Object {
     );
   }
 
-  method new_const_2fv (CoglContext() $context, Str() $name, gfloat $value) {
+  method new_const_2fv (CoglContext() $context, Str() $name, gfloat $value) 
+    is also<new-const-2fv> 
+  {
     self.bless(
       attribute => cogl_attribute_new_const_2fv($context, $name, $value)
     );
@@ -86,7 +94,9 @@ class COGL::Attribute is COGL::Object {
     Str() $name,
     CArray[gfloat] $matrix2x2,
     Int() $transpose
-  ) {
+  ) 
+    is also<new-const-2x2fv> 
+  {
     my gboolean $t = resolve-bool($transpose);
     
     self.bless(
@@ -102,7 +112,9 @@ class COGL::Attribute is COGL::Object {
     Num() $component0,
     Num() $component1,
     Num() $component2
-  ) {
+  ) 
+    is also<new-const-3f> 
+  {
     my gfloat ($c0, $c1, $c2) = ($component0, $component1, $component2);
     
     self.bless(
@@ -110,7 +122,9 @@ class COGL::Attribute is COGL::Object {
     );
   }
 
-  method new_const_3fv (CoglContext() $context, Str() $name, Num() $value) {
+  method new_const_3fv (CoglContext() $context, Str() $name, Num() $value) 
+    is also<new-const-3fv> 
+  {
     my gfloat $v = $value;
     
     self.bless(
@@ -123,7 +137,9 @@ class COGL::Attribute is COGL::Object {
     Str() $name,
     CArray[gfloat] $matrix3x3,
     Int() $transpose
-  ) {
+  ) 
+    is also<new-const-3x3fv> 
+  {
     my gboolean $t = resolve-bool($transpose);
     
     self.bless(
@@ -140,7 +156,9 @@ class COGL::Attribute is COGL::Object {
     Num() $component1,
     Num() $component2,
     Num() $component3
-  ) {
+  ) 
+    is also<new-const-4f> 
+  {
     my gfloat ($c0, $c1, $c2, $c3) = 
       ($component0, $component1, $component2, $component3);
       
@@ -151,7 +169,9 @@ class COGL::Attribute is COGL::Object {
     );
   }
 
-  method new_const_4fv (CoglContext() $context, Str() $name, Num() $value) {
+  method new_const_4fv (CoglContext() $context, Str() $name, Num() $value) 
+    is also<new-const-4fv> 
+  {
     my gfloat $v = $value;
     
     self.bless( 
@@ -164,7 +184,9 @@ class COGL::Attribute is COGL::Object {
     Str() $name,
     CArray[gfloat] $matrix4x4,
     Int() $transpose
-  ) {
+  ) 
+    is also<new-const-4x4fv> 
+  {
     my gboolean $t = resolve-bool($transpose);
     
     self.bless( 
@@ -174,12 +196,16 @@ class COGL::Attribute is COGL::Object {
     );  
   }
 
-  method buffer is rw {
+  method buffer(:$raw = False) is rw {
     Proxy.new(
       FETCH => sub ($) {
-        cogl_attribute_get_buffer($!ca);
+        my $b = cogl_attribute_get_buffer($!ca);
+        $b.defined ??
+          ( $raw ?? $b !! COGL::AttributeBuffer.new($b) )
+          !!
+          Nil;
       },
-      STORE => sub ($, $attribute_buffer is copy) {
+      STORE => sub ($, CoglAttributeBuffer() $attribute_buffer is copy) {
         cogl_attribute_set_buffer($!ca, $attribute_buffer);
       }
     );
@@ -188,19 +214,20 @@ class COGL::Attribute is COGL::Object {
   method normalized is rw {
     Proxy.new(
       FETCH => sub ($) {
-        cogl_attribute_get_normalized($!ca);
+        so cogl_attribute_get_normalized($!ca);
       },
-      STORE => sub ($, $normalized is copy) {
-        cogl_attribute_set_normalized($!ca, $normalized);
+      STORE => sub ($, Int() $normalized is copy) {
+        my guint $n = resolve-bool($n);
+        cogl_attribute_set_normalized($!ca, $n);
       }
     );
   }
 
-  method cogl_is_attribute {
+  method cogl_is_attribute is also<cogl-is-attribute> {
     so cogl_is_attribute($!ca);
   }
 
-  method get_gtype {
+  method get_gtype is also<get-gtype> {
     state ($n, $t)
     unstable_get_type( self.^name, &cogl_attribute_get_gtype, $n, $t );
   }
