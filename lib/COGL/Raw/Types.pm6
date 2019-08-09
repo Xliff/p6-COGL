@@ -11,6 +11,7 @@ class CoglAttribute       is repr('CPointer') is export does GTK::Roles::Pointer
 class CoglAttributeBuffer is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglBuffer          is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglContext         is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglDisplay         is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglFramebuffer     is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglHandle          is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglMaterial        is repr('CPointer') is export does GTK::Roles::Pointers { }
