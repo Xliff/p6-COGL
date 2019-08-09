@@ -30,6 +30,12 @@ class CoglTexture2D       is repr('CPointer') is export does GTK::Roles::Pointer
 constant CoglBool      is export := gint;
 constant CoglTexture2d is export := CoglTexture2D;
 
+class CoglPollFD is repr<CStruct>        also does GTK::Roles::Pointers is export {
+  has gint  $.fd      is rw;
+  has int16 $.events  is rw;
+  has int16 $.revents is rw;
+}
+
 class CoglVertexP2 is repr<CStruct>      also does GTK::Roles::Pointers is export {
   has gfloat $.x is rw;
   has gfloat $.y is rw;
