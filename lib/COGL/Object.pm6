@@ -40,6 +40,7 @@ class COGL::Object {
 
   method ref {
     cogl_object_ref($!co);
+    self;
   }
 
   method set_user_data (
