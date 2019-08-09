@@ -9,6 +9,7 @@ unit package COGL::Raw::Types;
 
 class CoglAttribute       is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglAttributeBuffer is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglBitmap          is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglBuffer          is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglContext         is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglDisplay         is repr('CPointer') is export does GTK::Roles::Pointers { }
