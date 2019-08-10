@@ -1,5 +1,7 @@
 use v6.c;
 
+use NativeCall;
+
 use GTK::Compat::Types;
 use COGL::Compat::Types;
 use COGL::Raw::Types;
@@ -8,10 +10,10 @@ use COGL::Raw::OnScreen;
 use COGL::FrameBuffer;
 
 our subset OnscreenAncestry of Mu
-  where CoglOnscreen | FramebufferAncestry;
+  where CoglOnscreen | FrameBufferAncestry;
 
 class COGL::OnScreen is COGL::FrameBuffer {
-  has CoglOnScreen $!co;
+  has CoglOnscreen $!co;
 
   submethod BUILD (:$onscreen) {
 
@@ -19,13 +21,13 @@ class COGL::OnScreen is COGL::FrameBuffer {
       when OnscreenAncestry {
         my $to-parent;
         $!co = do {
-          when CoglOnScreen {
+          when CoglOnscreen {
             $to-parent = cast(CoglFrameBuffer, $_);
             $_;
           }
           default {
             $to-parent = $_;
-            cast(CoglOnScreen, $_);
+            cast(CoglOnscreen, $_);
           }
         }
         self.setFramebuffer($to-parent);
@@ -42,7 +44,7 @@ class COGL::OnScreen is COGL::FrameBuffer {
   }
 
   method new (CoglContext $context, gint $width, gint $height) {
-    self.bless( onscreen => cogl_onscreen_new($cotext, $width, $height) )
+    self.bless( onscreen => cogl_onscreen_new($context, $width, $height) )
   }
 
   method resizable is rw {
@@ -88,11 +90,12 @@ class COGL::OnScreen is COGL::FrameBuffer {
   }
 
   method frame_closure_get_gtype {
-    cogl_frame_closure_get_gtype($!co);
+    state ($n, $t);
+    unstable_get_type( self.^name, &cogl_frame_closure_get_gtype, $n , $t );
   }
 
-  method is_onscreen {
-    cogl_is_onscreen($!co);
+  method is_onscreen (COGL::OnScreen:U: gpointer $candidate) {
+    cogl_is_onscreen($candidate);
   }
 
   method mir_get_surface {
@@ -137,7 +140,7 @@ class COGL::OnScreen is COGL::FrameBuffer {
   }
 
   method x11_set_foreign_window_xid (
-    uint32_t $xid,
+    uint32 $xid,
     CoglOnscreenX11MaskCallback $update,
     gpointer $user_data
   ) {
@@ -145,7 +148,13 @@ class COGL::OnScreen is COGL::FrameBuffer {
   }
 
   method dirty_closure_get_gtype {
-    cogl_onscreen_dirty_closure_get_gtype($!co);
+    state ($n, $t);
+    unstable_get_type(
+      self.^name,
+      &cogl_onscreen_dirty_closure_get_gtype,
+      $n,
+      $t
+    );
   }
 
   method get_buffer_age {
@@ -157,7 +166,8 @@ class COGL::OnScreen is COGL::FrameBuffer {
   }
 
   method get_gtype {
-    cogl_onscreen_get_gtype($!co);
+    state ($n, $t);
+    unstable_get_type( self.^name, &cogl_onscreen_get_gtype, $n, $t );
   }
 
   method hide {
@@ -177,7 +187,13 @@ class COGL::OnScreen is COGL::FrameBuffer {
   }
 
   method resize_closure_get_gtype {
-    cogl_onscreen_resize_closure_get_gtype($!co);
+    state ($n, $t);
+    unstable_get_type(
+      self.^name,
+      &cogl_onscreen_resize_closure_get_gtype,
+      $n,
+      $t
+    );
   }
 
   method set_swap_throttled (CoglBool $throttled) {

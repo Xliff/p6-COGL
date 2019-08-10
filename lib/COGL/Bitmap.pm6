@@ -17,6 +17,7 @@ class COGL::Bitmap {
   }
 
   method new_for_data (
+    CoglContext() $context,
     Int() $width,
     Int() $height,
     Int() $format,
@@ -26,11 +27,12 @@ class COGL::Bitmap {
     my gint ($w, $h, $r) = ($width, $height, $rowstride);
     my guint $f = resolve-uint($format);
     self.bless(
-      bitmap => cogl_bitmap_new_for_data($!cbm, $w, $h, $f, $r, $data)
+      bitmap => cogl_bitmap_new_for_data($context, $w, $h, $f, $r, $data)
     );
   }
 
   method new_from_buffer (
+    CoglBuffer() $buffer,
     Int() $format,
     Int() $width,
     Int() $height,
@@ -40,21 +42,22 @@ class COGL::Bitmap {
     my gint ($w, $h, $r, $o) = ($width, $height, $rowstride, $offset);
     my guint $f = resolve-uint($format);
     self.bless(
-      bitmap => cogl_bitmap_new_from_buffer($!cbm, $f, $w, $h, $r, $o)
+      bitmap => cogl_bitmap_new_from_buffer($buffer, $f, $w, $h, $r, $o)
     );
   }
 
   method new_from_file (
+    Str() $filename,
     CArray[Pointer[CoglError]] $error = gerror
   ) {
     clear_error;
-    my $rc = cogl_bitmap_new_from_file($!cbm, $error);
+    my $rc = cogl_bitmap_new_from_file($filename, $error);
     set_error($error);
     self.bless( bitmap => $rc );
   }
 
-  method is_bitmap {
-    so cogl_is_bitmap($!cbm);
+  method is_bitmap (COGL::Bitmap:U: gpointer $candidate) {
+    so cogl_is_bitmap($candidate);
   }
 
   method error_quark {
@@ -83,9 +86,22 @@ class COGL::Bitmap {
     cogl_bitmap_get_rowstride($!cbm);
   }
 
-  method get_size_from_file (Int() $width, Int() $height) {
-    my gint ($w, $h) = resolve-int($width, $height);
-    cogl_bitmap_get_size_from_file($!cbm, $w, $h);
+  multi method get_size_from_file (
+    COGL::Bitmap:U:
+    Str() $filename
+  ) {
+    my Int ($w, $h);
+    samewith($filename, $w, $h);
+  }
+  multi method get_size_from_file (
+    COGL::Bitmap:U:
+    Str() $filename,
+    Int $width is rw,
+    Int $height is rw
+  ) {
+    my gint ($w, $h) = 0 xx 2;
+    cogl_bitmap_get_size_from_file($filename, $w, $h);
+    ($width, $height) = ($w, $h);
   }
 
   method get_width {

@@ -36,7 +36,7 @@ sub cogl_has_feature (
   is export
 { * }
 
-sub cogl_is_context (void $object)
+sub cogl_is_context (Pointer $object)
   returns CoglBool
   is native(cogl)
   is export

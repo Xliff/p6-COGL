@@ -22,7 +22,7 @@ sub cogl_get_draw_framebuffer ()
   is export
 { * }
 
-sub cogl_is_framebuffer (void $object)
+sub cogl_is_framebuffer (Pointer $object)
   returns CoglBool
   is native(cogl)
   is export

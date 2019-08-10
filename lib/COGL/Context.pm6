@@ -1,6 +1,9 @@
 use v6.c;
 
 use Method::Also;
+use NativeCall;
+
+use GTK::Raw::Utils;
 
 use GTK::Compat::Types;
 use COGL::Raw::Types;
@@ -48,7 +51,7 @@ class COGL::Context is COGL::Object {
     CArray[Pointer[CoglError]] $error = gerror
   ) {
     clear_error;
-    my $rc = cogl_context_new($!cc, $error);
+    my $rc = cogl_context_new($display, $error);
     set_error($error);
     self.bless( context => $rc );
   }
@@ -71,8 +74,10 @@ class COGL::Context is COGL::Object {
     so cogl_has_feature($!cc, $f);
   }
 
-  method is_context is also<is-context> {
-    cogl_is_context($!cc);
+  method is_context (COGL::Context:U: gpointer $candidate)
+    is also<is-context>
+  {
+    so cogl_is_context($candidate);
   }
 
   method get_display is also<get-display> {
@@ -80,7 +85,7 @@ class COGL::Context is COGL::Object {
   }
 
   method get_gtype is also<get-gtype> {
-    state ($n, $t)
+    state ($n, $t);
     unstable_get_type( self.^name, &cogl_context_get_gtype, $n, $t );
   }
 

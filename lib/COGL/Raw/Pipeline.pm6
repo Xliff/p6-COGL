@@ -7,7 +7,7 @@ use COGL::Raw::Types;
 
 unit package COGL::Raw::Pipeline;
 
-sub cogl_is_pipeline (void $object)
+sub cogl_is_pipeline (Pointer $object)
   returns CoglBool
   is native(cogl)
   is export
@@ -20,8 +20,8 @@ sub cogl_pipeline_copy (CoglPipeline $source)
 { * }
 
 sub cogl_pipeline_foreach_layer (
-  CoglPipeline $pipeline, 
-  CoglPipelineLayerCallback $callback, 
+  CoglPipeline $pipeline,
+  CoglPipelineLayerCallback $callback,
   Pointer $user_data
 )
   is native(cogl)
@@ -35,7 +35,7 @@ sub cogl_pipeline_get_gtype ()
 { * }
 
 sub cogl_pipeline_get_uniform_location (
-  CoglPipeline $pipeline, 
+  CoglPipeline $pipeline,
   Str $uniform_name
 )
   returns gint

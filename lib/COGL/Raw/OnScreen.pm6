@@ -57,7 +57,7 @@ sub cogl_frame_closure_get_gtype ()
   is export
 { * }
 
-sub cogl_is_onscreen (void $object)
+sub cogl_is_onscreen (gpointer $object)
   returns CoglBool
   is native(cogl)
   is export

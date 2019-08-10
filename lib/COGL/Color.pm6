@@ -23,7 +23,7 @@ class COGL::Color {
   multi method new (CoglColor $color) {
     self.bless(:$color);
   }
-  method new {
+  multi method new {
     self.bless( color => cogl_color_new() );
   }
 
@@ -153,22 +153,22 @@ class COGL::Color {
 
   method set_alpha_float (Num() $float) is also<set-alpha-float> {
     my gfloat $f = $float;
-    cogl_color_get_alpha_float($!cc, $f);
+    cogl_color_set_alpha_float($!cc, $f);
   }
 
   method set_red_float (Num() $float) is also<set-red-float> {
     my gfloat $f = $float;
-    cogl_color_get_alpha_float($!cc, $f);
+    cogl_color_set_alpha_float($!cc, $f);
   }
 
   method set_green_float (Num() $float) is also<set-green-float> {
     my gfloat $f = $float;
-    cogl_color_get_green_float($!cc, $f);
+    cogl_color_set_green_float($!cc, $f);
   }
 
   method set_blue_float (Num() $float) is also<set-blue-float> {
     my gfloat $f = $float;
-    cogl_color_get_blue_float($!cc, $f);
+    cogl_color_set_blue_float($!cc, $f);
   }
 
   method get_gtype is also<get-gtype> {

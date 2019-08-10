@@ -9,7 +9,6 @@ unit package COGL::Raw::Types;
 
 constant cogl is export := 'cogl',v0;
 
-constant uint8_t       is export := CArray[uint8];
 constant CoglBool      is export := int32;
 constant CoglError     is export := GError;
 

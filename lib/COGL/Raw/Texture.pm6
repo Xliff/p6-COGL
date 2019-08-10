@@ -16,7 +16,7 @@ sub cogl_texture_allocate (
   is export
 { * }
 
-sub cogl_is_texture (void $object)
+sub cogl_is_texture (Pointer $object)
   returns CoglBool
   is native(cogl)
   is export
@@ -62,7 +62,7 @@ sub cogl_texture_set_data (
   CoglTexture $texture,
   guint $format, # CoglPixelFormat $format,
   gint $rowstride,
-  uint8_t $data,
+  CArray[uint8] $data,
   gint $level,
   CArray[Pointer[CoglError]] $error
 )

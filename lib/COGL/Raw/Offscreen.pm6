@@ -25,17 +25,17 @@ sub cogl_offscreen_new_with_texture (CoglTexture $texture)
   is export
 { * }
 
-sub cogl_offscreen_ref (void $offscreen)
+sub cogl_offscreen_ref (CoglOffscreen $offscreen)
   is native(cogl)
   is export
 { * }
 
-sub cogl_offscreen_unref (void $offscreen)
+sub cogl_offscreen_unref (CoglOffscreen $offscreen)
   is native(cogl)
   is export
 { * }
 
-sub cogl_is_offscreen (void $object)
+sub cogl_is_offscreen (gpointer $object)
   returns CoglBool
   is native(cogl)
   is export

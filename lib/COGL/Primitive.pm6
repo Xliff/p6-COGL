@@ -1,6 +1,9 @@
 use v6.c;
 
+use NativeCall;
 use Method::Also;
+
+use GTK::Raw::Utils;
 
 use GTK::Compat::Types;
 use COGL::Raw::Types;
@@ -12,7 +15,7 @@ our subset PrimitiveAncestry is export of Mu
   where CoglPrimitive | CoglObject;
 
 class COGL::Primitive is COGL::Object {
-  has COGL::Primitive $!cp;
+  has CoglPrimitive $!cp;
 
   submethod BUILD (:$primitive) {
     given $primitive {
@@ -21,7 +24,7 @@ class COGL::Primitive is COGL::Object {
         $!cp = do {
           when CoglPrimitive {
             $to-parent = cast(CoglObject, $_);
-            $_:
+            $_;
           }
 
           default {
@@ -41,8 +44,9 @@ class COGL::Primitive is COGL::Object {
   }
 
   method new_p2 (
+    CoglContext() $context,
     Int() $mode,
-    Int() $n_vertices
+    Int() $n_vertices,
     gpointer $data # CoglVertexP2 *data
   )
     is also<new-p2>
@@ -50,12 +54,13 @@ class COGL::Primitive is COGL::Object {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
-    cogl_primitive_new_p2($!cp, $m, $nv, $data);
+    cogl_primitive_new_p2($context, $m, $nv, $data);
   }
 
   method new_p2c4 (
+    CoglContext() $context,
     Int() $mode,
-    Int() $n_vertices
+    Int() $n_vertices,
     gpointer $data # CoglVertexP2C4 *data
   )
     is also<new-p2c4>
@@ -63,12 +68,13 @@ class COGL::Primitive is COGL::Object {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
-    cogl_primitive_new_p2c4($!cp, $m, $nv, $data);
+    cogl_primitive_new_p2c4($context, $m, $nv, $data);
   }
 
   method new_p2t2 (
+    CoglContext() $context,
     Int() $mode,
-    Int() $n_vertices
+    Int() $n_vertices,
     gpointer $data # CoglVertexP2T2 *data
   )
     is also<new-p2t2>
@@ -76,12 +82,13 @@ class COGL::Primitive is COGL::Object {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
-    cogl_primitive_new_p2t2($!cp, $m, $nv, $data);
+    cogl_primitive_new_p2t2($context, $m, $nv, $data);
   }
 
   method new_p2t2c4 (
+    CoglContext() $context,
     Int() $mode,
-    Int() $n_vertices
+    Int() $n_vertices,
     gpointer $data # CoglVertexP2T2C4 *data
   )
     is also<new-p2t2c4>
@@ -89,12 +96,13 @@ class COGL::Primitive is COGL::Object {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
-    cogl_primitive_new_p2t2c4($!cp, $m, $nv, $data);
+    cogl_primitive_new_p2t2c4($context, $m, $nv, $data);
   }
 
   method new_p3 (
+    CoglContext() $context,
     Int() $mode,
-    Int() $n_vertices
+    Int() $n_vertices,
     gpointer $data # CoglVertexP3 *data
   )
     is also<new-p3>
@@ -102,12 +110,13 @@ class COGL::Primitive is COGL::Object {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
-    cogl_primitive_new_p3($!cp, $m, $nv, $data);
+    cogl_primitive_new_p3($context, $m, $nv, $data);
   }
 
   method new_p3c4 (
+    CoglContext() $context,
     Int() $mode,
-    Int() $n_vertices
+    Int() $n_vertices,
     gpointer $data # CoglVertexP3C4 *data
   )
     is also<new-p3c4>
@@ -115,12 +124,13 @@ class COGL::Primitive is COGL::Object {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
-    cogl_primitive_new_p3c4($!cp, $m, $nv, $data);
+    cogl_primitive_new_p3c4($context, $m, $nv, $data);
   }
 
   method new_p3t2 (
+    CoglContext() $context,
     Int() $mode,
-    Int() $n_vertices
+    Int() $n_vertices,
     gpointer $data # CoglVertexP3T2 *data
   )
     is also<new-p3t2>
@@ -128,23 +138,26 @@ class COGL::Primitive is COGL::Object {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
-    cogl_primitive_new_p3t2($!cp, $m, $nv, $data);
+    cogl_primitive_new_p3t2($context, $m, $nv, $data);
   }
 
   method new_p3t2c4 (
+    CoglContext() $context,
     Int() $mode,
-    Int() $n_vertices
+    Int() $n_vertices,
     gpointer $data # CoglVertexP3T2C4 *data
   )
     is also<new-p3t2c4>
   {
     my guint $m = resolve-uint($mode);
+    my gint $nv = resolve-int($n_vertices);
 
-    cogl_primitive_new_p3t2c4($!cp, $m, $nv, $data);
+    cogl_primitive_new_p3t2c4($context, $m, $nv, $data);
   }
 
   method new_with_attributes (
-    Int() $n_vertices
+    CoglContext() $context,
+    Int() $n_vertices,
     CArray[CoglAttribute] $attributes,
     Int() $n_attributes
   )
@@ -152,11 +165,13 @@ class COGL::Primitive is COGL::Object {
   {
     my gint ($nv, $na) = resolve-int($n_vertices, $n_attributes);
 
-    cogl_primitive_new_with_attributes($!cp, $nv, $attributes, $na);
+    cogl_primitive_new_with_attributes($context, $nv, $attributes, $na);
   }
 
-  method is_primitive is also<is-primitive> {
-    cogl_is_primitive($!cp);
+  method is_primitive (COGL::Primitive:U: gpointer $candidate)
+    is also<is-primitive>
+  {
+    cogl_is_primitive($candidate);
   }
 
   method copy {
@@ -164,7 +179,7 @@ class COGL::Primitive is COGL::Object {
   }
 
   method draw (
-    CoglFramebuffer() $framebuffer,
+    CoglFrameBuffer() $framebuffer,
     CoglPipeline() $pipeline
   ) {
     cogl_primitive_draw($!cp, $framebuffer, $pipeline);
@@ -218,7 +233,7 @@ class COGL::Primitive is COGL::Object {
   }
 
   method set_indices (
-    gpointer $indices, # CoglIndices *indices,
+    CArray[CoglIndices] $indices, # CoglIndices *indices,
     Int() $n_indices
   )
     is also<set-indices>

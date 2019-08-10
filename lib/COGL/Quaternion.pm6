@@ -11,11 +11,11 @@ class COGL::Quaternion {
   { $!cq }
 
   method identity ( COGL::Quaternion:U: ) {
-    cogl_get_static_identity_quaternion($!cq);
+    cogl_get_static_identity_quaternion();
   }
 
   method zero ( COGL::Quaternion:U: ) {
-    cogl_get_static_zero_quaternion($!cq);
+    cogl_get_static_zero_quaternion();
   }
 
   method copy {
@@ -35,7 +35,8 @@ class COGL::Quaternion {
   }
 
   method get_gtype {
-    cogl_quaternion_get_gtype($!cq);
+    state ($n, $t);
+    unstable_get_type( self.^name, &cogl_quaternion_get_gtype, $n, $t );
   }
 
   method get_rotation_angle {

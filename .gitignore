@@ -1,2 +1,5 @@
 scripts/
 *.bak
+.touch
+LastBuildResults
+LastBuildResults.*

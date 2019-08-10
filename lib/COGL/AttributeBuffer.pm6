@@ -64,7 +64,7 @@ class COGL::AttributeBuffer is COGL::Object {
     Int() $bytes,
     gpointer $data = gpointer
   ) {
-    my uint64 $b = resolve-ulong($b);
+    my uint64 $b = resolve-ulong($bytes);
     self.bless( attribute => cogl_attribute_buffer_new($context, $b, $data) );
   }
 
@@ -74,14 +74,16 @@ class COGL::AttributeBuffer is COGL::Object {
   )
     is also<new-with-size>
   {
-    my uint64 $b = resolve-ulong($b);
+    my uint64 $b = resolve-ulong($bytes);
     self.bless(
       attribute => cogl_attribute_buffer_new_with_size($context, $b)
     );
   }
 
-  method is_attribute_buffer is also<is-attribute-buffer> {
-    cogl_is_attribute_buffer($!cab);
+  method is_attribute_buffer (COGL::AttributeBuffer:U: Pointer $candidate)
+    is also<is-attribute-buffer>
+  {
+    cogl_is_attribute_buffer($candidate);
   }
 
   method get_gtype is also<get-gtype> {
@@ -91,7 +93,7 @@ class COGL::AttributeBuffer is COGL::Object {
 
 }
 
-sub cogl_is_attribute_buffer (void $object)
+sub cogl_is_attribute_buffer (Pointer $object)
   returns CoglBool
   is native(cogl)
   is export

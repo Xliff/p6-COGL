@@ -75,10 +75,10 @@ sub cogl_color_init_from_4fv (
 
 sub cogl_color_init_from_4ub (
   CoglColor $color,
-  uint8_t $red,
-  uint8_t $green,
-  uint8_t $blue,
-  uint8_t $alpha
+  uint8 $red,
+  uint8 $green,
+  uint8 $blue,
+  uint8 $alpha
 )
   is native(cogl)
   is export
@@ -118,10 +118,10 @@ sub cogl_color_set_from_4f (
 
 sub cogl_color_set_from_4ub (
   CoglColor $color,
-  uint8_t $red,
-  uint8_t $green,
-  uint8_t $blue,
-  uint8_t $alpha
+  uint8 $red,
+  uint8 $green,
+  uint8 $blue,
+  uint8 $alpha
 )
   is native(cogl)
   is export
@@ -241,6 +241,11 @@ sub cogl_color_set_red_byte (CoglColor $color, uint8 $red)
 { * }
 
 sub cogl_color_set_green_byte (CoglColor $color, uint8 $green)
+  is native(cogl)
+  is export
+{ * }
+
+sub cogl_color_set_blue_byte (CoglColor $color, uint8 $alpha)
   is native(cogl)
   is export
 { * }

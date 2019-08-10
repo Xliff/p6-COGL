@@ -71,7 +71,7 @@ sub cogl_primitive_new_p2 (
   CoglContext $context,
   guint $mode, # CoglVerticesMode $mode,
   gint $n_vertices,
-  CoglVertexP2 $data
+  Pointer $data # CoglVertexP2 $data
 )
   returns CoglPrimitive
   is native(cogl)
@@ -82,7 +82,7 @@ sub cogl_primitive_new_p2c4 (
   CoglContext $context,
   guint $mode, # CoglVerticesMode $mode,
   gint $n_vertices,
-  CoglVertexP2C4 $data
+  Pointer $data # CoglVertexP2C4 $data
 )
   returns CoglPrimitive
   is native(cogl)
@@ -93,7 +93,7 @@ sub cogl_primitive_new_p2t2 (
   CoglContext $context,
   guint $mode, # CoglVerticesMode $mode,
   gint $n_vertices,
-  CoglVertexP2T2 $data
+  Pointer $data # CoglVertexP2T2 $data
 )
   returns CoglPrimitive
   is native(cogl)
@@ -104,7 +104,7 @@ sub cogl_primitive_new_p2t2c4 (
   CoglContext $context,
   guint $mode, # CoglVerticesMode $mode,
   gint $n_vertices,
-  CoglVertexP2T2C4 $data
+  Pointer $data # CoglVertexP2T2C4 $data
 )
   returns CoglPrimitive
   is native(cogl)
@@ -115,7 +115,7 @@ sub cogl_primitive_new_p3 (
   CoglContext $context,
   guint $mode, # CoglVerticesMode $mode,
   gint $n_vertices,
-  CoglVertexP3 $data
+  Pointer $data # CoglVertexP3 $data
 )
   returns CoglPrimitive
   is native(cogl)
@@ -126,7 +126,7 @@ sub cogl_primitive_new_p3c4 (
   CoglContext $context,
   guint $mode, # CoglVerticesMode $mode,
   gint $n_vertices,
-  CoglVertexP3C4 $data
+  Pointer $data #  CoglVertexP3C4 $data
 )
   returns CoglPrimitive
   is native(cogl)
@@ -137,7 +137,7 @@ sub cogl_primitive_new_p3t2 (
   CoglContext $context,
   guint $mode, # CoglVerticesMode $mode,
   gint $n_vertices,
-  CoglVertexP3T2 $data
+  Pointer $data # CoglVertexP3T2 $data
 )
   returns CoglPrimitive
   is native(cogl)
@@ -148,7 +148,7 @@ sub cogl_primitive_new_p3t2c4 (
   CoglContext $context,
   guint $mode, # CoglVerticesMode $mode,
   gint $n_vertices,
-  CoglVertexP3T2C4 $data
+  Pointer $data # CoglVertexP3T2C4 $data
 )
   returns CoglPrimitive
   is native(cogl)
@@ -168,7 +168,7 @@ sub cogl_primitive_new_with_attributes (
 
 sub cogl_primitive_set_attributes (
   CoglPrimitive $primitive,
-  CoglAttribute $attributes,
+  CArray[CoglAttribute] $attributes,
   gint $n_attributes
 )
   is native(cogl)
@@ -185,7 +185,7 @@ sub cogl_primitive_set_first_vertex (
 
 sub cogl_primitive_set_indices (
   CoglPrimitive $primitive,
-  CoglIndices $indices,
+  CArray[CoglIndices] $indices,
   gint $n_indices
 )
   is native(cogl)

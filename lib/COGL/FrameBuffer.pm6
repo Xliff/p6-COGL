@@ -1,6 +1,9 @@
 use v6.c;
 
 use Method::Also;
+use NativeCall;
+
+use GTK::Raw::Utils;
 
 use GTK::Compat::Types;
 use COGL::Raw::Types;
@@ -8,15 +11,15 @@ use COGL::Raw::FrameBuffer;
 
 use COGL::Roles::Buffer;
 
-our subset FrameAncestry of Mu
+our subset FrameBufferAncestry of Mu
   where CoglFrameBuffer | CoglBuffer | CoglObject;
 
 class COGL::FrameBuffer {
   also does COGL::Roles::Buffer;
 
-  has CoglFramebuffer $!cf;
+  has CoglFrameBuffer $!cf;
 
-  method setFrameBuffer(FrameAncestry $_) {
+  method setFrameBuffer(FrameBufferAncestry $_) {
     my $to-parent;
     $!cf = do {
       when CoglFrameBuffer {
@@ -27,12 +30,12 @@ class COGL::FrameBuffer {
       when CoglBuffer {
         $to-parent = cast(CoglObject, $_);
         $!cb = cast(CoglBuffer, $_);          # COGL::Roles::Buffer
-        cast(CoglFramebuffer, $_);
+        cast(CoglFrameBuffer, $_);
       }
 
       default {
         $to-parent = $_;
-        cast(CoglFramebuffer, $_);
+        cast(CoglFrameBuffer, $_);
       }
     };
     self.setObject($_);
@@ -45,7 +48,7 @@ class COGL::FrameBuffer {
         CoglColorMask( cogl_framebuffer_get_color_mask($!cf) );
       },
       STORE => sub ($, Int() $color_mask is copy) {
-        my guint $cm = resolve-uint($color_masl);
+        my guint $cm = resolve-uint($color_mask);
         cogl_framebuffer_set_color_mask($!cf, $cm);
       }
     );
@@ -120,12 +123,19 @@ class COGL::FrameBuffer {
     so $rc;
   }
 
-  method cogl_get_draw_framebuffer is also<cogl-get-draw-framebuffer> {
-    cogl_get_draw_framebuffer($!cf);
+  method cogl_get_draw_framebuffer ( COGL::FrameBuffer:U: )
+    is also<cogl-get-draw-framebuffer>
+  {
+    cogl_get_draw_framebuffer();
   }
 
-  method cogl_is_framebuffer is also<cogl-is-framebuffer> {
-    cogl_is_framebuffer($!cf);
+  method is_framebuffer (
+    COGL::FrameBuffer:U:
+    gpointer $candidate
+  )
+    is also<cogl-is-framebuffer>
+  {
+    so cogl_is_framebuffer($candidate);
   }
 
   method draw_attributes (
@@ -393,7 +403,6 @@ class COGL::FrameBuffer {
   method push_matrix is also<push-matrix> {
     cogl_framebuffer_push_matrix($!cf);
   }
- $bounds_x1, $bounds_y1, $bounds_x2, $bounds_y2
 
   method push_primitive_clip (
     CoglPrimitive() $primitive,
@@ -488,7 +497,7 @@ class COGL::FrameBuffer {
   {
     my gint ($xx, $yy, $w, $h) = resolve-int($x, $y, $width, $height);
 
-    cogl_framebuffer_resolve_samples_region($!cf, $xx, $yt, $w, $h);
+    cogl_framebuffer_resolve_samples_region($!cf, $xx, $yy, $w, $h);
   }
 
   method rotate (Num() $angle, Num() $x, Num() $y, Num() $z) {
@@ -543,11 +552,11 @@ class COGL::FrameBuffer {
     cogl_framebuffer_translate($!cf, $xx, $yy, $zz);
   }
 
-  method clear (Int() $buffer_mask, CoglColor() $color) {
-    my uint64 $bm = resolve-ulong($buffer-mask);
-
-    cogl_color_clear($!cf, $bm, $color)
-  }
+  # method clear (Int() $buffer_mask, CoglColor() $color) {
+  #   my uint64 $bm = resolve-ulong($buffer_mask);
+  #
+  #   cogl_color_clear($!cf, $bm, $color)
+  # }
 
   method clear4f (
     Int() $buffer-mask,
@@ -583,7 +592,12 @@ class COGL::FrameBuffer {
   {
     my guint $nr = resolve-uint($n_rectangles);
 
-    cogl_framebuffer_draw_textured_rectangles($!cf, $coordinates, $nr);
+    cogl_framebuffer_draw_textured_rectangles(
+      $!cf,
+      $pipeline,
+      $coordinates,
+      $nr
+    );
   }
 
   method discard_buffers (Int() $buffer_mask)
