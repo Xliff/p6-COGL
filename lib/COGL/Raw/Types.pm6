@@ -7,6 +7,9 @@ use GTK::Roles::Pointers;
 
 unit package COGL::Raw::Types;
 
+# Number of times I've had to force compile the whole project.
+constant forced = 0;
+
 constant cogl is export := 'cogl',v0;
 
 constant CoglBool      is export := int32;
