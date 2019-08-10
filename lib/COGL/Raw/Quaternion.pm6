@@ -1,5 +1,7 @@
 use v6.c;
 
+use NativeCall;
+
 use GTK::Compat::Types;
 use COGL::Raw::Types;
 
@@ -24,12 +26,12 @@ sub cogl_quaternion_copy (CoglQuaternion $src)
 { * }
 
 sub cogl_quaternion_dot_product (CoglQuaternion $a, CoglQuaternion $b)
-  returns float
+  returns gfloat
   is native(cogl)
   is export
 { * }
 
-sub cogl_quaternion_equal (void $v1, void $v2)
+sub cogl_quaternion_equal (CoglQuaternion $v1, CoglQuaternion $v2)
   returns CoglBool
   is native(cogl)
   is export
@@ -47,13 +49,13 @@ sub cogl_quaternion_get_gtype ()
 { * }
 
 sub cogl_quaternion_get_rotation_angle (CoglQuaternion $quaternion)
-  returns float
+  returns gfloat
   is native(cogl)
   is export
 { * }
 
 sub cogl_quaternion_get_rotation_axis (
-  CoglQuaternion $quaternion, 
+  CoglQuaternion $quaternion,
   gfloat $vector3
 )
   is native(cogl)
@@ -61,10 +63,10 @@ sub cogl_quaternion_get_rotation_axis (
 { * }
 
 sub cogl_quaternion_init (
-  CoglQuaternion $quaternion, 
-  gfloat $angle, 
-  gfloat $x, 
-  gfloat $y, 
+  CoglQuaternion $quaternion,
+  gfloat $angle,
+  gfloat $x,
+  gfloat $y,
   gfloat $z
 )
   is native(cogl)
@@ -72,8 +74,8 @@ sub cogl_quaternion_init (
 { * }
 
 sub cogl_quaternion_init_from_angle_vector (
-  CoglQuaternion $quaternion, 
-  gfloat $angle, 
+  CoglQuaternion $quaternion,
+  gfloat $angle,
   gfloat $axis3f
 )
   is native(cogl)
@@ -81,7 +83,7 @@ sub cogl_quaternion_init_from_angle_vector (
 { * }
 
 sub cogl_quaternion_init_from_array (
-  CoglQuaternion $quaternion, 
+  CoglQuaternion $quaternion,
   gfloat $array
 )
   is native(cogl)
@@ -89,7 +91,7 @@ sub cogl_quaternion_init_from_array (
 { * }
 
 sub cogl_quaternion_init_from_euler (
-  CoglQuaternion $quaternion, 
+  CoglQuaternion $quaternion,
   CoglEuler $euler
 )
   is native(cogl)
@@ -97,7 +99,7 @@ sub cogl_quaternion_init_from_euler (
 { * }
 
 sub cogl_quaternion_init_from_matrix (
-  CoglQuaternion $quaternion, 
+  CoglQuaternion $quaternion,
   CoglMatrix $matrix
 )
   is native(cogl)
@@ -105,7 +107,7 @@ sub cogl_quaternion_init_from_matrix (
 { * }
 
 sub cogl_quaternion_init_from_quaternion (
-  CoglQuaternion $quaternion, 
+  CoglQuaternion $quaternion,
   CoglQuaternion $src
 )
   is native(cogl)
@@ -113,7 +115,7 @@ sub cogl_quaternion_init_from_quaternion (
 { * }
 
 sub cogl_quaternion_init_from_x_rotation (
-  CoglQuaternion $quaternion, 
+  CoglQuaternion $quaternion,
   gfloat $angle
 )
   is native(cogl)
@@ -121,7 +123,7 @@ sub cogl_quaternion_init_from_x_rotation (
 { * }
 
 sub cogl_quaternion_init_from_y_rotation (
-  CoglQuaternion $quaternion, 
+  CoglQuaternion $quaternion,
   gfloat $angle
 )
   is native(cogl)
@@ -129,7 +131,7 @@ sub cogl_quaternion_init_from_y_rotation (
 { * }
 
 sub cogl_quaternion_init_from_z_rotation (
-  CoglQuaternion $quaternion, 
+  CoglQuaternion $quaternion,
   gfloat $angle
 )
   is native(cogl)
@@ -147,8 +149,8 @@ sub cogl_quaternion_invert (CoglQuaternion $quaternion)
 { * }
 
 sub cogl_quaternion_multiply (
-  CoglQuaternion $result, 
-  CoglQuaternion $left, 
+  CoglQuaternion $result,
+  CoglQuaternion $left,
   CoglQuaternion $right
 )
   is native(cogl)
@@ -156,9 +158,9 @@ sub cogl_quaternion_multiply (
 { * }
 
 sub cogl_quaternion_nlerp (
-  CoglQuaternion $result, 
-  CoglQuaternion $a, 
-  CoglQuaternion $b, 
+  CoglQuaternion $result,
+  CoglQuaternion $a,
+  CoglQuaternion $b,
   gfloat $t
 )
   is native(cogl)
@@ -176,9 +178,9 @@ sub cogl_quaternion_pow (CoglQuaternion $quaternion, gfloat $exponent)
 { * }
 
 sub cogl_quaternion_slerp (
-  CoglQuaternion $result, 
-  CoglQuaternion $a, 
-  CoglQuaternion $b, 
+  CoglQuaternion $result,
+  CoglQuaternion $a,
+  CoglQuaternion $b,
   gfloat $t
 )
   is native(cogl)
@@ -186,11 +188,11 @@ sub cogl_quaternion_slerp (
 { * }
 
 sub cogl_quaternion_squad (
-  CoglQuaternion $result, 
-  CoglQuaternion $prev, 
-  CoglQuaternion $a, 
-  CoglQuaternion $b, 
-  CoglQuaternion $next, 
+  CoglQuaternion $result,
+  CoglQuaternion $prev,
+  CoglQuaternion $a,
+  CoglQuaternion $b,
+  CoglQuaternion $next,
   gfloat $t
 )
   is native(cogl)

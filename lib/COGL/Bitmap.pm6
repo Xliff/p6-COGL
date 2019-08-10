@@ -1,5 +1,7 @@
 use v6.c;
 
+use NativeCall;
+
 use GTK::Raw::Utils;
 
 use GTK::Compat::Types;
@@ -8,34 +10,34 @@ use COGL::Raw::Bitmap;
 
 class COGL::Bitmap {
   has CoglBitmap $!cbm;
-  
+
   # does COGL::Object?
   submethod BUILD (:$bitmap) {
     $!cbm = $bitmap;
   }
-  
+
   method new_for_data (
-    Int() $width, 
-    Int() $height, 
-    Int() $format, 
-    Int() $rowstride, 
+    Int() $width,
+    Int() $height,
+    Int() $format,
+    Int() $rowstride,
     CArray[uint8] $data
   ) {
-    my gint ($w, $h, $r) = ($width, $height, $rowstride)
+    my gint ($w, $h, $r) = ($width, $height, $rowstride);
     my guint $f = resolve-uint($format);
-    self.bless( 
-      bitmap => cogl_bitmap_new_for_data($!cbm, $w, $h, $f, $r $data)
+    self.bless(
+      bitmap => cogl_bitmap_new_for_data($!cbm, $w, $h, $f, $r, $data)
     );
-  } 
+  }
 
   method new_from_buffer (
-    Int() $format, 
-    Int() $width, 
-    Int() $height, 
-    Int() $rowstride, 
+    Int() $format,
+    Int() $width,
+    Int() $height,
+    Int() $rowstride,
     Int() $offset
   ) {
-    my gint ($w, $h, $r, $o) = ($width, $height, $rowstride, $offset)
+    my gint ($w, $h, $r, $o) = ($width, $height, $rowstride, $offset);
     my guint $f = resolve-uint($format);
     self.bless(
       bitmap => cogl_bitmap_new_from_buffer($!cbm, $f, $w, $h, $r, $o)
@@ -89,5 +91,5 @@ class COGL::Bitmap {
   method get_width {
     cogl_bitmap_get_width($!cbm);
   }
-  
+
 }

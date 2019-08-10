@@ -6,12 +6,14 @@ use GTK::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::Context;
 
+use COGL::Object;
+
 our subset ContextAncestry is export of Mu
   where CoglContext | CoglObject;
 
 class COGL::Context is COGL::Object {
   has CoglContext $!cc;
-  
+
   submethod BUILD (:$context) {
     given $context {
       when ContextAncestry {
@@ -21,7 +23,7 @@ class COGL::Context is COGL::Object {
             $to-parent = cast(CoglObject, $_);
             $_;
           }
-          
+
           default {
             $to-parent = $_;
             cast(CoglContext, $_);
@@ -29,20 +31,20 @@ class COGL::Context is COGL::Object {
         }
         self.setObject($to-parent);
       }
-      
+
       when COGL::Context {
       }
-      
+
       default {
       }
-    }      
+    }
   }
-  
+
   multi method new {
     samewith(CoglDisplay);
   }
   multi method new (
-    CoglDisplay() $display, 
+    CoglDisplay() $display,
     CArray[Pointer[CoglError]] $error = gerror
   ) {
     clear_error;
@@ -52,10 +54,10 @@ class COGL::Context is COGL::Object {
   }
 
   method cogl_foreach_feature (
-    CoglFeatureCallback $callback, 
+    CoglFeatureCallback $callback,
     Pointer $user_data = Pointer
-  ) 
-    is also<cogl-foreach-feature> 
+  )
+    is also<cogl-foreach-feature>
   {
     cogl_foreach_feature($!cc, $callback, $user_data);
   }

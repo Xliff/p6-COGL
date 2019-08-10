@@ -1,37 +1,39 @@
 use v6.c;
 
+use NativeCall;
+
 use GTK::Compat::Types;
 use COGL::Raw::Types;
 
 unit package COGL::Raw::Buffer;
 
-sub cogl_is_buffer (void $object)
+sub cogl_is_buffer (Pointer $object)
   returns CoglBool
   is native(cogl)
   is export
 { * }
 
 sub cogl_buffer_get_size (CoglBuffer $buffer)
-  returns int
+  returns gint
   is native(cogl)
   is export
 { * }
 
 sub cogl_buffer_map (
-  CoglBuffer $buffer, 
-  CoglBufferAccess $access, 
-  CoglBufferMapHint $hints
+  CoglBuffer $buffer,
+  guint $access, # CoglBufferAccess $access,
+  guint $hints   # CoglBufferMapHint $hints
 )
   is native(cogl)
   is export
 { * }
 
 sub cogl_buffer_map_range (
-  CoglBuffer $buffer, 
-  size_t $offset, 
-  size_t $size, 
-  CoglBufferAccess $access, 
-  CoglBufferMapHint $hints, 
+  CoglBuffer $buffer,
+  size_t $offset,
+  size_t $size,
+  guint $access,   # CoglBufferAccess $access,
+  guint $hints,    # CoglBufferMapHint $hints
   CArray[Pointer[CoglError]]
 )
   is native(cogl)
@@ -39,9 +41,9 @@ sub cogl_buffer_map_range (
 { * }
 
 sub cogl_buffer_set_data (
-  CoglBuffer $buffer, 
-  size_t $offset, 
-  Pointer $data, 
+  CoglBuffer $buffer,
+  size_t $offset,
+  Pointer $data,
   size_t $size
 )
   returns CoglBool
@@ -55,14 +57,14 @@ sub cogl_buffer_unmap (CoglBuffer $buffer)
 { * }
 
 sub cogl_buffer_get_update_hint (CoglBuffer $buffer)
-  returns CoglBufferUpdateHint
+  returns guint # CoglBufferUpdateHint
   is native(cogl)
   is export
 { * }
 
 sub cogl_buffer_set_update_hint (
-  CoglBuffer $buffer, 
-  CoglBufferUpdateHint $hint
+  CoglBuffer $buffer,
+  guint $hint # CoglBufferUpdateHint $hint
 )
   is native(cogl)
   is export

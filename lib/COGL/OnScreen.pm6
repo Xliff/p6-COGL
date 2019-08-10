@@ -1,19 +1,20 @@
 use v6.c;
 
 use GTK::Compat::Types;
+use COGL::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::OnScreen;
 
-use COGL::Framebuffer;
+use COGL::FrameBuffer;
 
 our subset OnscreenAncestry of Mu
   where CoglOnscreen | FramebufferAncestry;
 
-class COGL::OnScreen is COGL::Framebuffer {
+class COGL::OnScreen is COGL::FrameBuffer {
   has CoglOnScreen $!co;
-  
+
   submethod BUILD (:$onscreen) {
-    
+
     given $onscreen {
       when OnscreenAncestry {
         my $to-parent;
@@ -29,21 +30,21 @@ class COGL::OnScreen is COGL::Framebuffer {
         }
         self.setFramebuffer($to-parent);
       }
-      
+
       when COGL::OnScreen {
       }
-      
+
       default {
       }
-      
+
     }
-    
+
   }
-  
+
   method new (CoglContext $context, gint $width, gint $height) {
     self.bless( onscreen => cogl_onscreen_new($cotext, $width, $height) )
   }
-  
+
   method resizable is rw {
     Proxy.new(
       FETCH => sub ($) {
@@ -54,33 +55,33 @@ class COGL::OnScreen is COGL::Framebuffer {
       }
     );
   }
-  
+
   method add_dirty_callback (
-    CoglOnscreenDirtyCallback $callback, 
-    gpointer $user_data, 
+    CoglOnscreenDirtyCallback $callback,
+    gpointer $user_data,
     CoglUserDataDestroyCallback $destroy
   ) {
     cogl_onscreen_add_dirty_callback($!co, $callback, $user_data, $destroy);
   }
 
   method add_frame_callback (
-    CoglFrameCallback $callback, 
-    gpointer $user_data, 
+    CoglFrameCallback $callback,
+    gpointer $user_data,
     CoglUserDataDestroyCallback $destroy
   ) {
     cogl_onscreen_add_frame_callback($!co, $callback, $user_data, $destroy);
   }
 
   method add_resize_callback (
-    CoglOnscreenResizeCallback $callback, 
-    gpointer $user_data, 
+    CoglOnscreenResizeCallback $callback,
+    gpointer $user_data,
     CoglUserDataDestroyCallback $destroy
   ) {
     cogl_onscreen_add_resize_callback($!co, $callback, $user_data, $destroy);
   }
 
   method add_swap_buffers_callback (
-    CoglSwapBuffersNotify $callback, 
+    CoglSwapBuffersNotify $callback,
     gpointer $user_data
   ) {
     cogl_onscreen_add_swap_buffers_callback($!co, $callback, $user_data);
@@ -111,9 +112,9 @@ class COGL::OnScreen is COGL::Framebuffer {
   }
 
   method wayland_resize (
-    gint $width, 
-    gint $height, 
-    gint $offset_x, 
+    gint $width,
+    gint $height,
+    gint $offset_x,
     gint $offset_y
   ) {
     cogl_wayland_onscreen_resize($!co, $width, $height, $offset_x, $offset_y);
@@ -136,8 +137,8 @@ class COGL::OnScreen is COGL::Framebuffer {
   }
 
   method x11_set_foreign_window_xid (
-    uint32_t $xid, 
-    CoglOnscreenX11MaskCallback $update, 
+    uint32_t $xid,
+    CoglOnscreenX11MaskCallback $update,
     gpointer $user_data
   ) {
     cogl_x11_onscreen_set_foreign_window_xid($!co, $xid, $update, $user_data);
@@ -198,5 +199,5 @@ class COGL::OnScreen is COGL::Framebuffer {
   method swap_region (gint $rectangles, gint $n_rectangles) {
     cogl_onscreen_swap_region($!co, $rectangles, $n_rectangles);
   }
-  
+
 }

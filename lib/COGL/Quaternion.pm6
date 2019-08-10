@@ -6,10 +6,10 @@ use COGL::Raw::Quaternion;
 
 class COGL::Quaternion {
   has CoglQuaternion $!cq;
-  
+
   method COGL::Raw::Types::CoglQuaternion
   { $!cq }
-  
+
   method identity ( COGL::Quaternion:U: ) {
     cogl_get_static_identity_quaternion($!cq);
   }
@@ -22,11 +22,11 @@ class COGL::Quaternion {
     cogl_quaternion_copy($!cq);
   }
 
-  method dot_product (CoglQuaternion $b) {
+  method dot_product (CoglQuaternion() $b) {
     cogl_quaternion_dot_product($!cq, $b);
   }
 
-  method equal (void $v2) {
+  method equal (CoglQuaternion() $v2) {
     cogl_quaternion_equal($!cq, $v2);
   }
 
@@ -58,15 +58,15 @@ class COGL::Quaternion {
     cogl_quaternion_init_from_array($!cq, $array);
   }
 
-  method init_from_euler (CoglEuler $euler) {
+  method init_from_euler (CoglEuler() $euler) {
     cogl_quaternion_init_from_euler($!cq, $euler);
   }
 
-  method init_from_matrix (CoglMatrix $matrix) {
+  method init_from_matrix (CoglMatrix() $matrix) {
     cogl_quaternion_init_from_matrix($!cq, $matrix);
   }
 
-  method init_from_quaternion (CoglQuaternion $src) {
+  method init_from_quaternion (CoglQuaternion() $src) {
     cogl_quaternion_init_from_quaternion($!cq, $src);
   }
 
@@ -90,11 +90,18 @@ class COGL::Quaternion {
     cogl_quaternion_invert($!cq);
   }
 
-  method multiply (CoglQuaternion $left, CoglQuaternion $right) {
+  method multiply (
+    CoglQuaternion() $left,
+    CoglQuaternion() $right
+  ) {
     cogl_quaternion_multiply($!cq, $left, $right);
   }
 
-  method nlerp (CoglQuaternion $a, CoglQuaternion $b, gfloat $t) {
+  method nlerp (
+    CoglQuaternion() $a,
+    CoglQuaternion() $b,
+    gfloat $t
+  ) {
     cogl_quaternion_nlerp($!cq, $a, $b, $t);
   }
 
@@ -106,12 +113,22 @@ class COGL::Quaternion {
     cogl_quaternion_pow($!cq, $exponent);
   }
 
-  method slerp (CoglQuaternion $a, CoglQuaternion $b, gfloat $t) {
+  method slerp (
+    CoglQuaternion() $a,
+    CoglQuaternion() $b,
+    gfloat $t
+  ) {
     cogl_quaternion_slerp($!cq, $a, $b, $t);
   }
 
-  method squad (CoglQuaternion $prev, CoglQuaternion $a, CoglQuaternion $b, CoglQuaternion $next, gfloat $t) {
+  method squad (
+    CoglQuaternion() $prev,
+    CoglQuaternion() $a,
+    CoglQuaternion() $b,
+    CoglQuaternion() $next,
+    gfloat $t
+  ) {
     cogl_quaternion_squad($!cq, $prev, $a, $b, $next, $t);
   }
-  
+
 }
