@@ -9,8 +9,11 @@ unit package COGL::Raw::Types;
 
 class CoglAttribute       is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglAttributeBuffer is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglBitmap          is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglBuffer          is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglContext         is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglDisplay         is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglEuler           is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglFramebuffer     is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglHandle          is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglMaterial        is repr('CPointer') is export does GTK::Roles::Pointers { }
@@ -18,12 +21,20 @@ class CoglObject          is repr('CPointer') is export does GTK::Roles::Pointer
 class CoglOffscreen       is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglOnScreen        is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglPipeline        is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglPrimative       is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglPrimitive       is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglQuaternion      is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglSnippet         is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglTexture         is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglTexture2D       is repr('CPointer') is export does GTK::Roles::Pointers { }
 
 constant CoglBool      is export := gint;
 constant CoglTexture2d is export := CoglTexture2D;
+
+class CoglPollFD is repr<CStruct>        also does GTK::Roles::Pointers is export {
+  has gint  $.fd      is rw;
+  has int16 $.events  is rw;
+  has int16 $.revents is rw;
+}
 
 class CoglVertexP2 is repr<CStruct>      also does GTK::Roles::Pointers is export {
   has gfloat $.x is rw;

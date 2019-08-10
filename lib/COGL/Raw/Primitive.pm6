@@ -30,7 +30,7 @@ sub cogl_primitive_draw (
 
 sub cogl_primitive_foreach_attribute (
   CoglPrimitive $primitive, 
-  CoglPrimitiveAttributeCallback $callback, 
+  &callback (CoglPrimative, CoglAttribute, gpointer --> CoglBool), 
   Pointer $user_data
 )
   is native(cogl)
