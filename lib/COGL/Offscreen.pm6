@@ -44,7 +44,7 @@ class COGL::Offscreen is COGL::Object {
     is DEPRECATED<COGL::Offscreen.new_with_texture>
     is also<new-to-texture> 
   {
-    self.bless( offscreen => cogl_offscreen_new_to_texture($texture) );
+    self.bless( offscreen => cogl_offscreen_new_to_texture($texture) );  
   }
 
   method new_with_texture (CoglTexture() $texture) 
