@@ -1,21 +1,46 @@
 use v6.c;
 
+use Method::Also;
+
 use NativeCall;
 
 use GTK::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::Texture;
 
-class COGL::Texture {
+use COGL::Object;
+
+our subset TextureAncestry is export of Mu
+  where CoglTexture | CoglObject;
+
+class COGL::Texture is COGL::Object {
   has CoglTexture $!ct;
+  
+  method setTexture (TextureAncestry $_) {
+    my $to-parent;
+    $!ct = do {
+      when CoglTexture {
+        $to-parent = cast(CoglObject, $_);
+        $_;
+      }
+      
+      default {
+        $to-parent = $_;
+        cast(CoglTexture, $_)l
+      }
+    }
+    self.setObject($to-parent);
+  }
+    
   
   method components is rw {
     Proxy.new(
       FETCH => sub ($) {
-        cogl_texture_get_components($!ct);
+        CoglTextureComponents( cogl_texture_get_components($!ct) );
       },
-      STORE => sub ($, $components is copy) {
-        cogl_texture_set_components($!ct, $components);
+      STORE => sub ($, Int() $components is copy) {
+        my guint $c = resolve-uint($components);
+        cogl_texture_set_components($!ct, $c);
       }
     );
   }
@@ -23,10 +48,11 @@ class COGL::Texture {
   method premultiplied is rw {
     Proxy.new(
       FETCH => sub ($) {
-        cogl_texture_get_premultiplied($!ct);
+        so cogl_texture_get_premultiplied($!ct);
       },
-      STORE => sub ($, $premultiplied is copy) {
-        cogl_texture_set_premultiplied($!ct, $premultiplied);
+      STORE => sub ($, Int() $premultiplied is copy) {
+        my gboolean $p = resolve-bool($premultiplied);
+        cogl_texture_set_premultiplied($!ct, $p);
       }
     );
   }
@@ -35,42 +61,51 @@ class COGL::Texture {
     cogl_texture_allocate($!ct, $error);
   }
 
-  method cogl_is_texture {
-    cogl_is_texture($!ct);
+  method is_texture is also<is-texture> {
+    so cogl_is_texture($!ct);
   }
 
-  method error_quark {
-    cogl_texture_error_quark($!ct);
+  method error_quark is also<error-quark> {
+    cogl_texture_error_quark();
   }
 
-  method get_gtype {
-    cogl_texture_get_gtype($!ct);
+  method get_gtype is also<get-gtype> {
+    state ($n, $t);
+    unstable_get_type( self.^name, &cogl_texture_get_gtype, $n, $t );
   }
 
-  method get_height {
+  method get_height is also<get-height> {
     cogl_texture_get_height($!ct);
   }
 
-  method get_max_waste {
+  method get_max_waste is also<get-max-waste> {
     cogl_texture_get_max_waste($!ct);
   }
 
-  method get_width {
+  method get_width is also<get-width> {
     cogl_texture_get_width($!ct);
   }
 
-  method is_sliced {
-    cogl_texture_is_sliced($!ct);
+  method is_sliced is also<is-sliced> {
+    so cogl_texture_is_sliced($!ct);
   }
 
   method set_data (
-    CoglPixelFormat $format, 
-    gint $rowstride, 
-    uint8_t $data, 
-    gint $level, 
+    Int() $format, 
+    Int() $rowstride, 
+    CArray[uint8] $data, 
+    Int() $level, 
     CArray[Pointer[CoglError]] $error = gerror
-  ) {
-    cogl_texture_set_data($!ct, $format, $rowstride, $data, $level, $error);
+  ) 
+    is also<set-data> 
+  {
+    my guint $f = resolve-uint($format);
+    my gint ($r, $l) = resolve-int($rowstride, $level);
+    
+    clear_error;
+    my $rc = cogl_texture_set_data($!ct, $f, $r, $data, $l, $error);
+    set_error($error);
+    so $rc;
   }
 
 }
