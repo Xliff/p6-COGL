@@ -156,16 +156,17 @@ class COGL::Primitive is COGL::Object {
   }
 
   method new_with_attributes (
-    CoglContext() $context,
+    Int() $mode,
     Int() $n_vertices,
     CArray[CoglAttribute] $attributes,
     Int() $n_attributes
   )
     is also<new-with-attributes>
   {
+    my guint $m = resolve-uint($mode);
     my gint ($nv, $na) = resolve-int($n_vertices, $n_attributes);
 
-    cogl_primitive_new_with_attributes($context, $nv, $attributes, $na);
+    cogl_primitive_new_with_attributes($m, $nv, $attributes, $na);
   }
 
   method is_primitive (COGL::Primitive:U: gpointer $candidate)

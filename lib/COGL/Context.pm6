@@ -43,6 +43,10 @@ class COGL::Context is COGL::Object {
     }
   }
 
+  method COGL::Raw::Types::CoglContext
+    is also<CoglContext>
+  { $!cc }
+
   multi method new {
     samewith(CoglDisplay);
   }

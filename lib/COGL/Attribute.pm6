@@ -43,6 +43,10 @@ class COGL::Attribute is COGL::Object {
     }
   }
 
+  method COGL::Raw::Types::CoglAttribute
+    is also<CoglAttribute>
+  { $!ca }
+
   method new (
     CoglAttributeBuffer() $ab,
     Str() $name,

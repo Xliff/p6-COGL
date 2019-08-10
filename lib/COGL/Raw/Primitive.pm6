@@ -158,7 +158,7 @@ sub cogl_primitive_new_p3t2c4 (
 sub cogl_primitive_new_with_attributes (
   guint $mode, # CoglVerticesMode $mode,
   gint $n_vertices,
-  CoglAttribute $attributes,
+  CArray[CoglAttribute] $attributes,
   gint $n_attributes
 )
   returns CoglPrimitive

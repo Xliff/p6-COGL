@@ -2,6 +2,8 @@ use v6.c;
 
 use NativeCall;
 
+use GTK::Raw::Utils;
+
 use GTK::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::Buffer;
@@ -12,10 +14,11 @@ role COGL::Roles::Buffer {
   method update_hint is rw {
     Proxy.new(
       FETCH => sub ($) {
-        cogl_buffer_get_update_hint($!cb);
+        CoglBufferUpdateHint( cogl_buffer_get_update_hint($!cb) );
       },
-      STORE => sub ($, $hint is copy) {
-        cogl_buffer_set_update_hint($!cb, $hint);
+      STORE => sub ($, Int() $hint is copy) {
+        my guint $h = resolve-uint($hint);
+        cogl_buffer_set_update_hint($!cb, $h);
       }
     );
   }

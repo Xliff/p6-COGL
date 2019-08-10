@@ -10,7 +10,7 @@ unit package COGL::Raw::Types;
 # Number of times I've had to force compile the whole project.
 constant forced = 0;
 
-constant cogl is export := 'cogl',v0;
+constant cogl is export := 'cogl';
 
 constant CoglBool      is export := int32;
 constant CoglError     is export := GError;
@@ -35,6 +35,7 @@ class CoglBitmap           is repr('CPointer') is export does GTK::Roles::Pointe
 class CoglBuffer           is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglColor            is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglContext          is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglDepthState       is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglDisplay          is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglEuler            is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglFrameBuffer      is repr('CPointer') is export does GTK::Roles::Pointers { }

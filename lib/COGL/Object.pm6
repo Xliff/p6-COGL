@@ -41,9 +41,15 @@ class COGL::Object {
     cogl_object_get_user_data($!co, $key);
   }
 
-  method ref {
-    cogl_object_ref($!co);
+  multi method ref {
+    COGL::Object.ref($!co);
     self;
+  }
+  multi method ref (COGL::Object:U: $obj) {
+    die '$obj must be a CPointer!' unless $obj.REPR eq 'CPointer';
+    my $o = $obj;
+    $o = cast(gpointer, $o) unless $o ~~ gpointer;
+    cogl_object_ref($o);
   }
 
   method set_user_data (
@@ -56,8 +62,14 @@ class COGL::Object {
     cogl_object_set_user_data($!co, $key, $user_data, $destroy);
   }
 
-  method unref {
-    cogl_object_unref($!co);
+  multi method unref {
+    COGL::Object.unref($!co);
+  }
+  multi method unref (COGL::Object:U: $obj) {
+    die '$obj must be a CPointer!' unless $obj.REPR eq 'CPointer';
+    my $o = $obj;
+    $o = cast(gpointer, $obj) unless $o ~~ gpointer;
+    cogl_object_unref($o);
   }
 
 }

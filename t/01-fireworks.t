@@ -7,7 +7,15 @@ use GTK::Compat::Types;
 use GTK::Compat::Timer;
 
 use COGL::Raw::Types;
+
+use COGL::Attribute;
+use COGL::AttributeBuffer;
+use COGL::Context;
+use COGL::Pipeline;
+use COGL::Primitive;
 use COGL::Texture2d;
+
+use GTK::Compat::Roles::TypedBuffer;
 
 constant N_FIREWORKS    = 32;
 constant N_SPARKS       = N_FIREWORKS * 32;
@@ -158,8 +166,8 @@ sub paint (%data) {
 
   %data<attribute-buffer>.set_data(
     0,
-    %data<sparks>,
-    nativesizeof(%data<sparks>),
+    %data<sparks>.p,
+    %data<sparks>.bufferSize,
   );
 
   %data<fb>.clear4f(COGL_BUFFER_BIT_COLOR, 0, 0, 0, 1);
@@ -169,11 +177,11 @@ sub paint (%data) {
 
 sub create-primitive (%data) {
   %data<attribute-buffer> = COGL::AttributeBuffer.new_with_size(
-    %data<context>, nativesizeof(%data<sparks>)
+    %data<context>, %data<sparks>.bufferSize
   );
-  %data<attribute-buffer>.set_update_hint(COGL_BUFFER_UPDATE_HINT_DYNAMIC);
+  %data<attribute-buffer>.update_hint = COGL_BUFFER_UPDATE_HINT_DYNAMIC;
 
-  ( my $attributes = CArray[CoglAttribute].new ).allocate(2);
+  my $attributes = CArray[CoglAttribute].new;
   $attributes[0] = COGL::Attribute.new(
     %data<attribute-buffer>,
     'cogl_position_in',
@@ -181,7 +189,7 @@ sub create-primitive (%data) {
     0,                                # Position of 'x' in Spark
     2,                                # Number of components in position: (x, y)
     COGL_ATTRIBUTE_TYPE_FLOAT         # Type of each component
-  );
+  ).CoglAttribute;
 
   $attributes[1] = COGL::Attribute.new(
     %data<attribute-buffer>,
@@ -190,28 +198,35 @@ sub create-primitive (%data) {
     8,                                # Position of 'color' in Spark
     4,                                # Number of components in color: (r, g, b, a)
     COGL_ATTRIBUTE_TYPE_UNSIGNED_BYTE  # Type of each component
-  );
+  ).CoglAttribute;
 
-  %data<primative> = COGL::Primative.new_with_attributes(
+  %data<primative> = COGL::Primitive.new_with_attributes(
     COGL_VERTICES_MODE_POINTS,
     N_SPARKS,
     $attributes,
     2
   );
 
-  $attributes[$_].unref for (0, 1);
+  COGL::Object.unref( $attributes[$_] ) for (0, 1);
 }
 
 sub MAIN {
   my %data;
 
+  %data<fireworks> = GTK::Compat::Roles::TypedBuffer[Firework].new(
+    size => N_FIREWORKS
+  );
+  %data<sparks>    = GTK::Compat::Roles::TypedBuffer[Spark].new(
+    size => N_SPARKS
+  );
+
   %data<context> = COGL::Context.new;
-  create-primitive(%data)
+  create-primitive(%data);
 
   %data<pipeline> = COGL::Pipeline.new(%data<context>);
   %data<last-spark-time> = GTK::Compat::Timer.new;
   %data<next-spark-num> = 0;
-  %data<pipeline>.set_point_size(TEXTURE_SIZE);
+  %data<pipeline>.point_size = TEXTURE_SIZE;
 
   my $tex = generate-round-texture(%data<context>);
   %data<pipeline>.set_layer_texture(0, $tex);
