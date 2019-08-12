@@ -1,14 +1,16 @@
 use v6.c;
 
+use NativeCall;
+
 use GTK::Compat::Types;
 use COGL::Raw::Types;
 
 unit package COGL::Raw::Bitmap;
 
 # sub cogl_android_bitmap_new_from_asset (
-#   CoglContext $context, 
-#   AAssetManager $manager, 
-#   Str $filename, 
+#   CoglContext $context,
+#   AAssetManager $manager,
+#   Str $filename,
 #   CoglError $error
 # )
 #   returns CoglBitmap
@@ -16,14 +18,14 @@ unit package COGL::Raw::Bitmap;
 #   is export
 # { * }
 
-sub cogl_is_bitmap (void $object)
+sub cogl_is_bitmap (Pointer $object)
   returns CoglBool
   is native(cogl)
   is export
 { * }
 
 sub cogl_bitmap_error_quark ()
-  returns uint32_t
+  returns uint32
   is native(cogl)
   is export
 { * }
@@ -35,7 +37,7 @@ sub cogl_bitmap_get_buffer (CoglBitmap $bitmap)
 { * }
 
 sub cogl_bitmap_get_format (CoglBitmap $bitmap)
-  returns CoglPixelFormat
+  returns guint # CoglPixelFormat
   is native(cogl)
   is export
 { * }
@@ -47,13 +49,13 @@ sub cogl_bitmap_get_gtype ()
 { * }
 
 sub cogl_bitmap_get_height (CoglBitmap $bitmap)
-  returns int
+  returns gint
   is native(cogl)
   is export
 { * }
 
 sub cogl_bitmap_get_rowstride (CoglBitmap $bitmap)
-  returns int
+  returns gint
   is native(cogl)
   is export
 { * }
@@ -65,17 +67,17 @@ sub cogl_bitmap_get_size_from_file (Str $filename, gint $width, gint $height)
 { * }
 
 sub cogl_bitmap_get_width (CoglBitmap $bitmap)
-  returns int
+  returns gint
   is native(cogl)
   is export
 { * }
 
 sub cogl_bitmap_new_for_data (
-  CoglContext $context, 
-  gint $width, 
-  gint $height, 
-  CoglPixelFormat $format, 
-  gint $rowstride, 
+  CoglContext $context,
+  gint $width,
+  gint $height,
+  guint $format, # CoglPixelFormat $format,
+  gint $rowstride,
   CArray[uint8] $data
 )
   returns CoglBitmap
@@ -84,11 +86,11 @@ sub cogl_bitmap_new_for_data (
 { * }
 
 sub cogl_bitmap_new_from_buffer (
-  CoglBuffer $buffer, 
-  uint8 $format, # CoglPixelFormat $format, 
-  gint $width, 
-  gint $height, 
-  gint $rowstride, 
+  CoglBuffer $buffer,
+  uint8 $format, # CoglPixelFormat $format,
+  gint $width,
+  gint $height,
+  gint $rowstride,
   gint $offset
 )
   returns CoglBitmap
@@ -97,7 +99,7 @@ sub cogl_bitmap_new_from_buffer (
 { * }
 
 sub cogl_bitmap_new_from_file (
-  Str $filename, 
+  Str $filename,
   CArray[Pointer[CoglError]] $error
 )
   returns CoglBitmap

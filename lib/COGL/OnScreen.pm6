@@ -1,104 +1,115 @@
 use v6.c;
 
+use NativeCall;
+
+use GTK::Raw::Utils;
+
 use GTK::Compat::Types;
+use COGL::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::OnScreen;
 
-use COGL::Framebuffer;
+use COGL::FrameBuffer;
 
 our subset OnscreenAncestry of Mu
-  where CoglOnscreen | FramebufferAncestry;
+  where CoglOnscreen | FrameBufferAncestry;
 
-class COGL::OnScreen is COGL::Framebuffer {
-  has CoglOnScreen $!co;
-  
+class COGL::OnScreen is COGL::FrameBuffer {
+  has CoglOnscreen $!co;
+
   submethod BUILD (:$onscreen) {
-    
+
     given $onscreen {
       when OnscreenAncestry {
         my $to-parent;
         $!co = do {
-          when CoglOnScreen {
+          when CoglOnscreen {
             $to-parent = cast(CoglFrameBuffer, $_);
             $_;
           }
           default {
             $to-parent = $_;
-            cast(CoglOnScreen, $_);
+            cast(CoglOnscreen, $_);
           }
         }
-        self.setFramebuffer($to-parent);
+        self.setFrameBuffer($to-parent);
       }
-      
+
       when COGL::OnScreen {
       }
-      
+
       default {
       }
-      
+
     }
-    
+
   }
-  
-  method new (CoglContext $context, gint $width, gint $height) {
-    self.bless( onscreen => cogl_onscreen_new($cotext, $width, $height) )
+
+  method new (CoglContext() $context, Int() $width, Int() $height) {
+    my gint ($w, $h) = resolve-int($width, $height);
+    self.bless( onscreen => cogl_onscreen_new($context, $w, $h) )
   }
-  
+
   method resizable is rw {
     Proxy.new(
       FETCH => sub ($) {
-        cogl_onscreen_get_resizable($!co);
+        so cogl_onscreen_get_resizable($!co);
       },
-      STORE => sub ($, $resizable is copy) {
-        cogl_onscreen_set_resizable($!co, $resizable);
+      STORE => sub ($, Int() $resizable is copy) {
+        my gboolean $r = resolve-bool($resizable);
+        cogl_onscreen_set_resizable($!co, $r);
       }
     );
   }
-  
+
   method add_dirty_callback (
-    CoglOnscreenDirtyCallback $callback, 
-    gpointer $user_data, 
-    CoglUserDataDestroyCallback $destroy
+    &callback,
+    gpointer $user_data                  = gpointer,
+    CoglUserDataDestroyCallback $destroy = gpointer
   ) {
-    cogl_onscreen_add_dirty_callback($!co, $callback, $user_data, $destroy);
+    cogl_onscreen_add_dirty_callback($!co, &callback, $user_data, $destroy);
   }
 
   method add_frame_callback (
-    CoglFrameCallback $callback, 
-    gpointer $user_data, 
-    CoglUserDataDestroyCallback $destroy
+    &callback,
+    gpointer $user_data                  = gpointer,
+    CoglUserDataDestroyCallback $destroy = gpointer
   ) {
-    cogl_onscreen_add_frame_callback($!co, $callback, $user_data, $destroy);
+    cogl_onscreen_add_frame_callback($!co, &callback, $user_data, $destroy);
   }
 
   method add_resize_callback (
-    CoglOnscreenResizeCallback $callback, 
-    gpointer $user_data, 
-    CoglUserDataDestroyCallback $destroy
+    &callback,
+    gpointer $user_data                  = gpointer,
+    CoglUserDataDestroyCallback $destroy = gpointer
   ) {
-    cogl_onscreen_add_resize_callback($!co, $callback, $user_data, $destroy);
+    cogl_onscreen_add_resize_callback($!co, &callback, $user_data, $destroy);
   }
 
-  method add_swap_buffers_callback (
-    CoglSwapBuffersNotify $callback, 
-    gpointer $user_data
-  ) {
-    cogl_onscreen_add_swap_buffers_callback($!co, $callback, $user_data);
-  }
+  # method add_swap_buffers_callback (
+  #   &callback,
+  #   gpointer $user_data
+  # ) 
+  #   is DEPRECATED<COGL::OnScreen.add_frame_callback>
+  # {
+  #   cogl_onscreen_add_swap_buffers_callback($!co, &callback, $user_data);
+  # }
 
   method frame_closure_get_gtype {
-    cogl_frame_closure_get_gtype($!co);
+    state ($n, $t);
+    unstable_get_type( self.^name, &cogl_frame_closure_get_gtype, $n , $t );
   }
 
-  method is_onscreen {
-    cogl_is_onscreen($!co);
+  method is_onscreen (COGL::OnScreen:U: gpointer $candidate) {
+    cogl_is_onscreen($candidate);
   }
 
   method mir_get_surface {
     cogl_mir_onscreen_get_surface($!co);
   }
 
-  method mir_resize (gint $width, gint $height) {
+  method mir_resize (Int() $width, Int() $height) {
+    my gint ($w, $h) = resolve-int($width, $height);
     cogl_mir_onscreen_resize($!co, $width, $height);
   }
 
@@ -111,12 +122,15 @@ class COGL::OnScreen is COGL::Framebuffer {
   }
 
   method wayland_resize (
-    gint $width, 
-    gint $height, 
-    gint $offset_x, 
-    gint $offset_y
+    Int() $width,
+    Int() $height,
+    Int() $offset_x,
+    Int() $offset_y
   ) {
-    cogl_wayland_onscreen_resize($!co, $width, $height, $offset_x, $offset_y);
+    my gint ($w, $h, $ox, $oy) = 
+      resolve-int($width, $height, $offset_x, $offset_y);
+      
+    cogl_wayland_onscreen_resize($!co, $w, $h, $ox, $oy);
   }
 
   method win32_get_window {
@@ -136,15 +150,22 @@ class COGL::OnScreen is COGL::Framebuffer {
   }
 
   method x11_set_foreign_window_xid (
-    uint32_t $xid, 
-    CoglOnscreenX11MaskCallback $update, 
-    gpointer $user_data
+    Int() $xid,
+    CoglOnscreenX11MaskCallback $update,
+    gpointer $user_data = gpointer
   ) {
-    cogl_x11_onscreen_set_foreign_window_xid($!co, $xid, $update, $user_data);
+    my $xxid = resolve-uint($xid);
+    cogl_x11_onscreen_set_foreign_window_xid($!co, $xxid, $update, $user_data);
   }
 
   method dirty_closure_get_gtype {
-    cogl_onscreen_dirty_closure_get_gtype($!co);
+    state ($n, $t);
+    unstable_get_type(
+      self.^name,
+      &cogl_onscreen_dirty_closure_get_gtype,
+      $n,
+      $t
+    );
   }
 
   method get_buffer_age {
@@ -156,7 +177,8 @@ class COGL::OnScreen is COGL::Framebuffer {
   }
 
   method get_gtype {
-    cogl_onscreen_get_gtype($!co);
+    state ($n, $t);
+    unstable_get_type( self.^name, &cogl_onscreen_get_gtype, $n, $t );
   }
 
   method hide {
@@ -176,11 +198,18 @@ class COGL::OnScreen is COGL::Framebuffer {
   }
 
   method resize_closure_get_gtype {
-    cogl_onscreen_resize_closure_get_gtype($!co);
+    state ($n, $t);
+    unstable_get_type(
+      self.^name,
+      &cogl_onscreen_resize_closure_get_gtype,
+      $n,
+      $t
+    );
   }
 
-  method set_swap_throttled (CoglBool $throttled) {
-    cogl_onscreen_set_swap_throttled($!co, $throttled);
+  method set_swap_throttled (Int() $throttled) {
+    my gboolean $t = resolve-bool($throttled);
+    cogl_onscreen_set_swap_throttled($!co, $t);
   }
 
   method show {
@@ -191,12 +220,14 @@ class COGL::OnScreen is COGL::Framebuffer {
     cogl_onscreen_swap_buffers($!co);
   }
 
-  method swap_buffers_with_damage (gint $rectangles, gint $n_rectangles) {
+  method swap_buffers_with_damage (Int() $rectangles, Int() $n_rectangles) {
+    my gint ($r, $nr) = ($rectangles, $n_rectangles);
+    
     cogl_onscreen_swap_buffers_with_damage($!co, $rectangles, $n_rectangles);
   }
 
-  method swap_region (gint $rectangles, gint $n_rectangles) {
+  method swap_region (Int() $rectangles, Int() $n_rectangles) {
     cogl_onscreen_swap_region($!co, $rectangles, $n_rectangles);
   }
-  
+
 }

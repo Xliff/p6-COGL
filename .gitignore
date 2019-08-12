@@ -1,2 +1,6 @@
 scripts/
 *.bak
+.touch
+LastBuildResults
+LastBuildResults.*
+.precomp

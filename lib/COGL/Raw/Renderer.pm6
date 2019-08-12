@@ -8,16 +8,16 @@ use COGL::Raw::Types;
 unit package COGL::Raw::Renderer;
 
 sub cogl_renderer_add_constraint (
-  CoglRenderer $renderer, 
-  CoglRendererConstraint $constraint
+  CoglRenderer $renderer,
+  guint $constraint # CoglRendererConstraint $constraint
 )
   is native(cogl)
   is export
 { * }
 
 sub cogl_renderer_check_onscreen_template (
-  CoglRenderer $renderer, 
-  CoglOnscreenTemplate $onscreen_template, 
+  CoglRenderer $renderer,
+  CoglOnscreenTemplate $onscreen_template,
   CArray[Pointer[CoglError]] $error
 )
   returns CoglBool
@@ -25,14 +25,14 @@ sub cogl_renderer_check_onscreen_template (
   is export
 { * }
 
-sub cogl_is_renderer (void $object)
+sub cogl_is_renderer (Pointer $object)
   returns CoglBool
   is native(cogl)
   is export
 { * }
 
 sub cogl_renderer_connect (
-  CoglRenderer $renderer, 
+  CoglRenderer $renderer,
   CArray[Pointer[CoglError]] $error
 )
   returns CoglBool
@@ -41,14 +41,14 @@ sub cogl_renderer_connect (
 { * }
 
 sub cogl_renderer_error_quark ()
-  returns uint32_t
+  returns uint32
   is native(cogl)
   is export
 { * }
 
 sub cogl_renderer_foreach_output (
-  CoglRenderer $renderer, 
-  CoglOutputCallback $callback, 
+  CoglRenderer $renderer,
+  CoglOutputCallback $callback,
   Pointer $user_data
 )
   is native(cogl)
@@ -62,7 +62,7 @@ sub cogl_renderer_get_gtype ()
 { * }
 
 sub cogl_renderer_get_n_fragment_texture_units (CoglRenderer $renderer)
-  returns int
+  returns gint
   is native(cogl)
   is export
 { * }
@@ -74,33 +74,36 @@ sub cogl_renderer_new ()
 { * }
 
 sub cogl_renderer_remove_constraint (
-  CoglRenderer $renderer, 
-  CoglRendererConstraint $constraint
+  CoglRenderer $renderer,
+  guint $constraint # CoglRendererConstraint $constraint
 )
   is native(cogl)
   is export
 { * }
 
 sub cogl_renderer_get_driver (CoglRenderer $renderer)
-  returns CoglDriver
+  returns guint # CoglDriver
   is native(cogl)
   is export
 { * }
 
 sub cogl_renderer_get_winsys_id (CoglRenderer $renderer)
-  returns CoglWinsysID
+  returns guint # CoglWinsysID
   is native(cogl)
   is export
 { * }
 
-sub cogl_renderer_set_driver (CoglRenderer $renderer, CoglDriver $driver)
+sub cogl_renderer_set_driver (
+  CoglRenderer $renderer,
+  guint # CoglDriver $driver
+)
   is native(cogl)
   is export
 { * }
 
 sub cogl_renderer_set_winsys_id (
-  CoglRenderer $renderer, 
-  CoglWinsysID $winsys_id
+  CoglRenderer $renderer,
+  guint $winsys_id # CoglWinsysID $winsys_id
 )
   is native(cogl)
   is export

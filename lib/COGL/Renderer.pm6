@@ -2,24 +2,31 @@ use v6.c;
 
 use NativeCall;
 
+use GTK::Raw::Utils;
+
 use GTK::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::Renderer;
 
 class COGL::Renderer {
   has CoglRenderer $!cr;
-  
-  method new {
-    cogl_renderer_new();
+
+  submethod BUILD (:$renderer) {
+    $!cr = $renderer;
   }
-  
+
+  method new {
+    self.bless( renderer => cogl_renderer_new() );
+  }
+
   method driver is rw {
     Proxy.new(
       FETCH => sub ($) {
-        cogl_renderer_get_driver($!cr);
+        CoglDriver( cogl_renderer_get_driver($!cr) );
       },
-      STORE => sub ($, $driver is copy) {
-        cogl_renderer_set_driver($!cr, $driver);
+      STORE => sub ($, Int() $driver is copy) {
+        my guint $d = resolve-uint($driver);
+        cogl_renderer_set_driver($!cr, $d);
       }
     );
   }
@@ -27,31 +34,43 @@ class COGL::Renderer {
   method winsys_id is rw {
     Proxy.new(
       FETCH => sub ($) {
-        cogl_renderer_get_winsys_id($!cr);
+        CoglWinsysID( cogl_renderer_get_winsys_id($!cr) );
       },
-      STORE => sub ($, $winsys_id is copy) {
-        cogl_renderer_set_winsys_id($!cr, $winsys_id);
+      STORE => sub ($, Int() $winsys_id is copy) {
+        my guint $w = resolve-uint($winsys_id);
+        cogl_renderer_set_winsys_id($!cr, $w);
       }
     );
   }
 
-  method add_constraint (CoglRendererConstraint $constraint) {
-    cogl_renderer_add_constraint($!cr, $constraint);
+  method add_constraint (Int() $constraint) {
+    my guint $c = resolve-uint($constraint);
+    cogl_renderer_add_constraint($!cr, $c);
   }
 
   method check_onscreen_template (
-    CoglOnscreenTemplate $onscreen_template, 
+    CoglOnscreenTemplate $onscreen_template,
     CArray[Pointer[CoglError]] $error = gerror
   ) {
-    cogl_renderer_check_onscreen_template($!cr, $onscreen_template, $error);
+    clear_error;
+    my $rc = cogl_renderer_check_onscreen_template(
+      $!cr,
+      $onscreen_template,
+      $error
+    );
+    set_error($error);
+    $rc;
   }
 
-  method cogl_is_renderer {
-    cogl_is_renderer($!cr);
+  method is_renderer (gpointer $object) {
+    cogl_is_renderer($object);
   }
 
-  method connect (CArray[Pointer[CoglError]] = gerror $error) {
-    cogl_renderer_connect($!cr, $error);
+  method connect (CArray[Pointer[CoglError]] $error = gerror) {
+    clear_error;
+    my $rc = cogl_renderer_connect($!cr, $error);
+    set_error($error);
+    $rc;
   }
 
   method error_quark {
@@ -59,22 +78,24 @@ class COGL::Renderer {
   }
 
   method foreach_output (
-    CoglOutputCallback $callback, 
+    CoglOutputCallback $callback,
     gpointer $user_data = Pointer
   ) {
     cogl_renderer_foreach_output($!cr, $callback, $user_data);
   }
 
   method get_gtype {
-    cogl_renderer_get_gtype($!cr);
+    state ($n, $t);
+    unstable_get_type( self.^name, &cogl_renderer_get_gtype, $n, $t );
   }
 
   method get_n_fragment_texture_units {
     cogl_renderer_get_n_fragment_texture_units($!cr);
   }
 
-  method remove_constraint (CoglRendererConstraint $constraint) {
-    cogl_renderer_remove_constraint($!cr, $constraint);
+  method remove_constraint (Int() $constraint) {
+    my guint $c = resolve-uint($constraint);
+    cogl_renderer_remove_constraint($!cr, $c);
   }
-  
+
 }

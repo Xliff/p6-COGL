@@ -1,17 +1,22 @@
 use v6.c;
 
 use Method::Also;
+use NativeCall;
+
+use GTK::Raw::Utils;
 
 use GTK::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::Context;
+
+use COGL::Object;
 
 our subset ContextAncestry is export of Mu
   where CoglContext | CoglObject;
 
 class COGL::Context is COGL::Object {
   has CoglContext $!cc;
-  
+
   submethod BUILD (:$context) {
     given $context {
       when ContextAncestry {
@@ -21,7 +26,7 @@ class COGL::Context is COGL::Object {
             $to-parent = cast(CoglObject, $_);
             $_;
           }
-          
+
           default {
             $to-parent = $_;
             cast(CoglContext, $_);
@@ -29,33 +34,37 @@ class COGL::Context is COGL::Object {
         }
         self.setObject($to-parent);
       }
-      
+
       when COGL::Context {
       }
-      
+
       default {
       }
-    }      
+    }
   }
-  
+
+  method COGL::Raw::Types::CoglContext
+    is also<CoglContext>
+  { $!cc }
+
   multi method new {
     samewith(CoglDisplay);
   }
   multi method new (
-    CoglDisplay() $display, 
+    CoglDisplay() $display,
     CArray[Pointer[CoglError]] $error = gerror
   ) {
     clear_error;
-    my $rc = cogl_context_new($!cc, $error);
+    my $rc = cogl_context_new($display, $error);
     set_error($error);
     self.bless( context => $rc );
   }
 
   method cogl_foreach_feature (
-    CoglFeatureCallback $callback, 
+    CoglFeatureCallback $callback,
     Pointer $user_data = Pointer
-  ) 
-    is also<cogl-foreach-feature> 
+  )
+    is also<cogl-foreach-feature>
   {
     cogl_foreach_feature($!cc, $callback, $user_data);
   }
@@ -69,8 +78,10 @@ class COGL::Context is COGL::Object {
     so cogl_has_feature($!cc, $f);
   }
 
-  method is_context is also<is-context> {
-    cogl_is_context($!cc);
+  method is_context (COGL::Context:U: gpointer $candidate)
+    is also<is-context>
+  {
+    so cogl_is_context($candidate);
   }
 
   method get_display is also<get-display> {
@@ -78,7 +89,7 @@ class COGL::Context is COGL::Object {
   }
 
   method get_gtype is also<get-gtype> {
-    state ($n, $t)
+    state ($n, $t);
     unstable_get_type( self.^name, &cogl_context_get_gtype, $n, $t );
   }
 

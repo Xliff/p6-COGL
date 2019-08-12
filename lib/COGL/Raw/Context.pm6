@@ -1,5 +1,7 @@
 use v6.c;
 
+use NativeCall;
+
 use GTK::Compat::Types;
 use COGL::Raw::Types;
 
@@ -11,8 +13,8 @@ unit package COGL::Raw::Context;
 # { * }
 
 sub cogl_foreach_feature (
-  CoglContext $context, 
-  CoglFeatureCallback $callback, 
+  CoglContext $context,
+  CoglFeatureCallback $callback,
   Pointer $user_data
 )
   is native(cogl)
@@ -20,18 +22,21 @@ sub cogl_foreach_feature (
 { * }
 
 sub cogl_get_clock_time (CoglContext $context)
-  returns int64_t
+  returns int64
   is native(cogl)
   is export
 { * }
 
-sub cogl_has_feature (CoglContext $context, CoglFeatureID $feature)
+sub cogl_has_feature (
+  CoglContext $context,
+  guint $feature # CoglFeatureID $feature
+)
   returns CoglBool
   is native(cogl)
   is export
 { * }
 
-sub cogl_is_context (void $object)
+sub cogl_is_context (Pointer $object)
   returns CoglBool
   is native(cogl)
   is export

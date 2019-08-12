@@ -1,0 +1,378 @@
+Dependency Generation
+=====================
+real 0.59
+user 0.91
+sys 0.05
+ === GTK::Compat::Types ===
+Stage start      :   0.000
+Stage parse      :   0.814
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.003
+Stage mast       :   0.007
+Stage mbc        :   0.003
+Stage moar       :   0.000
+ === GTK::Raw::Utils ===
+Stage start      :   0.000
+Stage parse      :   0.809
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === GTK::Roles::Pointers ===
+Stage start      :   0.000
+Stage parse      :   0.732
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === Method::Also ===
+Stage start      :   0.000
+Stage parse      :   0.635
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.003
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Raw::Types ===
+Stage start      :   0.000
+Stage parse      :   3.258
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.002
+Stage mast       :   0.005
+Stage mbc        :   0.002
+Stage moar       :   0.000
+ === COGL::Compat::Types ===
+Stage start      :   0.000
+Stage parse      :   0.722
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Poll ===
+Stage start      :   0.000
+Stage parse      :   1.932
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.006
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Raw::Attribute ===
+Stage start      :   0.000
+Stage parse      :   2.336
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Raw::Bitmap ===
+Stage start      :   0.000
+Stage parse      :   2.152
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Raw::Buffer ===
+Stage start      :   0.000
+Stage parse      :   1.994
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Raw::Color ===
+Stage start      :   0.000
+Stage parse      :   3.124
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.002
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Raw::Context ===
+Stage start      :   0.000
+Stage parse      :   1.992
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Raw::Euler ===
+Stage start      :   0.000
+Stage parse      :   1.996
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Raw::FrameBuffer ===
+Stage start      :   0.000
+Stage parse      :   4.219
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.002
+Stage mbc        :   0.001
+Stage moar       :   0.000
+ === COGL::Raw::Object ===
+Stage start      :   0.000
+Stage parse      :   1.973
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Raw::Offscreen ===
+Stage start      :   0.000
+Stage parse      :   1.941
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Raw::OnScreen ===
+Stage start      :   0.000
+Stage parse      :   2.848
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.007
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Raw::Pipeline ===
+Stage start      :   0.000
+Stage parse      :   1.975
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Raw::Pipeline::LayerState ===
+Stage start      :   0.000
+Stage parse      :   2.525
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Raw::Primitive ===
+Stage start      :   0.000
+Stage parse      :   2.551
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.001
+Stage moar       :   0.000
+ === COGL::Raw::Quaternion ===
+Stage start      :   0.000
+Stage parse      :   2.592
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Raw::Renderer ===
+Stage start      :   0.000
+Stage parse      :   2.205
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Raw::Texture ===
+Stage start      :   0.000
+Stage parse      :   2.152
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Raw::Texture2d ===
+Stage start      :   0.000
+Stage parse      :   1.910
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Renderer ===
+Stage start      :   0.000
+Stage parse      :   1.869
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Roles::Buffer ===
+Stage start      :   0.000
+Stage parse      :   1.768
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Bitmap ===
+Stage start      :   0.000
+Stage parse      :   1.841
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Color ===
+Stage start      :   0.000
+Stage parse      :   1.994
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Euler ===
+Stage start      :   0.000
+Stage parse      :   1.719
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::FrameBuffer ===
+Stage start      :   0.000
+Stage parse      :   2.263
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Object ===
+Stage start      :   0.000
+Stage parse      :   1.766
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Offscreen ===
+Stage start      :   0.000
+Stage parse      :   1.804
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::OnScreen ===
+Stage start      :   0.000
+Stage parse      :   1.939
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Pipeline ===
+Stage start      :   0.000
+Stage parse      :   1.983
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Primitive ===
+Stage start      :   0.000
+Stage parse      :   1.918
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Quaternion ===
+Stage start      :   0.000
+Stage parse      :   1.782
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Texture ===
+Stage start      :   0.000
+Stage parse      :   1.896
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Texture2d ===
+Stage start      :   0.000
+Stage parse      :   1.866
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.004
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::AttributeBuffer ===
+Stage start      :   0.000
+Stage parse      :   2.011
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Context ===
+Stage start      :   0.000
+Stage parse      :   1.869
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+ === COGL::Attribute ===
+Stage start      :   0.000
+Stage parse      :   2.008
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.000
+Stage moar       :   0.000
+
+real 83.67
+user 111.29
+sys 5.31

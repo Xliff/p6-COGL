@@ -8,12 +8,12 @@ use COGL::Raw::Offscreen;
 
 use COGL::Object;
 
-our subset OffscreenAncestry is export of Mu 
+our subset OffscreenAncestry is export of Mu
   where CoglOffscreen | CoglObject;
 
 class COGL::Offscreen is COGL::Object {
   has CoglOffscreen $!co;
-  
+
   submethod BUILD (:$offscreen) {
     given $offscreen {
       when OffscreenAncestry {
@@ -23,7 +23,7 @@ class COGL::Offscreen is COGL::Object {
             $to-parent = cast(CoglObject, $_);
             $_;
           }
-          
+
           default {
             $to-parent = $_;
             cast(CoglOffscreen, $_);
@@ -31,30 +31,32 @@ class COGL::Offscreen is COGL::Object {
         }
         self.setObject($to-parent);
       }
-      
+
       when COGL::Offscreen {
       }
-      
+
       default {
       }
     }
   }
-  
-  method new_to_texture (CoglTexture() $texture) 
+
+  method new_to_texture (CoglTexture() $texture)
     is DEPRECATED<COGL::Offscreen.new_with_texture>
-    is also<new-to-texture> 
+    is also<new-to-texture>
   {
-    self.bless( offscreen => cogl_offscreen_new_to_texture($texture) );  
+    self.bless( offscreen => cogl_offscreen_new_to_texture($texture) );
   }
 
-  method new_with_texture (CoglTexture() $texture) 
-    is also<new-with-texture> 
+  method new_with_texture (CoglTexture() $texture)
+    is also<new-with-texture>
   {
     self.bless( offscreen => cogl_offscreen_new_with_texture($texture) );
   }
-  
-  method is_offscreen is also<is-offscreen> {
-    so cogl_is_offscreen($!co);
+
+  method is_offscreen (COGL::Offscreen:U: gpointer $candidate)
+    is also<is-offscreen>
+  {
+    so cogl_is_offscreen($candidate);
   }
 
   method get_gtype is also<get-gtype> {

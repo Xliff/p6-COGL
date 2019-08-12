@@ -7,47 +7,77 @@ use GTK::Roles::Pointers;
 
 unit package COGL::Raw::Types;
 
-class CoglAttribute       is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglAttributeBuffer is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglBitmap          is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglBuffer          is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglContext         is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglDisplay         is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglEuler           is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglFramebuffer     is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglHandle          is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglMaterial        is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglObject          is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglOffscreen       is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglOnScreen        is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglPipeline        is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglPrimitive       is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglQuaternion      is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglSnippet         is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglTexture         is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglTexture2D       is repr('CPointer') is export does GTK::Roles::Pointers { }
+# Number of times I've had to force compile the whole project.
+constant forced = 0;
 
-constant CoglBool      is export := gint;
-constant CoglTexture2d is export := CoglTexture2D;
+constant cogl is export := 'cogl';
 
-class CoglPollFD is repr<CStruct>        also does GTK::Roles::Pointers is export {
+constant CoglBool      is export := int32;
+constant CoglError     is export := GError;
+
+constant CoglDebugObjectForeachTypeCallback is export := Pointer;
+constant CoglFeatureCallback                is export := Pointer;
+constant CoglUserDataDestroyCallback        is export := Pointer;
+constant CoglPipelineLayerCallback          is export := Pointer;
+constant CoglOnscreenDirtyCallback          is export := Pointer;
+constant CoglOnscreenDirtyClosure           is export := Pointer;
+constant CoglFrameCallback                  is export := Pointer;
+constant CoglFrameClosure                   is export := Pointer;
+constant CoglOutputCallback                 is export := Pointer;
+constant CoglOnscreenResizeCallback         is export := Pointer;
+constant CoglOnscreenResizeClosure          is export := Pointer;
+constant CoglSwapBuffersNotify              is export := Pointer;
+constant CoglOnscreenX11MaskCallback        is export := Pointer;
+
+class CoglAttribute        is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglAttributeBuffer  is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglBitmap           is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglBuffer           is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglColor            is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglContext          is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglDepthState       is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglDisplay          is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglEuler            is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglFrameBuffer      is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglFrameInfo        is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglHandle           is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglIndices          is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglMaterial         is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglMatrix           is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglObject           is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglOffscreen        is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglOnscreen         is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglOnscreenTemplate is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglPipeline         is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglPixelBuffer      is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglPrimitive        is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglQuaternion       is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglRenderer         is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglSource           is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglSnippet          is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglTexture          is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglTexture2d        is repr('CPointer') is export does GTK::Roles::Pointers { }
+
+constant CoglTexture2D is export := CoglTexture2d;
+
+class CoglPollFD is repr<CStruct>            does GTK::Roles::Pointers is export {
   has gint  $.fd      is rw;
   has int16 $.events  is rw;
   has int16 $.revents is rw;
 }
 
-class CoglVertexP2 is repr<CStruct>      also does GTK::Roles::Pointers is export {
+class CoglVertexP2 is repr<CStruct>          does GTK::Roles::Pointers is export {
   has gfloat $.x is rw;
   has gfloat $.y is rw;
 }
 
-class CoglVertexP3 is repr<CStruct>      also does GTK::Roles::Pointers is export {
+class CoglVertexP3 is repr<CStruct>          does GTK::Roles::Pointers is export {
   has gfloat $.x is rw;
   has gfloat $.y is rw;
   has gfloat $.z is rw;
 }
 
-class CoglVertexP2C4 is repr<CStruct>    also does GTK::Roles::Pointers is export {
+class CoglVertexP2C4 is repr<CStruct>        does GTK::Roles::Pointers is export {
   has gfloat $.x is rw;
   has gfloat $.y is rw;
   has uint8  $.r is rw;
@@ -56,7 +86,7 @@ class CoglVertexP2C4 is repr<CStruct>    also does GTK::Roles::Pointers is expor
   has uint8  $.a is rw;
 }
 
-class CoglVertexP3C4 is repr<CStruct>    also does GTK::Roles::Pointers is export {
+class CoglVertexP3C4 is repr<CStruct>        does GTK::Roles::Pointers is export {
   has gfloat $.x is rw;
   has gfloat $.y is rw;
   has gfloat $.z is rw;
@@ -66,14 +96,14 @@ class CoglVertexP3C4 is repr<CStruct>    also does GTK::Roles::Pointers is expor
   has uint8  $.a is rw;
 }
 
-class CoglVertexP2T2 is repr<CStruct>    also does GTK::Roles::Pointers is export {
+class CoglVertexP2T2 is repr<CStruct>        does GTK::Roles::Pointers is export {
   has gfloat $.x is rw;
   has gfloat $.y is rw;
   has gfloat $.s is rw;
   has gfloat $.t is rw;
 }
 
-class CoglVertexP3T2 is repr<CStruct>    also does GTK::Roles::Pointers is export {
+class CoglVertexP3T2 is repr<CStruct>        does GTK::Roles::Pointers is export {
   has gfloat $.x is rw;
   has gfloat $.y is rw;
   has gfloat $.z is rw;
@@ -81,7 +111,7 @@ class CoglVertexP3T2 is repr<CStruct>    also does GTK::Roles::Pointers is expor
   has gfloat $.t is rw;
 }
 
-class CoglVertexP2T2C4 is repr<CStruct>  also does GTK::Roles::Pointers is export {
+class CoglVertexP2T2C4 is repr<CStruct>      does GTK::Roles::Pointers is export {
   has gfloat $.x is rw;
   has gfloat $.y is rw;
   has gfloat $.s is rw;
@@ -92,7 +122,7 @@ class CoglVertexP2T2C4 is repr<CStruct>  also does GTK::Roles::Pointers is expor
   has uint8  $.a is rw;
 }
 
-class CoglVertexP3T2C$ is repr<CStruct>  also does GTK::Roles::Pointers is export {
+class CoglVertexP3T2C4 is repr<CStruct>      does GTK::Roles::Pointers is export {
   has gfloat $.x is rw;
   has gfloat $.y is rw;
   has gfloat $.z is rw;
@@ -102,6 +132,17 @@ class CoglVertexP3T2C$ is repr<CStruct>  also does GTK::Roles::Pointers is expor
   has uint8  $.g is rw;
   has uint8  $.b is rw;
   has uint8  $.a is rw;
+}
+
+class CoglUserDataKey is repr<CStruct>       does GTK::Roles::Pointers is export {
+  has gint $.unused;
+}
+
+class CoglOnscreenDirtyInfo is repr<CStruct> does GTK::Roles::Pointers is export {
+  has gint $.x      is rw;
+  has gint $.y      is rw;
+  has gint $.width  is rw;
+  has gint $.height is rw;
 }
 
 our enum CoglAttributeType is export (
@@ -124,6 +165,12 @@ our enum CoglBlendStringError is export <
   COGL_BLEND_STRING_ERROR_INVALID_ERROR
   COGL_BLEND_STRING_ERROR_GPU_UNSUPPORTED_ERROR
 >;
+
+our enum CoglBufferAccess is export (
+ COGL_BUFFER_ACCESS_READ       => 1,
+ COGL_BUFFER_ACCESS_WRITE      => 2,
+ COGL_BUFFER_ACCESS_READ_WRITE => 1 +| 2
+);
 
 our enum CoglBufferError is export <
   COGL_BUFFER_ERROR_MAP
@@ -149,6 +196,34 @@ our enum CoglDepthTestFunction is export (
   COGL_DEPTH_TEST_FUNCTION_NOTEQUAL =>  0x0205,
   COGL_DEPTH_TEST_FUNCTION_GEQUAL   =>  0x0206,
   COGL_DEPTH_TEST_FUNCTION_ALWAYS   =>  0x0207,
+);
+
+our enum CoglFeatureID is export (
+  COGL_FEATURE_ID_TEXTURE_NPOT_BASIC => 1,
+  'COGL_FEATURE_ID_TEXTURE_NPOT_MIPMAP',
+  'COGL_FEATURE_ID_TEXTURE_NPOT_REPEAT',
+  'COGL_FEATURE_ID_TEXTURE_NPOT',
+  'COGL_FEATURE_ID_TEXTURE_RECTANGLE',
+  'COGL_FEATURE_ID_TEXTURE_3D',
+  'COGL_FEATURE_ID_GLSL',
+  'COGL_FEATURE_ID_ARBFP',
+  'COGL_FEATURE_ID_OFFSCREEN',
+  'COGL_FEATURE_ID_OFFSCREEN_MULTISAMPLE',
+  'COGL_FEATURE_ID_ONSCREEN_MULTIPLE',
+  'COGL_FEATURE_ID_UNSIGNED_INT_INDICES',
+  'COGL_FEATURE_ID_DEPTH_RANGE',
+  'COGL_FEATURE_ID_POINT_SPRITE',
+  'COGL_FEATURE_ID_MAP_BUFFER_FOR_READ',
+  'COGL_FEATURE_ID_MAP_BUFFER_FOR_WRITE',
+  'COGL_FEATURE_ID_MIRRORED_REPEAT',
+  'COGL_FEATURE_ID_SWAP_BUFFERS_EVENT',
+  'COGL_FEATURE_ID_GLES2_CONTEXT',
+  'COGL_FEATURE_ID_DEPTH_TEXTURE',
+  'COGL_FEATURE_ID_PRESENTATION_TIME',
+  'COGL_FEATURE_ID_FENCE',
+  'COGL_FEATURE_ID_PER_VERTEX_POINT_SIZE',
+  'COGL_FEATURE_ID_TEXTURE_RG',
+  'COGL_FEATURE_ID_BUFFER_AGE',
 );
 
 our enum CoglFilterReturn is export <
@@ -226,6 +301,13 @@ our enum CoglPipelineFilter is export (
   COGL_PIPELINE_FILTER_LINEAR_MIPMAP_NEAREST  =>  0x2701,
   COGL_PIPELINE_FILTER_NEAREST_MIPMAP_LINEAR  =>  0x2702,
   COGL_PIPELINE_FILTER_LINEAR_MIPMAP_LINEAR   =>  0x2703,
+);
+
+our enum CoglPipelineWrapMode is export (
+  COGL_PIPELINE_WRAP_MODE_REPEAT          => 0x2901,
+  COGL_PIPELINE_WRAP_MODE_MIRRORED_REPEAT => 0x8370,
+  COGL_PIPELINE_WRAP_MODE_CLAMP_TO_EDGE   => 0x812F,
+  COGL_PIPELINE_WRAP_MODE_AUTOMATIC       => 0x0207 # GL_ALWAYS
 );
 
 our enum CoglRendererError is export <
@@ -387,4 +469,43 @@ our enum CoglPixelFormat is export (
   COGL_PIXEL_FORMAT_DEPTH_32  => (3 +| COGL_DEPTH_BIT),
 
   COGL_PIXEL_FORMAT_DEPTH_24_STENCIL_8 => (3 +| COGL_DEPTH_BIT +| COGL_STENCIL_BIT)
+);
+
+our enum CoglRendererConstraint is export (
+  COGL_RENDERER_CONSTRAINT_USES_X11            => 1,
+  COGL_RENDERER_CONSTRAINT_USES_XLIB           => 1 +< 1,
+  COGL_RENDERER_CONSTRAINT_USES_EGL            => 1 +< 2,
+  COGL_RENDERER_CONSTRAINT_SUPPORTS_COGL_GLES2 => 1 +< 3
+);
+
+our enum CoglDriver is export <
+  COGL_DRIVER_ANY
+  COGL_DRIVER_NOP
+  COGL_DRIVER_GL
+  COGL_DRIVER_GL3
+  COGL_DRIVER_GLES1
+  COGL_DRIVER_GLES2
+  COGL_DRIVER_WEBGL
+>;
+
+# 64 BITS!
+our enum CoglReadPixelFlags is export (
+  COGL_READ_PIXELS_COLOR_BUFFER => 1
+);
+
+# 64 BITS!
+our enum CoglColorMask is export (
+  COGL_COLOR_MASK_NONE  => 0,
+  COGL_COLOR_MASK_RED   => 1,
+  COGL_COLOR_MASK_GREEN => 1 +< 1,
+  COGL_COLOR_MASK_BLUE  => 1 +< 2,
+  COGL_COLOR_MASK_ALPHA => 1 +< 3,
+  COGL_COLOR_MASK_ALL   => 15
+);
+
+# 64 BITS!
+our enum CoglBufferBit is export (
+  COGL_BUFFER_BIT_COLOR   => 1,
+  COGL_BUFFER_BIT_DEPTH   => 1 +< 1,
+  COGL_BUFFER_BIT_STENCIL => 1 +< 2
 );

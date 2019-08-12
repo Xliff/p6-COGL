@@ -1,5 +1,7 @@
 use v6.c;
 
+use NativeCall;
+
 use GTK::Compat::Types;
 use COGL::Raw::Types;
 
@@ -11,7 +13,7 @@ sub cogl_euler_copy (CoglEuler $src)
   is export
 { * }
 
-sub cogl_euler_equal (void $v1, void $v2)
+sub cogl_euler_equal (CoglEuler $v1, CoglEuler $v2)
   returns CoglBool
   is native(cogl)
   is export
@@ -29,9 +31,9 @@ sub cogl_euler_get_gtype ()
 { * }
 
 sub cogl_euler_init (
-  CoglEuler $euler, 
-  gfloat $heading, 
-  gfloat $pitch, 
+  CoglEuler $euler,
+  gfloat $heading,
+  gfloat $pitch,
   gfloat $roll
 )
   is native(cogl)
@@ -44,7 +46,7 @@ sub cogl_euler_init_from_matrix (CoglEuler $euler, CoglMatrix $matrix)
 { * }
 
 sub cogl_euler_init_from_quaternion (
-  CoglEuler $euler, 
+  CoglEuler $euler,
   CoglQuaternion $quaternion
 )
   is native(cogl)

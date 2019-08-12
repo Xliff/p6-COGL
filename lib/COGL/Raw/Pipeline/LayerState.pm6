@@ -20,7 +20,7 @@ sub cogl_pipeline_get_layer_mag_filter (
   CoglPipeline $pipeline,
   gint $layer_index
 )
-  returns CoglPipelineFilter
+  returns guint # CoglPipelineFilter
   is native(cogl)
   is export
 { * }
@@ -29,7 +29,7 @@ sub cogl_pipeline_get_layer_min_filter (
   CoglPipeline $pipeline,
   gint $layer_index
 )
-  returns CoglPipelineFilter
+  returns guint # CoglPipelineFilter
   is native(cogl)
   is export
 { * }
@@ -56,7 +56,7 @@ sub cogl_pipeline_get_layer_wrap_mode_p (
   CoglPipeline $pipeline,
   gint $layer_index
 )
-  returns CoglPipelineWrapMode
+  returns guint # CoglPipelineWrapMode
   is native(cogl)
   is export
 { * }
@@ -65,7 +65,7 @@ sub cogl_pipeline_get_layer_wrap_mode_s (
   CoglPipeline $pipeline,
   gint $layer_index
 )
-  returns CoglPipelineWrapMode
+  returns guint # CoglPipelineWrapMode
   is native(cogl)
   is export
 { * }
@@ -74,13 +74,13 @@ sub cogl_pipeline_get_layer_wrap_mode_t (
   CoglPipeline $pipeline,
   gint $layer_index
 )
-  returns CoglPipelineWrapMode
+  returns guint # CoglPipelineWrapMode
   is native(cogl)
   is export
 { * }
 
 sub cogl_pipeline_get_n_layers (CoglPipeline $pipeline)
-  returns int
+  returns gint
   is native(cogl)
   is export
 { * }
@@ -94,7 +94,7 @@ sub cogl_pipeline_set_layer_combine (
   CoglPipeline $pipeline,
   gint $layer_index,
   Str $blend_string,
-  CoglError $error
+  CArray[Pointer[CoglError]] $error
 )
   returns CoglBool
   is native(cogl)
@@ -113,8 +113,8 @@ sub cogl_pipeline_set_layer_combine_constant (
 sub cogl_pipeline_set_layer_filters (
   CoglPipeline $pipeline,
   gint $layer_index,
-  CoglPipelineFilter $min_filter,
-  CoglPipelineFilter $mag_filter
+  guint $min_filter,  # CoglPipelineFilter
+  guint $mag_filter   # CoglPipelineFilter
 )
   is native(cogl)
   is export
@@ -132,7 +132,7 @@ sub cogl_pipeline_set_layer_matrix (
 sub cogl_pipeline_set_layer_null_texture (
   CoglPipeline $pipeline,
   gint $layer_index,
-  CoglTextureType $texture_type
+  guint $texture_type # CoglTextureType $texture_type
 )
   is native(cogl)
   is export
@@ -142,7 +142,7 @@ sub cogl_pipeline_set_layer_point_sprite_coords_enabled (
   CoglPipeline $pipeline,
   gint $layer_index,
   CoglBool $enable,
-  CoglError $error
+  CArray[Pointer[CoglError]] $error
 )
   returns CoglBool
   is native(cogl)
@@ -161,7 +161,7 @@ sub cogl_pipeline_set_layer_texture (
 sub cogl_pipeline_set_layer_wrap_mode (
   CoglPipeline $pipeline,
   gint $layer_index,
-  CoglPipelineWrapMode $mode
+  guint $mode # CoglPipelineWrapMode $mode
 )
   is native(cogl)
   is export
@@ -170,7 +170,7 @@ sub cogl_pipeline_set_layer_wrap_mode (
 sub cogl_pipeline_set_layer_wrap_mode_p (
   CoglPipeline $pipeline,
   gint $layer_index,
-  CoglPipelineWrapMode $mode
+  guint $mode # CoglPipelineWrapMode $mode
 )
   is native(cogl)
   is export
@@ -179,7 +179,7 @@ sub cogl_pipeline_set_layer_wrap_mode_p (
 sub cogl_pipeline_set_layer_wrap_mode_s (
   CoglPipeline $pipeline,
   gint $layer_index,
-  CoglPipelineWrapMode $mode
+  guint $mode # CoglPipelineWrapMode $mode
 )
   is native(cogl)
   is export
@@ -188,7 +188,7 @@ sub cogl_pipeline_set_layer_wrap_mode_s (
 sub cogl_pipeline_set_layer_wrap_mode_t (
   CoglPipeline $pipeline,
   gint $layer_index,
-  CoglPipelineWrapMode $mode
+  guint $mode # CoglPipelineWrapMode $mode
 )
   is native(cogl)
   is export

@@ -1,8 +1,9 @@
 use v6.c;
 
 use Method::Also;
-
 use NativeCall;
+
+use GTK::Raw::Utils;
 
 use GTK::Compat::Types;
 use COGL::Raw::Types;
@@ -15,7 +16,7 @@ our subset TextureAncestry is export of Mu
 
 class COGL::Texture is COGL::Object {
   has CoglTexture $!ct;
-  
+
   method setTexture (TextureAncestry $_) {
     my $to-parent;
     $!ct = do {
@@ -23,16 +24,20 @@ class COGL::Texture is COGL::Object {
         $to-parent = cast(CoglObject, $_);
         $_;
       }
-      
+
       default {
         $to-parent = $_;
-        cast(CoglTexture, $_)l
+        cast(CoglTexture, $_);
       }
     }
     self.setObject($to-parent);
   }
-    
-  
+
+  method COGL::Raw::Types::CoglTexture
+    is also<CoglTexture>
+  { $!ct }
+
+
   method components is rw {
     Proxy.new(
       FETCH => sub ($) {
@@ -61,8 +66,10 @@ class COGL::Texture is COGL::Object {
     cogl_texture_allocate($!ct, $error);
   }
 
-  method is_texture is also<is-texture> {
-    so cogl_is_texture($!ct);
+  method is_texture (COGL::Texture:U: gpointer $candidate)
+    is also<is-texture>
+  {
+    so cogl_is_texture($candidate);
   }
 
   method error_quark is also<error-quark> {
@@ -91,17 +98,17 @@ class COGL::Texture is COGL::Object {
   }
 
   method set_data (
-    Int() $format, 
-    Int() $rowstride, 
-    CArray[uint8] $data, 
-    Int() $level, 
+    Int() $format,
+    Int() $rowstride,
+    CArray[uint8] $data,
+    Int() $level,
     CArray[Pointer[CoglError]] $error = gerror
-  ) 
-    is also<set-data> 
+  )
+    is also<set-data>
   {
     my guint $f = resolve-uint($format);
     my gint ($r, $l) = resolve-int($rowstride, $level);
-    
+
     clear_error;
     my $rc = cogl_texture_set_data($!ct, $f, $r, $data, $l, $error);
     set_error($error);

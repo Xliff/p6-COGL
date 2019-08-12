@@ -1,12 +1,14 @@
 use v6.c;
 
+use NativeCall;
+
 use GTK::Compat::Types;
 use COGL::Raw::Types;
 
 unit package COGL::Raw::Object;
 
 sub cogl_debug_object_foreach_type (
-  CoglDebugObjectForeachTypeCallback $func, 
+  CoglDebugObjectForeachTypeCallback $func,
   Pointer $user_data
 )
   is native(cogl)
@@ -35,9 +37,9 @@ sub cogl_object_ref (CoglObject $object)
 { * }
 
 sub cogl_object_set_user_data (
-  CoglObject $object, 
-  CoglUserDataKey $key, 
-  Pointer $user_data, 
+  CoglObject $object,
+  CoglUserDataKey $key,
+  Pointer $user_data,
   CoglUserDataDestroyCallback $destroy
 )
   is native(cogl)
