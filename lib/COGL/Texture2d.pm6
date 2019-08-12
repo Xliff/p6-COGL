@@ -53,7 +53,7 @@ class COGL::Texture2d is COGL::Texture {
     Int() $height,
     Int() $format,
     Int() $rowstride,
-    gpointer $data,
+    CArray[uint8] $data,
     CArray[Pointer[CoglError]] $error = gerror
   )
     is also<new-from-data>

@@ -62,7 +62,7 @@ class Spark is repr('CStruct') {
 }
 
 sub generate-round-texture($context) {
-  my $p = CArray[gfloat].allocate(TEXTURE_SIZE * TEXTURE_SIZE * 4);
+  my $p = CArray[uint8].allocate(TEXTURE_SIZE * TEXTURE_SIZE * 4);
 
   # You want more speed, you can NQP it!
   my $pos = 0;
@@ -70,13 +70,14 @@ sub generate-round-texture($context) {
     loop (my $y = 0; $y < TEXTURE_SIZE; $y++) {
       my $dx = $x - TEXTURE_SIZE / 2;
       my $dy = $y - TEXTURE_SIZE / 2;
-      my $v  = sqrt($dx * $dx *$dy *$dy) * 255 / TEXTURE_SIZE / 2;
+      my gfloat $v  = (sqrt($dx * $dx * $dy * $dy) * 255 / TEXTURE_SIZE / 2).Num;
 
-      $v := 255 if $v > 255;
-      $p[$pos++] = $v;
-      $p[$pos++] = $v;
-      $p[$pos++] = $v;
-      $p[$pos++] = $v;
+      $v = 255e0 if $v > 255;
+      $v = 255e0 - $v;
+      $p[$pos++] = $v.Int;
+      $p[$pos++] = $v.Int;
+      $p[$pos++] = $v.Int;
+      $p[$pos++] = $v.Int;
     }
   }
 
@@ -85,7 +86,7 @@ sub generate-round-texture($context) {
     TEXTURE_SIZE, TEXTURE_SIZE,
     COGL_PIXEL_FORMAT_RGBA_8888_PRE,
     TEXTURE_SIZE * 4,
-    cast(Pointer, $p)
+    $p
   );
 
   $tex;

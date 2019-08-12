@@ -47,7 +47,9 @@ class COGL::Pipeline is COGL::Object {
   { $!cp }
 
   method new (CoglContext() $context) {
-    self.bless( pipeline => cogl_pipeline_new($context) );
+    my $pipeline = cogl_pipeline_new($context);
+    say $pipeline;
+    self.bless( :$pipeline );
   }
 
   method is_pipeline (COGL::Pipeline:U: gpointer $candidate)
@@ -62,7 +64,7 @@ class COGL::Pipeline is COGL::Object {
         CoglColorMask( cogl_pipeline_get_color_mask($!cp) );
       },
       STORE => sub ($, Int() $color_mask is copy) {
-        my uint64 $m = resolve-uint64($color-mask)
+        my uint64 $m = resolve-uint64($color_mask);
         cogl_pipeline_set_color_mask($!cp, $m);
       }
     );
@@ -71,7 +73,7 @@ class COGL::Pipeline is COGL::Object {
   method cull_face_mode is rw {
     Proxy.new(
       FETCH => sub ($) {
-        CoglCullFaceMode( cogl_pipeline_get_cull_face_mode($!cp) );
+        CoglPipelineCullFaceMode( cogl_pipeline_get_cull_face_mode($!cp) );
       },
       STORE => sub ($, Int() $cull_face_mode is copy) {
         my guint $m = resolve-uint($cull_face_mode);
@@ -87,7 +89,7 @@ class COGL::Pipeline is COGL::Object {
       },
       STORE => sub ($, Int() $front_winding is copy) {
         my guint $w = resolve-uint($front_winding);
-        cogl_pipeline_set_front_face_winding($!cp, $f);
+        cogl_pipeline_set_front_face_winding($!cp, $w);
       }
     );
   }
@@ -343,7 +345,7 @@ class COGL::Pipeline is COGL::Object {
   }
 
   method get_alpha_test_function is also<get-alpha-test-function> {
-    CoglPipelineAlphaFunc( ogl_pipeline_get_alpha_test_function($!cp) );
+    CoglPipelineAlphaFunc( cogl_pipeline_get_alpha_test_function($!cp) );
   }
 
   method get_alpha_test_reference is also<get-alpha-test-reference> {
@@ -385,7 +387,7 @@ class COGL::Pipeline is COGL::Object {
   )
     is also<set-alpha-test-function>
   {
-    my guint $af = resolve-uint($alpha_func)
+    my guint $af = resolve-uint($alpha_func);
     my gfloat $ar = $alpha_reference;
 
     cogl_pipeline_set_alpha_test_function($!cp, $af, $ar);
@@ -477,7 +479,7 @@ class COGL::Pipeline is COGL::Object {
   )
     is also<set-per-vertex-point-size>
   {
-    my gboolean $e = resolve-bool($e);
+    my gboolean $e = resolve-bool($enable);
 
     clear_error;
     my $rc = cogl_pipeline_set_per_vertex_point_size($!cp, $e, $error);

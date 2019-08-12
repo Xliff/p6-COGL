@@ -33,6 +33,10 @@ class COGL::Texture is COGL::Object {
     self.setObject($to-parent);
   }
 
+  method COGL::Raw::Types::CoglTexture
+    is also<CoglTexture>
+  { $!ct }
+
 
   method components is rw {
     Proxy.new(
