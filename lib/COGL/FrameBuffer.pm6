@@ -9,15 +9,21 @@ use GTK::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::FrameBuffer;
 
+use COGL::Object;
+
 use COGL::Roles::Buffer;
 
 our subset FrameBufferAncestry of Mu
   where CoglFrameBuffer | CoglBuffer | CoglObject;
 
-class COGL::FrameBuffer {
+class COGL::FrameBuffer is COGL::Object {
   also does COGL::Roles::Buffer;
 
   has CoglFrameBuffer $!cf;
+  
+  method COGL::Raw::Types::CoglFrameBuffer
+    is also<CoglFrameBuffer>
+  { $!cf }
 
   method setFrameBuffer(FrameBufferAncestry $_) {
     my $to-parent;
@@ -38,7 +44,7 @@ class COGL::FrameBuffer {
         cast(CoglFrameBuffer, $_);
       }
     };
-    self.setObject($_);
+    self.setObject($to-parent);
     $!cb //= cast(CoglBuffer, $!cf);          # COGL::Roles::Buffer
   }
 

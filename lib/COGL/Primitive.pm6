@@ -32,7 +32,7 @@ class COGL::Primitive is COGL::Object {
             cast(CoglPrimitive, $_);
           }
         }
-        self.setParent($to-parent);
+        self.setObject($to-parent);
       }
 
       when COGL::Primitive {
@@ -54,7 +54,7 @@ class COGL::Primitive is COGL::Object {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
-    cogl_primitive_new_p2($context, $m, $nv, $data);
+    self.bless( primitive => cogl_primitive_new_p2($context, $m, $nv, $data) );
   }
 
   method new_p2c4 (
@@ -68,7 +68,7 @@ class COGL::Primitive is COGL::Object {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
-    cogl_primitive_new_p2c4($context, $m, $nv, $data);
+    self.bless( primitive => cogl_primitive_new_p2c4($context, $m, $nv, $data) );
   }
 
   method new_p2t2 (
@@ -82,7 +82,7 @@ class COGL::Primitive is COGL::Object {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
-    cogl_primitive_new_p2t2($context, $m, $nv, $data);
+    self.bless( primitive => cogl_primitive_new_p2t2($context, $m, $nv, $data) );
   }
 
   method new_p2t2c4 (
@@ -96,7 +96,9 @@ class COGL::Primitive is COGL::Object {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
-    cogl_primitive_new_p2t2c4($context, $m, $nv, $data);
+    self.bless( 
+      primitive => cogl_primitive_new_p2t2c4($context, $m, $nv, $data) 
+    );
   }
 
   method new_p3 (
@@ -110,7 +112,9 @@ class COGL::Primitive is COGL::Object {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
-    cogl_primitive_new_p3($context, $m, $nv, $data);
+    self.bless(
+      primitive => cogl_primitive_new_p3($context, $m, $nv, $data)
+    );
   }
 
   method new_p3c4 (
@@ -124,7 +128,9 @@ class COGL::Primitive is COGL::Object {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
-    cogl_primitive_new_p3c4($context, $m, $nv, $data);
+    self.bless( 
+      primitive => cogl_primitive_new_p3c4($context, $m, $nv, $data)
+    );
   }
 
   method new_p3t2 (
@@ -138,7 +144,9 @@ class COGL::Primitive is COGL::Object {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
-    cogl_primitive_new_p3t2($context, $m, $nv, $data);
+    self.bless(
+      primitive => cogl_primitive_new_p3t2($context, $m, $nv, $data)
+    );
   }
 
   method new_p3t2c4 (
@@ -152,7 +160,9 @@ class COGL::Primitive is COGL::Object {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
-    cogl_primitive_new_p3t2c4($context, $m, $nv, $data);
+    self.bless(
+      primitive => cogl_primitive_new_p3t2c4($context, $m, $nv, $data)
+    );
   }
 
   method new_with_attributes (
@@ -166,7 +176,14 @@ class COGL::Primitive is COGL::Object {
     my guint $m = resolve-uint($mode);
     my gint ($nv, $na) = resolve-int($n_vertices, $n_attributes);
 
-    cogl_primitive_new_with_attributes($m, $nv, $attributes, $na);
+    self.bless(
+      primitive => cogl_primitive_new_with_attributes(
+        $m, 
+        $nv, 
+        $attributes, 
+        $na
+      )
+    );
   }
 
   method is_primitive (COGL::Primitive:U: gpointer $candidate)

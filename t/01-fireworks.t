@@ -11,55 +11,19 @@ use COGL::Raw::Types;
 use COGL::Attribute;
 use COGL::AttributeBuffer;
 use COGL::Context;
+use COGL::OnScreen;
 use COGL::Pipeline;
 use COGL::Primitive;
+use COGL::Source;
 use COGL::Texture2d;
+
+use GTK::Compat::MainLoop;
 
 use GTK::Compat::Roles::TypedBuffer;
 
-constant N_FIREWORKS    = 32;
-constant N_SPARKS       = N_FIREWORKS * 32;
-constant TEXTURE_SIZE   = 32;
-constant TIME_PER_SPARK = 0.1;
-constant GRAVITY        = -1.5;
-constant FLT_MAX        = 3.402823e38;   # C define value
+use lib <. t>;
 
-class Color is repr('CStruct') {
-  has uint8 $.red   is rw;
-  has uint8 $.green is rw;
-  has uint8 $.blue  is rw;
-  has uint8 $.alpha is rw;
-}
-
-class Firework is repr('CStruct') {
-  my $timer-attr = Firework.^attributes[* - 1];
-
-  has gfloat $.size               is rw;
-  has gfloat $.x                  is rw;
-  has gfloat $.y                  is rw;
-  has gfloat $.start-x            is rw;
-  has gfloat $.start-y            is rw;
-  has gfloat $.initial-x-velocity is rw;
-  has gfloat $.initial-y-velocity is rw;
-
-  HAS Color  $.color;
-
-  has GTimer $!timer;
-
-  method timer is rw {
-    Proxy.new:
-      FETCH => -> $ { $!timer },
-      STORE => -> $, GTimer() \val { $timer-attr.set-value(self, val) };
-  }
-}
-
-class Spark is repr('CStruct') {
-  has gfloat $.x is rw;
-  has gfloat $.y is rw;
-
-  HAS Color  $.color;
-  HAS Color  $.base-color;
-}
+use Fireworks;
 
 sub generate-round-texture($context) {
   my $p = CArray[uint8].allocate(TEXTURE_SIZE * TEXTURE_SIZE * 4);
@@ -104,7 +68,7 @@ sub paint (%data) {
     {
       $firework.size = (0.001e0 ..^ 0.1e0).rand;
       $firework.start-x = 1 + $firework.size;
-      $firework.start-y = -1;
+      $firework.start-y = -1e0;
       $firework.initial-x-velocity = (-2e0 ^.. -0.1e0).rand;
       $firework.initial-y-velocity = (0.1e0 ..^ 4e0).rand;
       $firework.timer.reset();
@@ -140,7 +104,7 @@ sub paint (%data) {
 
       $spark.x =
         $firework.x + (-$firework.size/2e0 ..^ $firework.size/2e0).rand;
-      $spark<y> =
+      $spark.y =
         $firework.y + (-$firework.size/2e0 ..^ $firework.size/2e0).rand;
 
       $spark.base-color = $firework.color;
@@ -158,8 +122,7 @@ sub paint (%data) {
       $spark.base-color.red   *= $cv;
       $spark.base-color.green *= $cv;
       $spark.base-color.blue  *= $cv;
-
-      $spark.base-color.alpha = 255 * $cv;
+      $spark.base-color.alpha  = 255 * $cv;
     }
 
     %data<last-spark-time>.reset();
@@ -201,7 +164,7 @@ sub create-primitive (%data) {
     COGL_ATTRIBUTE_TYPE_UNSIGNED_BYTE  # Type of each component
   ).CoglAttribute;
 
-  %data<primative> = COGL::Primitive.new_with_attributes(
+  %data<primitive> = COGL::Primitive.new_with_attributes(
     COGL_VERTICES_MODE_POINTS,
     N_SPARKS,
     $attributes,
@@ -217,9 +180,12 @@ sub MAIN {
   %data<fireworks> = GTK::Compat::Roles::TypedBuffer[Firework].new(
     size => N_FIREWORKS
   );
+  %data<fireworks>.bind($_, Firework.new) for ^N_FIREWORKS;
+  
   %data<sparks>    = GTK::Compat::Roles::TypedBuffer[Spark].new(
     size => N_SPARKS
   );
+  %data<sparks>.bind($_, Spark.new) for ^N_SPARKS;
 
   %data<context> = COGL::Context.new;
   create-primitive(%data);
@@ -238,23 +204,24 @@ sub MAIN {
   for ^N_FIREWORKS {
     %data<fireworks>[$_].x     = -FLT_MAX;
     %data<fireworks>[$_].y     = FLT_MAX;
-    %data<fireworks>[$_].size  = 0;
+    %data<fireworks>[$_].size  = 0e0;
     %data<fireworks>[$_].timer = GTK::Compat::Timer.new;
   }
   for ^N_SPARKS {
-    %data<sparks>[$_].x = %data<sparks>[$_].y = 2;
+    %data<sparks>[$_].x = %data<sparks>[$_].y = 2e0;
   }
 
-  %data<fb> = COGL::Onscreen.new(%data<context>, 800, 600);
+  %data<fb> = COGL::OnScreen.new(%data<context>, 800, 600);
   %data<fb>.show;
   %data<fb>.add_frame_callback(-> *@a {
+    # CoglOnscreen, CoglFrameEvent, CoglFrameInfo, Pointer
     paint(%data) if CoglFrameEvent( @a[1] ) == COGL_FRAME_EVENT_SYNC
   });
 
   my $source = COGL::Source.new(%data<context>);
   $source.attach;
 
-  my $loop = GTK::Compat::Main.new(GMainContext, True);
+  my $loop = GTK::Compat::MainLoop.new(GMainContext, True);
   paint(%data);
 
   $loop.run;

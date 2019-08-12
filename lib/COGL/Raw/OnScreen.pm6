@@ -10,7 +10,7 @@ unit package COGL::Raw::OnScreen;
 
 sub cogl_onscreen_add_dirty_callback (
   CoglOnscreen $onscreen,
-  CoglOnscreenDirtyCallback $callback,
+  &callback (CoglOnscreen, CoglOnscreenDirtyInfo, Pointer),
   Pointer $user_data,
   CoglUserDataDestroyCallback $destroy
 )
@@ -21,7 +21,7 @@ sub cogl_onscreen_add_dirty_callback (
 
 sub cogl_onscreen_add_frame_callback (
   CoglOnscreen $onscreen,
-  CoglFrameCallback $callback,
+  &callback (CoglOnscreen, guint, CoglFrameInfo, Pointer),
   Pointer $user_data,
   CoglUserDataDestroyCallback $destroy
 )
@@ -32,7 +32,7 @@ sub cogl_onscreen_add_frame_callback (
 
 sub cogl_onscreen_add_resize_callback (
   CoglOnscreen $onscreen,
-  CoglOnscreenResizeCallback $callback,
+  &callback (CoglOnscreen, gint, gint, Pointer),
   Pointer $user_data,
   CoglUserDataDestroyCallback $destroy
 )
@@ -41,15 +41,15 @@ sub cogl_onscreen_add_resize_callback (
   is export
 { * }
 
-sub cogl_onscreen_add_swap_buffers_callback (
-  CoglOnscreen $onscreen,
-  CoglSwapBuffersNotify $callback,
-  Pointer $user_data
-)
-  returns gint
-  is native(cogl)
-  is export
-{ * }
+# sub cogl_onscreen_add_swap_buffers_callback (
+#   CoglOnscreen $onscreen,
+#   &callback (CoglFramebuffer, Pointer),
+#   Pointer $user_data
+# )
+#   returns gint
+#   is native(cogl)
+#   is export
+# { * }
 
 sub cogl_frame_closure_get_gtype ()
   returns GType

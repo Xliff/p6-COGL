@@ -19,26 +19,28 @@ class COGL::Pipeline is COGL::Object {
   has CoglPipeline $!cp;
 
   submethod BUILD (:$pipeline) {
-    when PipelineAncestry {
-      my $to-parent;
-      $!cp = do {
-        when CoglPipeline {
-          $to-parent = cast(CoglObject, $_);
-          $_;
-        }
+    given $pipeline {
+      when PipelineAncestry {
+        my $to-parent;
+        $!cp = do {
+          when CoglPipeline {
+            $to-parent = cast(CoglObject, $_);
+            $_;
+          }
 
-        default {
-          $to-parent = $_;
-          cast(CoglPipeline, $_);
+          default {
+            $to-parent = $_;
+            cast(CoglPipeline, $_);
+          }
         }
+        self.setObject($to-parent);
       }
-      self.setObject($to-parent);
-    }
 
-    when COGL::Pipeline {
-    }
+      when COGL::Pipeline {
+      }
 
-    default {
+      default {
+      }
     }
   }
 
@@ -47,9 +49,7 @@ class COGL::Pipeline is COGL::Object {
   { $!cp }
 
   method new (CoglContext() $context) {
-    my $pipeline = cogl_pipeline_new($context);
-    say $pipeline;
-    self.bless( :$pipeline );
+    self.bless( pipeline => cogl_pipeline_new($context) );
   }
 
   method is_pipeline (COGL::Pipeline:U: gpointer $candidate)
