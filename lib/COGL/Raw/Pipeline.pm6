@@ -263,7 +263,7 @@ sub cogl_pipeline_set_uniform_matrix (
 { * }
 
 sub cogl_pipeline_get_color_mask (CoglPipeline $pipeline)
-  returns guint # CoglColorMask
+  returns uint64 # CoglColorMask
   is native(cogl)
   is export
 { * }
@@ -300,7 +300,7 @@ sub cogl_pipeline_get_user_program (CoglPipeline $pipeline)
 
 sub cogl_pipeline_set_color_mask (
   CoglPipeline $pipeline,
-  guint $color_mask # CoglColorMask $color_mask
+  uint64 $color_mask # CoglColorMask $color_mask
 )
   is native(cogl)
   is export

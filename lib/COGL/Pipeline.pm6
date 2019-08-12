@@ -59,10 +59,11 @@ class COGL::Pipeline is COGL::Object {
   method color_mask is rw {
     Proxy.new(
       FETCH => sub ($) {
-        cogl_pipeline_get_color_mask($!cp);
+        CoglColorMask( cogl_pipeline_get_color_mask($!cp) );
       },
-      STORE => sub ($, $color_mask is copy) {
-        cogl_pipeline_set_color_mask($!cp, $color_mask);
+      STORE => sub ($, Int() $color_mask is copy) {
+        my uint64 $m = resolve-uint64($color-mask)
+        cogl_pipeline_set_color_mask($!cp, $m);
       }
     );
   }
@@ -70,10 +71,11 @@ class COGL::Pipeline is COGL::Object {
   method cull_face_mode is rw {
     Proxy.new(
       FETCH => sub ($) {
-        cogl_pipeline_get_cull_face_mode($!cp);
+        CoglCullFaceMode( cogl_pipeline_get_cull_face_mode($!cp) );
       },
-      STORE => sub ($, $cull_face_mode is copy) {
-        cogl_pipeline_set_cull_face_mode($!cp, $cull_face_mode);
+      STORE => sub ($, Int() $cull_face_mode is copy) {
+        my guint $m = resolve-uint($cull_face_mode);
+        cogl_pipeline_set_cull_face_mode($!cp, $m);
       }
     );
   }
@@ -81,10 +83,11 @@ class COGL::Pipeline is COGL::Object {
   method front_face_winding is rw {
     Proxy.new(
       FETCH => sub ($) {
-        cogl_pipeline_get_front_face_winding($!cp);
+        CoglWinding( cogl_pipeline_get_front_face_winding($!cp) );
       },
-      STORE => sub ($, $front_winding is copy) {
-        cogl_pipeline_set_front_face_winding($!cp, $front_winding);
+      STORE => sub ($, Int() $front_winding is copy) {
+        my guint $w = resolve-uint($front_winding);
+        cogl_pipeline_set_front_face_winding($!cp, $f);
       }
     );
   }
@@ -94,8 +97,9 @@ class COGL::Pipeline is COGL::Object {
       FETCH => sub ($) {
         cogl_pipeline_get_point_size($!cp);
       },
-      STORE => sub ($, $point_size is copy) {
-        cogl_pipeline_set_point_size($!cp, $point_size);
+      STORE => sub ($, Num() $point_size is copy) {
+        my gfloat $p = $point_size;
+        cogl_pipeline_set_point_size($!cp, $p);
       }
     );
   }
@@ -105,8 +109,9 @@ class COGL::Pipeline is COGL::Object {
       FETCH => sub ($) {
         cogl_pipeline_get_shininess($!cp);
       },
-      STORE => sub ($, $shininess is copy) {
-        cogl_pipeline_set_shininess($!cp, $shininess);
+      STORE => sub ($, Num() $shininess is copy) {
+        my gfloat $s = $shininess;
+        cogl_pipeline_set_shininess($!cp, $s);
       }
     );
   }
@@ -116,7 +121,7 @@ class COGL::Pipeline is COGL::Object {
       FETCH => sub ($) {
         cogl_pipeline_get_user_program($!cp);
       },
-      STORE => sub ($, $program is copy) {
+      STORE => sub ($, CoglHandle $program is copy) {
         cogl_pipeline_set_user_program($!cp, $program);
       }
     );
@@ -163,7 +168,7 @@ class COGL::Pipeline is COGL::Object {
     cogl_pipeline_get_layer_mag_filter($!cp, $li);
   }
 
-  method get_layer_min_filter (gint $layer_index)
+  method get_layer_min_filter (Int() $layer_index)
     is also<get-layer-min-filter>
   {
     my gint $li = resolve-int($layer_index);
@@ -183,7 +188,7 @@ class COGL::Pipeline is COGL::Object {
     cogl_pipeline_get_layer_texture($!cp, $li);
   }
 
-  method get_layer_wrap_mode_p (gint $layer_index)
+  method get_layer_wrap_mode_p (Int() $layer_index)
     is also<get-layer-wrap-mode-p>
   {
     my gint $li = resolve-int($layer_index);
@@ -333,75 +338,82 @@ class COGL::Pipeline is COGL::Object {
     cogl_pipeline_set_layer_wrap_mode_t($!cp, $li, $m);
   }
 
-  method add_snippet (CoglSnippet $snippet) is also<add-snippet> {
+  method add_snippet (CoglSnippet() $snippet) is also<add-snippet> {
     cogl_pipeline_add_snippet($!cp, $snippet);
   }
 
-  method get_alpha_test_function () is also<get-alpha-test-function> {
-    cogl_pipeline_get_alpha_test_function($!cp);
+  method get_alpha_test_function is also<get-alpha-test-function> {
+    CoglPipelineAlphaFunc( ogl_pipeline_get_alpha_test_function($!cp) );
   }
 
-  method get_alpha_test_reference () is also<get-alpha-test-reference> {
+  method get_alpha_test_reference is also<get-alpha-test-reference> {
     cogl_pipeline_get_alpha_test_reference($!cp);
   }
 
-  method get_ambient (CoglColor $ambient) is also<get-ambient> {
+  method get_ambient (CoglColor() $ambient) is also<get-ambient> {
     cogl_pipeline_get_ambient($!cp, $ambient);
   }
 
-  method get_color (CoglColor $color) is also<get-color> {
+  method get_color (CoglColor() $color) is also<get-color> {
     cogl_pipeline_get_color($!cp, $color);
   }
 
-  method get_depth_state (CoglDepthState $state_out) is also<get-depth-state> {
+  method get_depth_state (Int() $state_out) is also<get-depth-state> {
+    my guint $so = resolve-uint($state_out);
     cogl_pipeline_get_depth_state($!cp, $state_out);
   }
 
-  method get_diffuse (CoglColor $diffuse) is also<get-diffuse> {
+  method get_diffuse (CoglColor() $diffuse) is also<get-diffuse> {
     cogl_pipeline_get_diffuse($!cp, $diffuse);
   }
 
-  method get_emission (CoglColor $emission) is also<get-emission> {
+  method get_emission (CoglColor() $emission) is also<get-emission> {
     cogl_pipeline_get_emission($!cp, $emission);
   }
 
-  method get_per_vertex_point_size () is also<get-per-vertex-point-size> {
+  method get_per_vertex_point_size is also<get-per-vertex-point-size> {
     cogl_pipeline_get_per_vertex_point_size($!cp);
   }
 
-  method get_specular (CoglColor $specular) is also<get-specular> {
+  method get_specular (CoglColor() $specular) is also<get-specular> {
     cogl_pipeline_get_specular($!cp, $specular);
   }
 
   method set_alpha_test_function (
-    CoglPipelineAlphaFunc $alpha_func,
-    gfloat $alpha_reference
+    Int() $alpha_func,
+    Num() $alpha_reference
   )
     is also<set-alpha-test-function>
   {
-    cogl_pipeline_set_alpha_test_function($!cp, $alpha_func, $alpha_reference);
+    my guint $af = resolve-uint($alpha_func)
+    my gfloat $ar = $alpha_reference;
+
+    cogl_pipeline_set_alpha_test_function($!cp, $af, $ar);
   }
 
-  method set_ambient (CoglColor $ambient) is also<set-ambient> {
+  method set_ambient (CoglColor() $ambient) is also<set-ambient> {
     cogl_pipeline_set_ambient($!cp, $ambient);
   }
 
-  method set_ambient_and_diffuse (CoglColor $color)
+  method set_ambient_and_diffuse (CoglColor() $color)
     is also<set-ambient-and-diffuse>
   {
     cogl_pipeline_set_ambient_and_diffuse($!cp, $color);
   }
 
   method set_blend (
-    Str $blend_string,
+    Str() $blend_string,
     CArray[Pointer[CoglError]] $error = gerror
   )
     is also<set-blend>
   {
-    cogl_pipeline_set_blend($!cp, $blend_string, $error);
+    clear_error;
+    my $rc = cogl_pipeline_set_blend($!cp, $blend_string, $error);
+    set_error($error);
+    $rc;
   }
 
-  method set_blend_constant (CoglColor $constant_color)
+  method set_blend_constant (CoglColor() $constant_color)
     is also<set-blend-constant>
   {
     cogl_pipeline_set_blend_constant($!cp, $constant_color);
@@ -412,94 +424,110 @@ class COGL::Pipeline is COGL::Object {
   }
 
   method set_color4f (
-    gfloat $red,
-    gfloat $green,
-    gfloat $blue,
-    gfloat $alpha
+    Num() $red,
+    Num() $green,
+    Num() $blue,
+    Num() $alpha
   )
     is also<set-color4f>
   {
-    cogl_pipeline_set_color4f($!cp, $red, $green, $blue, $alpha);
+    my gfloat ($r, $g, $b, $a) = ($red, $green, $blue, $alpha);
+
+    cogl_pipeline_set_color4f($!cp, $r, $g, $b, $a);
   }
 
   method set_color4ub (
-    uint8 $red,
-    uint8 $green,
-    uint8 $blue,
-    uint8 $alpha
+    Int() $red,
+    Int() $green,
+    Int() $blue,
+    Int() $alpha
   )
     is also<set-color4ub>
   {
-    cogl_pipeline_set_color4ub($!cp, $red, $green, $blue, $alpha);
+    my uint8 ($r, $g, $b, $a) = resolve-uint8($red, $green, $blue, $alpha);
+
+    cogl_pipeline_set_color4ub($!cp, $r, $g, $b, $a);
   }
 
   method set_depth_state (
-    CoglDepthState $state,
+    Int() $state,
     CArray[Pointer[CoglError]] $error = gerror
   )
     is also<set-depth-state>
   {
-    cogl_pipeline_set_depth_state($!cp, $state, $error);
+    my gint $s = resolve-uint($state);
+
+    clear_error;
+    my $rc = cogl_pipeline_set_depth_state($!cp, $s, $error);
+    set_error($error);
+    $rc;
   }
 
-  method set_diffuse (CoglColor $diffuse) is also<set-diffuse> {
+  method set_diffuse (CoglColor() $diffuse) is also<set-diffuse> {
     cogl_pipeline_set_diffuse($!cp, $diffuse);
   }
 
-  method set_emission (CoglColor $emission) is also<set-emission> {
+  method set_emission (CoglColor() $emission) is also<set-emission> {
     cogl_pipeline_set_emission($!cp, $emission);
   }
 
   method set_per_vertex_point_size (
-    CoglBool $enable,
+    Int() $enable,
     CArray[Pointer[CoglError]] $error = gerror
   )
     is also<set-per-vertex-point-size>
   {
-    cogl_pipeline_set_per_vertex_point_size($!cp, $enable, $error);
+    my gboolean $e = resolve-bool($e);
+
+    clear_error;
+    my $rc = cogl_pipeline_set_per_vertex_point_size($!cp, $e, $error);
+    set_error($error);
+    $rc;
   }
 
-  method set_specular (CoglColor $specular) is also<set-specular> {
+  method set_specular (CoglColor() $specular) is also<set-specular> {
     cogl_pipeline_set_specular($!cp, $specular);
   }
 
-  method set_uniform_1f (gint $uniform_location, gfloat $value)
+  method set_uniform_1f (Int() $uniform_location, Num() $value)
     is also<set-uniform-1f>
   {
+    my gint $u = resolve-int($uniform_location);
+    my gfloat $v = $value;
+
     cogl_pipeline_set_uniform_1f($!cp, $uniform_location, $value);
   }
 
-  method set_uniform_1i (gint $uniform_location, gint $value)
+  method set_uniform_1i (Int() $uniform_location, Int() $value)
     is also<set-uniform-1i>
   {
+    my gint ($u, $v) = resolve-int($uniform_location, $value);
+
     cogl_pipeline_set_uniform_1i($!cp, $uniform_location, $value);
   }
 
   method set_uniform_float (
-    gint $uniform_location,
-    gint $n_components,
-    gint $count,
+    Int() $uniform_location,
+    Int() $n_components,
+    Int() $count,
     CArray[gfloat] $value
   )
     is also<set-uniform-float>
   {
-    cogl_pipeline_set_uniform_float(
-      $!cp,
-      $uniform_location,
-      $n_components,
-      $count,
-      $value
-    );
+    my gint ($u, $n, $c) = resolve-int($uniform_location, $n_components, $count);
+    cogl_pipeline_set_uniform_float($!cp, $u, $n, $c, $value);
   }
 
   method set_uniform_int (
-    gint $uniform_location,
-    gint $n_components,
-    gint $count,
+    Int() $uniform_location,
+    Int() $n_components,
+    Int() $count,
     CArray[gint] $value
   )
     is also<set-uniform-int>
   {
+    my gint ($u, $n, $c) = resolve-int($uniform_location, $n_components, $count);
+
     cogl_pipeline_set_uniform_int(
       $!cp,
       $uniform_location,
@@ -510,22 +538,18 @@ class COGL::Pipeline is COGL::Object {
   }
 
   method set_uniform_matrix (
-    gint $uniform_location,
-    gint $dimensions,
-    gint $count,
-    CoglBool $transpose,
+    Int() $uniform_location,
+    Int() $dimensions,
+    Int() $count,
+    Int() $transpose,
     CArray[gfloat] $value
   )
     is also<set-uniform-matrix>
   {
-    cogl_pipeline_set_uniform_matrix(
-      $!cp,
-      $uniform_location,
-      $dimensions,
-      $count,
-      $transpose,
-      $value
-    );
+    my gint ($u, $d, $c) = resolve-int($uniform_location, $dimensions, $count);
+    my gboolean $t = resolve-bool($transpose);
+
+    cogl_pipeline_set_uniform_matrix($!cp, $u, $d, $c, $t, $value);
   }
 
 }
