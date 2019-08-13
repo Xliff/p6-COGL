@@ -57,32 +57,32 @@ sub generate-round-texture($context) {
 }
 
 sub paint (%data) {
-  my ($diff-time, $i);
+  my gfloat $diff-time;
+  my gint $i;
 
   loop ($i = 0; $i < N_FIREWORKS; $i++) {
     my $firework := %data<fireworks>[$i];
 
-    if
-      abs($firework.x - $firework.start-x) > 2 ||
-      $firework.y < 1
-    {
+    if abs($firework.x - $firework.start-x) > 2e0 || $firework.y < 1e0 {
       $firework.size = (0.001e0 ..^ 0.1e0).rand;
-      $firework.start-x = 1 + $firework.size;
+      $firework.start-x = 1e0 + $firework.size;
       $firework.start-y = -1e0;
       $firework.initial-x-velocity = (-2e0 ^.. -0.1e0).rand;
       $firework.initial-y-velocity = (0.1e0 ..^ 4e0).rand;
       $firework.timer.reset();
 
-      my $range = ^((^3).pick);
-      my $c = <red green blue>;
-      for $range {
-        $firework.color."$c[$_]"() = Bool.pick ?? 255 !! 0;
-      }
+      my $c-idx = (^3).pick;
+      my $b = Bool.pick;
+      memset($firework.color.p, $b ?? 255 !! 0, nativesizeof(Color));
+      $firework.color.red   = $b ?? 0 !! 255 if $c-idx == 0;
+      $firework.color.green = $b ?? 0 !! 255 if $c-idx == 1;
+      $firework.color.blue  = $b ?? 0 !! 255 if $c-idx == 2;
       $firework.color.alpha = 255;
 
+      # Fire some of the fireworks from the other side
       if Bool.pick {
-        $firework.start-x *= -1;
-        $firework.initial-x-velocity *= -1;
+        $firework.start-x = -$firework.start-x;
+        $firework.initial-x-velocity = -$firework.initial-x-velocity;
       }
     }
 
@@ -93,11 +93,11 @@ sub paint (%data) {
 
     $firework.y = $firework.start-y +
                   $firework.initial-y-velocity * $diff-time +
-                  0.5 * GRAVITY * $diff-time²;
+                  0.5 * GRAVITY * $diff-time * $diff-time;
   }
 
   $diff-time = %data<last-spark-time>.elapsed;
-  unless $diff-time ~~ 0..TIME_PER_SPARK {
+  if $diff-time < 0 || $diff-time > TIME_PER_SPARK {
     loop ($i = 0; $i < N_FIREWORKS; $i++) {
       my $spark := %data<sparks>[%data<next-spark-num>];
       my $firework := %data<fireworks>[$i];
@@ -113,17 +113,17 @@ sub paint (%data) {
     }
 
     # Update the colour of each spark
-    loop ($i = 0; $i < N_SPARKS; $i++) {
-      my $spark := %data<sparks>[
-        %data<next-spark-num> + $i +& (N_SPARKS - 1)
-      ];
-
-      my $cv = $i / (N_SPARKS - 1);
-      $spark.base-color.red   *= $cv;
-      $spark.base-color.green *= $cv;
-      $spark.base-color.blue  *= $cv;
-      $spark.base-color.alpha  = 255 * $cv;
-    }
+    # loop ($i = 0; $i < N_SPARKS; $i++) {
+    #   my $spark := %data<sparks>[
+    #     %data<next-spark-num> + $i +& (N_SPARKS - 1)
+    #   ];
+    # 
+    #   my $cv = $i / (N_SPARKS - 1);
+    #   $spark.base-color.red   *= $cv;
+    #   $spark.base-color.green *= $cv;
+    #   $spark.base-color.blue  *= $cv;
+    #   $spark.base-color.alpha  = 255 * $cv;
+    # }
 
     %data<last-spark-time>.reset();
   }
@@ -131,7 +131,7 @@ sub paint (%data) {
   %data<attribute-buffer>.set_data(
     0,
     %data<sparks>.p,
-    %data<sparks>.bufferSize,
+    %data<sparks>.bufferSize
   );
 
   %data<fb>.clear4f(COGL_BUFFER_BIT_COLOR, 0, 0, 0, 1);
@@ -175,17 +175,15 @@ sub create-primitive (%data) {
 }
 
 sub MAIN {
+  my $frame_cb = 0;
   my %data;
 
   %data<fireworks> = GTK::Compat::Roles::TypedBuffer[Firework].new(
     size => N_FIREWORKS
   );
-  %data<fireworks>.bind($_, Firework.new) for ^N_FIREWORKS;
-  
   %data<sparks>    = GTK::Compat::Roles::TypedBuffer[Spark].new(
     size => N_SPARKS
   );
-  %data<sparks>.bind($_, Spark.new) for ^N_SPARKS;
 
   %data<context> = COGL::Context.new;
   create-primitive(%data);
@@ -201,21 +199,27 @@ sub MAIN {
 
   %data<pipeline>.set_layer_point_sprite_coords_enabled(0, True);
 
-  for ^N_FIREWORKS {
-    %data<fireworks>[$_].x     = -FLT_MAX;
-    %data<fireworks>[$_].y     = FLT_MAX;
-    %data<fireworks>[$_].size  = 0e0;
-    %data<fireworks>[$_].timer = GTK::Compat::Timer.new;
+  my gint $i;
+  loop ($i = 0; $i < N_FIREWORKS; $i++) {
+    %data<fireworks>.bind($i, Firework.new);
+    %data<fireworks>[$i].x     = -FLT_MAX;
+    %data<fireworks>[$i].y     = FLT_MAX;
+    %data<fireworks>[$i].size  = 0e0;
+    %data<fireworks>[$i].timer = GTK::Compat::Timer.new;
   }
-  for ^N_SPARKS {
-    %data<sparks>[$_].x = %data<sparks>[$_].y = 2e0;
+  loop ($i = 0; $i < N_SPARKS; $i++) {
+    %data<sparks>.bind($i, Spark.new);
+    %data<sparks>[$i].x = %data<sparks>[$i].y = 2e0;
   }
 
   %data<fb> = COGL::OnScreen.new(%data<context>, 800, 600);
   %data<fb>.show;
   %data<fb>.add_frame_callback(-> *@a {
     # CoglOnscreen, CoglFrameEvent, CoglFrameInfo, Pointer
-    paint(%data) if CoglFrameEvent( @a[1] ) == COGL_FRAME_EVENT_SYNC
+    if CoglFrameEvent( @a[1] ) == COGL_FRAME_EVENT_SYNC {
+      paint(%data);
+      $frame_cb++;
+    }
   });
 
   my $source = COGL::Source.new(%data<context>);
@@ -224,10 +228,16 @@ sub MAIN {
   my $loop = GTK::Compat::MainLoop.new(GMainContext, True);
   paint(%data);
 
+  my $lock = Lock.new;
+  $*SCHEDULER.cue({ 
+    say "{ $frame_cb } calls made this second."; 
+    $lock.protect({ $frame_cb = 0 });
+  }, every => 1);
+  
   $loop.run;
   $loop.unref;
 
   %data{$_}.unref for <pipeline attribute_buffer primative fb context>;
   %data<last-spark-time>.destroy;
-  .destroy for %data<fireworks>;
+  %data<fireworks>[$_].destroy for ^N_FIREWORKS;
 }

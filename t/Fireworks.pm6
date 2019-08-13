@@ -3,6 +3,7 @@ use v6.c;
 use GTK::Raw::Utils;
 
 use GTK::Compat::Types;
+use GTK::Roles::Pointers;
 use COGL::Raw::Types;
 
 use GTK::Compat::Timer;
@@ -16,7 +17,7 @@ constant TIME_PER_SPARK is export = 0.1             ;
 constant GRAVITY        is export = -1.5            ;
 constant FLT_MAX        is export = 3.402823e38     ;   # C define value
 
-class Color is repr<CStruct> is export {
+class Color is repr<CStruct> is export does GTK::Roles::Pointers {
   has uint8 $!red  ;
   has uint8 $!green;
   has uint8 $!blue ;
@@ -64,7 +65,7 @@ class Color is repr<CStruct> is export {
   
 }
 
-class Firework is repr<CStruct> is export {
+class Firework is repr<CStruct> is export does GTK::Roles::Pointers {
   my $timer-attr = Firework.^attributes[* - 1];
 
   has gfloat $!size              ;
