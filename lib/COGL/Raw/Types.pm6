@@ -42,6 +42,7 @@ class CoglFrameBuffer      is repr('CPointer') is export does GTK::Roles::Pointe
 class CoglFrameInfo        is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglHandle           is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglIndices          is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglIndexBuffer      is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglMaterial         is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglMatrix           is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglObject           is repr('CPointer') is export does GTK::Roles::Pointers { }

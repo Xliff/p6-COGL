@@ -99,7 +99,7 @@ class COGL::FrameBuffer is COGL::Object {
   method modelview_matrix is rw is also<modelview-matrix> {
     Proxy.new: 
       FETCH => -> $ { self.get-modelview-matrix },
-      STORE => -> $, CoglMatrix() \m { self.set-modelview-matrix(m) };
+      STORE => -> $, CoglMatrix() \mm { self.set-modelview-matrix(mm) };
   }
 
   method samples_per_pixel is rw is also<samples-per-pixel> {
@@ -302,7 +302,7 @@ class COGL::FrameBuffer is COGL::Object {
     cogl_framebuffer_get_alpha_bits($!cf);
   }
   
-  method get_aspect is also<get-aspect>
+  method get_aspect is also<get-aspect> {
     self.width / self.height;
   }
 

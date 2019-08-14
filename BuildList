@@ -1,3 +1,4 @@
+GTK::Comat::Types
 GTK::Compat::Raw::Main
 GTK::Compat::Source
 GTK::Compat::Types
@@ -7,6 +8,7 @@ Method::Also
 Pango::FontMap
 Pango::Raw::Types
 COGL::Raw::Types
+COGL::IndexBuffer
 COGL::Compat::Types
 COGL::Poll
 COGL::Raw::Attribute
@@ -14,8 +16,11 @@ COGL::Raw::Bitmap
 COGL::Raw::Buffer
 COGL::Raw::Color
 COGL::Raw::Context
+COGL::Raw::DepthState
 COGL::Raw::Euler
 COGL::Raw::FrameBuffer
+COGL::Raw::Indices
+COGL::Raw::Matrix
 COGL::Raw::Object
 COGL::Raw::Offscreen
 COGL::Raw::OnScreen
@@ -32,8 +37,11 @@ COGL::Roles::Buffer
 COGL::Source
 COGL::Bitmap
 COGL::Color
+COGL::DepthState
 COGL::Euler
 COGL::FontMap
+COGL::Indices
+COGL::Matrix
 COGL::Object
 COGL::Offscreen
 COGL::Pango
