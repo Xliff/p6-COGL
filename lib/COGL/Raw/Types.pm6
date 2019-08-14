@@ -36,7 +36,6 @@ class CoglBitmap           is repr('CPointer') is export does GTK::Roles::Pointe
 class CoglBuffer           is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglColor            is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglContext          is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglDepthState       is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglDisplay          is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglEuler            is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglFrameBuffer      is repr('CPointer') is export does GTK::Roles::Pointers { }
@@ -189,6 +188,28 @@ class CoglOnscreenDirtyInfo is repr<CStruct> does GTK::Roles::Pointers is export
   has gint $.y      is rw;
   has gint $.width  is rw;
   has gint $.height is rw;
+}
+
+class CoglDepthState is repr<CStruct>        does GTK::Roles::Pointers is export {
+  # private >
+  has uint32   $.magic;
+
+  has CoglBool $.test_enabled;
+  has guint    $.test_function;
+  has CoglBool $.write_enabled;
+  has gfloat   $.range_near;
+  has gfloat   $.range_far;
+
+  has uint32   $.padding0;
+  has uint32   $.padding1;
+  has uint32   $.padding2;
+  has uint32   $.padding3;
+  has uint32   $.padding4;
+  has uint32   $.padding5;
+  has uint32   $.padding6;
+  has uint32   $.padding7;
+  has uint32   $.padding8;
+  has uint32   $.padding9;
 }
 
 our enum CoglAttributeType is export (
