@@ -10,7 +10,8 @@ unit package COGL::Raw::Types;
 # Number of times I've had to force compile the whole project.
 constant forced = 0;
 
-constant cogl is export := 'cogl';
+constant cogl       is export := 'cogl';
+constant cogl-pango is export := 'coglpango';
 
 constant CoglBool      is export := int32;
 constant CoglError     is export := GError;
@@ -48,6 +49,7 @@ class CoglObject           is repr('CPointer') is export does GTK::Roles::Pointe
 class CoglOffscreen        is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglOnscreen         is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglOnscreenTemplate is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglPangoFontMap     is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglPipeline         is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglPixelBuffer      is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglPrimitive        is repr('CPointer') is export does GTK::Roles::Pointers { }

@@ -1,7 +1,11 @@
+GTK::Compat::Raw::Main
+GTK::Compat::Source
 GTK::Compat::Types
 GTK::Raw::Utils
 GTK::Roles::Pointers
 Method::Also
+Pango::FontMap
+Pango::Raw::Types
 COGL::Raw::Types
 COGL::Compat::Types
 COGL::Poll
@@ -15,6 +19,7 @@ COGL::Raw::FrameBuffer
 COGL::Raw::Object
 COGL::Raw::Offscreen
 COGL::Raw::OnScreen
+COGL::Raw::Pango
 COGL::Raw::Pipeline
 COGL::Raw::Pipeline::LayerState
 COGL::Raw::Primitive
@@ -24,13 +29,14 @@ COGL::Raw::Texture
 COGL::Raw::Texture2d
 COGL::Renderer
 COGL::Roles::Buffer
+COGL::Source
 COGL::Bitmap
 COGL::Color
 COGL::Euler
-COGL::FrameBuffer
+COGL::FontMap
 COGL::Object
 COGL::Offscreen
-COGL::OnScreen
+COGL::Pango
 COGL::Pipeline
 COGL::Primitive
 COGL::Quaternion
@@ -38,4 +44,6 @@ COGL::Texture
 COGL::Texture2d
 COGL::AttributeBuffer
 COGL::Context
+COGL::FrameBuffer
+COGL::OnScreen
 COGL::Attribute
