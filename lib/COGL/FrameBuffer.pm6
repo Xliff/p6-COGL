@@ -95,6 +95,12 @@ class COGL::FrameBuffer is COGL::Object {
       }
     );
   }
+  
+  method modelview_matrix is rw is also<modelview-matrix> {
+    Proxy.new: 
+      FETCH => -> $ { self.get-modelview-matrix },
+      STORE => -> $, CoglMatrix() \m { self.set-modelview-matrix(m) };
+  }
 
   method samples_per_pixel is rw is also<samples-per-pixel> {
     Proxy.new(
@@ -295,6 +301,10 @@ class COGL::FrameBuffer is COGL::Object {
   method get_alpha_bits is also<get-alpha-bits> {
     cogl_framebuffer_get_alpha_bits($!cf);
   }
+  
+  method get_aspect is also<get-aspect>
+    self.width / self.height;
+  }
 
   method get_blue_bits is also<get-blue-bits> {
     cogl_framebuffer_get_blue_bits($!cf);
@@ -321,18 +331,36 @@ class COGL::FrameBuffer is COGL::Object {
     unstable_get_type( self.^name, &cogl_framebuffer_get_gtype, $n, $t );
   }
 
-  method get_height is also<get-height> {
+  method get_height 
+    is also<
+      get-height
+      height
+    > 
+  {
     cogl_framebuffer_get_height($!cf);
   }
 
-  method get_is_stereo is also<get-is-stereo> {
+  method get_is_stereo 
+    is also<
+      get-is-stereo
+      is-stereo
+      is_stereo
+    > 
+  {
     cogl_framebuffer_get_is_stereo($!cf);
   }
 
-  method get_modelview_matrix (CoglMatrix() $matrix)
+  proto method get_modelview_matrix (|)
     is also<get-modelview-matrix>
-  {
+  { * }
+
+  multi method get_modelview_matrix {
+    my CoglMatrix $matrix .= new;
+    samewith($matrix);
+  }
+  multi method get_modelview_matrix (CoglMatrix() $matrix) {
     cogl_framebuffer_get_modelview_matrix($!cf, $matrix);
+    $matrix;
   }
 
   method get_projection_matrix (CoglMatrix() $matrix)
@@ -343,6 +371,10 @@ class COGL::FrameBuffer is COGL::Object {
 
   method get_red_bits is also<get-red-bits> {
     cogl_framebuffer_get_red_bits($!cf);
+  }
+  
+  method get_size is also<size> {
+    (self.get-width, self.get-height);
   }
 
   method get_viewport4fv (gfloat $viewport) is also<get-viewport4fv> {
@@ -365,7 +397,12 @@ class COGL::FrameBuffer is COGL::Object {
     cogl_framebuffer_get_viewport_y($!cf);
   }
 
-  method get_width is also<get-width> {
+  method get_width 
+    is also<
+      get-width
+      width
+    > 
+  {
     cogl_framebuffer_get_width($!cf);
   }
 
