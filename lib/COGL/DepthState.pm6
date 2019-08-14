@@ -1,5 +1,7 @@
 use v6.c;
 
+use Method::Also;
+
 use GTK::Raw::Utils;
 
 use GTK::Compat::Types;
@@ -14,13 +16,16 @@ class COGL::DepthState {
   }
   
   method COGL::Raw::Types::CoglDepthState 
+    is also<CoglDepthState>
   { $!cds }
   
   method new {
-    self.bless( depth => COGL::DepthState.init( CoglDepthState.new ) )
+    self.bless( 
+      depth => COGL::DepthState.init( CoglDepthState.new ) 
+    );
   }
   
-  method test_enabled is rw {
+  method test_enabled is rw is also<test-enabled> {
     Proxy.new(
       FETCH => sub ($) {
         so cogl_depth_state_get_test_enabled($!cds);
@@ -33,7 +38,7 @@ class COGL::DepthState {
     );
   }
 
-  method test_function is rw {
+  method test_function is rw is also<test-function> {
     Proxy.new(
       FETCH => sub ($) {
         CoglDepthTestFunction( cogl_depth_state_get_test_function($!cds) );
@@ -46,7 +51,7 @@ class COGL::DepthState {
     );
   }
 
-  method write_enabled is rw {
+  method write_enabled is rw is also<write-enabled> {
     Proxy.new(
       FETCH => sub ($) {
         so cogl_depth_state_get_write_enabled($!cds);
@@ -59,18 +64,23 @@ class COGL::DepthState {
     );
   }
   
-  method get_range (Num() $near_val, Num $far_val) {
+  method get_range (Num() $near_val, Num() $far_val) 
+    is also<get-range> 
+  {
     my gfloat ($nv, $fv) = ($near_val, $far_val);
     
     cogl_depth_state_get_range($!cds, $near_val, $far_val);
   }
 
-  method init (COGL::DepthState:U: CoglDepthState $slate) {
-    cogl_depth_state_init($slate);
-    $slate;
+  # Tabula
+  method init (COGL::DepthState:U: CoglDepthState $rosa) {
+    cogl_depth_state_init($rosa);
+    $rosa;
   }
 
-  method set_range (Num() $near_val, Num $far_val) {
+  method set_range (Num() $near_val, Num() $far_val) 
+    is also<set-range> 
+  {
     my gfloat ($nv, $fv) = ($near_val, $far_val);
     
     cogl_depth_state_set_range($!cds, $near_val, $far_val);
