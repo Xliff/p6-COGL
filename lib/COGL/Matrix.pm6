@@ -31,7 +31,10 @@ DIE
     is also<CoglMatrix>
   { $!cm }
   
-  method new(*@params, *%origin) {
+  multi method new(CoglMatrix $matrix) {
+    self.bless( :$matrix );
+  }
+  multi method new(*@params, *%origin) {
     die $die-single-msg  unless %origin.keys.all eq @valid-origins.any;
     die $die-single-msg  if     %origin.values.map( *.Int ).sum > 1;
     

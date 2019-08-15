@@ -20,8 +20,8 @@ class COGL::OnScreen is COGL::FrameBuffer {
   has CoglOnscreen $!co;
 
   submethod BUILD (:$onscreen) {
-
     given $onscreen {
+      
       when OnscreenAncestry {
         my $to-parent;
         $!co = do {
@@ -44,7 +44,6 @@ class COGL::OnScreen is COGL::FrameBuffer {
       }
 
     }
-
   }
   
   method COGL::Raw::Types::CoglOnscreen 

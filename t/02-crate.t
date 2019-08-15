@@ -228,6 +228,7 @@ sub MAIN {
   }
   
   while True {
+    state $f = False;
     use NativeCall;
     
     if %data<swap-ready> {
@@ -242,7 +243,7 @@ sub MAIN {
     my $renderer = %data<ctx>.renderer;
     COGL::Poll.get-info($renderer, $poll_fds, $n_poll_fds, $timeout);
     GTK::Compat::MainLoop.poll(
-      cast(Pointer, $poll_fds), 
+      $poll_fds[0], 
       $n_poll_fds, 
       $timeout == -1 ?? -1 !! $timeout / 1000
     );

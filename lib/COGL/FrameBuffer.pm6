@@ -20,11 +20,15 @@ class COGL::FrameBuffer is COGL::Object {
   also does COGL::Roles::Buffer;
 
   has CoglFrameBuffer $!cf;
+ 
+  submethod BUILD (CoglFrameBuffer :$framebuffer) {
+    self.setFramebuffer($framebuffer) if $framebuffer;
+  }
   
   method COGL::Raw::Types::CoglFrameBuffer
     is also<CoglFrameBuffer>
   { $!cf }
-
+ 
   method setFrameBuffer(FrameBufferAncestry $_) {
     my $to-parent;
     $!cf = do {
@@ -47,6 +51,10 @@ class COGL::FrameBuffer is COGL::Object {
     self.setObject($to-parent);
     $!cb //= cast(CoglBuffer, $!cf);          # COGL::Roles::Buffer
   }
+  
+  method new (CoglFrameBuffer $framebuffer) {
+    self.bless( :$framebuffer );
+  }
 
   method color_mask is rw is also<color-mask> {
     Proxy.new(
@@ -55,6 +63,7 @@ class COGL::FrameBuffer is COGL::Object {
       },
       STORE => sub ($, Int() $color_mask is copy) {
         my guint $cm = resolve-uint($color_mask);
+        
         cogl_framebuffer_set_color_mask($!cf, $cm);
       }
     );
@@ -67,6 +76,7 @@ class COGL::FrameBuffer is COGL::Object {
       },
       STORE => sub ($, Int() $enabled is copy) {
         my gboolean $e = resolve-bool($enabled);
+        
         cogl_framebuffer_set_depth_texture_enabled($!cf, $e);
       }
     );
@@ -79,6 +89,7 @@ class COGL::FrameBuffer is COGL::Object {
       },
       STORE => sub ($, Int() $depth_write_enabled is copy) {
         my gboolean $e = resolve-bool($depth_write_enabled);
+        
         cogl_framebuffer_set_depth_write_enabled($!cf, $e);
       }
     );
@@ -91,14 +102,15 @@ class COGL::FrameBuffer is COGL::Object {
       },
       STORE => sub ($, $dither_enabled is copy) {
         my gboolean $e = resolve-bool($dither_enabled);
+        
         cogl_framebuffer_set_dither_enabled($!cf, $e);
       }
     );
   }
   
-  method modelview_matrix is rw is also<modelview-matrix> {
+  method modelview_matrix(:$raw = False) is rw is also<modelview-matrix> {
     Proxy.new: 
-      FETCH => -> $ { self.get-modelview-matrix },
+      FETCH => -> $ { self.get-modelview-matrix(:$raw) },
       STORE => -> $, CoglMatrix() \mm { self.set-modelview-matrix(mm) };
   }
 
@@ -109,6 +121,7 @@ class COGL::FrameBuffer is COGL::Object {
       },
       STORE => sub ($, Int() $samples_per_pixel is copy) {
         my gint $s = resolve-int($samples_per_pixel);
+        
         cogl_framebuffer_set_samples_per_pixel($!cf, $s);
       }
     );
@@ -121,6 +134,7 @@ class COGL::FrameBuffer is COGL::Object {
       },
       STORE => sub ($, Int() $stereo_mode is copy) {
         my guint $sm = resolve-uint($stereo_mode);
+        
         cogl_framebuffer_set_stereo_mode($!cf, $sm);
       }
     );
@@ -135,10 +149,18 @@ class COGL::FrameBuffer is COGL::Object {
     so $rc;
   }
 
-  method cogl_get_draw_framebuffer ( COGL::FrameBuffer:U: )
-    is also<cogl-get-draw-framebuffer>
+  method get_draw_framebuffer ( COGL::FrameBuffer:U: :$raw = False)
+    is also<
+      get-draw-framebuffer
+      draw_framebuffer
+      draw-framebuffer
+    >
   {
-    cogl_get_draw_framebuffer();
+    my $fb = cogl_get_draw_framebuffer();
+    $fb ??
+      ( $raw ?? $fb !! COGL::Framebuffer.new($fb) )
+      !!
+      Nil;
   }
 
   method is_framebuffer (
@@ -354,13 +376,13 @@ class COGL::FrameBuffer is COGL::Object {
     is also<get-modelview-matrix>
   { * }
 
-  multi method get_modelview_matrix {
+  multi method get_modelview_matrix(:$raw = False) {
     my CoglMatrix $matrix .= new;
-    samewith($matrix);
+    samewith($matrix, :$raw);
   }
-  multi method get_modelview_matrix (CoglMatrix() $matrix) {
+  multi method get_modelview_matrix (CoglMatrix() $matrix, :$raw = False) {
     cogl_framebuffer_get_modelview_matrix($!cf, $matrix);
-    $matrix;
+    $raw ?? $matrix !! COGL::Matrix.new($matrix);
   }
 
   method get_projection_matrix (CoglMatrix() $matrix)
