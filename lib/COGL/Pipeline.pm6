@@ -360,8 +360,9 @@ class COGL::Pipeline is COGL::Object {
     cogl_pipeline_get_color($!cp, $color);
   }
 
-  method get_depth_state (Int() $state_out) is also<get-depth-state> {
-    my guint $so = resolve-uint($state_out);
+  method get_depth_state (CoglDepthState() $state_out) 
+    is also<get-depth-state> 
+  {
     cogl_pipeline_get_depth_state($!cp, $state_out);
   }
 
@@ -452,15 +453,13 @@ class COGL::Pipeline is COGL::Object {
   }
 
   method set_depth_state (
-    Int() $state,
+    CoglDepthState() $state,
     CArray[Pointer[CoglError]] $error = gerror
   )
     is also<set-depth-state>
   {
-    my gint $s = resolve-uint($state);
-
     clear_error;
-    my $rc = cogl_pipeline_set_depth_state($!cp, $s, $error);
+    my $rc = cogl_pipeline_set_depth_state($!cp, $state, $error);
     set_error($error);
     $rc;
   }

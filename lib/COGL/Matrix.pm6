@@ -1,6 +1,7 @@
 use v6.c;
 
 use Method::Also;
+use NativeCall;
 
 use GTK::Compat::Types;
 use COGL::Raw::Types;
@@ -8,18 +9,27 @@ use COGL::Raw::Matrix;
 
 use GTK::Raw::Utils;
 
-class COGL::Matirx {
+class COGL::Matrix {
   my @valid-origins = <identity quaternion array euler translation>;
   my $die-single-msg = qq:to/DIE/;
 Must specify a SINGLE valid origin. The valid origins are:
   { @valid-origins.sort.join(', ') }
 DIE
 
-  has CoglMatrix $!cm;
-  
+  has CoglMatrix $!cm handles<
+    xx xy xz xw
+    yx yy yz yw
+    zx zy zz zw
+    wx wy wz ww
+  >;
+
   submethod BUILD (:$matrix) {
     $!cm = $matrix;
   }
+  
+  method COGL::Raw::Types::CoglMatrix 
+    is also<CoglMatrix>
+  { $!cm }
   
   method new(*@params, *%origin) {
     die $die-single-msg  unless %origin.keys.all eq @valid-origins.any;
@@ -28,7 +38,7 @@ DIE
     my $matrix = CoglMatrix.new;
     { 
       when %origin<identity>.so {
-        COGL::Matrix.init_from_identity($matrix);
+        COGL::Matrix.init_identity($matrix);
       }
       
       when %origin<array>.so {
@@ -99,7 +109,11 @@ DIE
     unstable_get_type( self.^name, &cogl_matrix_get_gtype, $n, $t );
   }
 
-  multi method get_inverse (:$raw) is also<get-inverse> {
+  proto method get_inverse (|)
+    is also<get-inverse>
+  { * }
+  
+  multi method get_inverse (:$raw = False) {
     my $i = 0;
     COGL::Matrix.get_inverse($!cm, $i);
     $raw ?? $i !! COGL::Matrix.new($i);
@@ -107,9 +121,7 @@ DIE
   multi method get_inverse (
     COGL::Matrix:U: 
     CoglMatrix() $matrix, $inverse is rw
-  ) 
-    is also<get-inverse> 
-  {
+  ) {
     $inverse = CoglMatrix.new;
     cogl_matrix_get_inverse($!cm, $inverse);
   }
@@ -142,7 +154,7 @@ DIE
     is also<init-from-quaternion> 
   {
     cogl_matrix_init_from_quaternion($matrix, $quaternion);
-    $matrix'
+    $matrix;
   }
 
   method init_identity (COGL::Matrix:U: CoglMatrix() $matrix) 
@@ -341,6 +353,7 @@ DIE
     cogl_matrix_transpose($!cm);
   }
 
+  # Not aliased due to number in name
   method view_2d_in_frustum (
     Num() $left, 
     Num() $right, 
@@ -350,9 +363,7 @@ DIE
     Num() $z_2d, 
     Num() $width_2d, 
     Num() $height_2d
-  ) 
-    is also<view-2d-in-frustum> 
-  {
+  ) {
     my gfloat ($l, $r, $b, $t, $z, $z2d, $w, $h) = (
       $left, 
       $right, 
@@ -367,6 +378,7 @@ DIE
     cogl_matrix_view_2d_in_frustum($!cm, $l, $r, $b, $t, $z, $z2d, $w, $h);
   }
 
+  # Not aliased due to number in name.
   method view_2d_in_perspective (
     Num() $fov_y, 
     Num() $aspect, 
@@ -374,9 +386,7 @@ DIE
     Num() $z_2d, 
     Num() $width_2d, 
     Num() $height_2d
-  ) 
-    is also<view-2d-in-perspective> 
-  {
+  ) {
     my gfloat ($fy, $a, $z, $z2d, $w, $h) = (
       $fov_y, 
       $aspect, 

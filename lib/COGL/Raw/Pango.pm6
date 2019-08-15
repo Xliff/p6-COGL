@@ -36,7 +36,7 @@ sub cogl_pango_font_map_get_use_mipmapping (CoglPangoFontMap $font_map)
   is export
 { * }
 
-sub cogl_pango_font_map_new ()
+sub cogl_pango_font_map_new (CoglContext $context)
   returns CoglPangoFontMap
   is native(cogl-pango)
   is export

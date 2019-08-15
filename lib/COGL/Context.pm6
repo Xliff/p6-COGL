@@ -84,7 +84,12 @@ class COGL::Context is COGL::Object {
     so cogl_is_context($candidate);
   }
 
-  method get_display is also<get-display> {
+  method get_display 
+    is also<
+      get-display
+      display
+    > 
+  {
     cogl_context_get_display($!cc);
   }
 
@@ -93,7 +98,12 @@ class COGL::Context is COGL::Object {
     unstable_get_type( self.^name, &cogl_context_get_gtype, $n, $t );
   }
 
-  method get_renderer is also<get-renderer> {
+  method get_renderer 
+    is also<
+      get-renderer
+      renderer
+    > 
+  {
     cogl_context_get_renderer($!cc);
   }
 

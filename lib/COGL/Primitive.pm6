@@ -251,7 +251,7 @@ class COGL::Primitive is COGL::Object {
   }
 
   method set_indices (
-    CArray[CoglIndices] $indices, # CoglIndices *indices,
+    gpointer $indices, # CoglIndices *indices,
     Int() $n_indices
   )
     is also<set-indices>

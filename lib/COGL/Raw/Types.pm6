@@ -11,7 +11,7 @@ unit package COGL::Raw::Types;
 constant forced = 0;
 
 constant cogl       is export := 'cogl';
-constant cogl-pango is export := 'coglpango';
+constant cogl-pango is export := 'cogl-pango';
 
 constant CoglBool      is export := int32;
 constant CoglError     is export := GError;
@@ -44,7 +44,6 @@ class CoglHandle           is repr('CPointer') is export does GTK::Roles::Pointe
 class CoglIndices          is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglIndexBuffer      is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglMaterial         is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglMatrix           is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglObject           is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglOffscreen        is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglOnscreen         is repr('CPointer') is export does GTK::Roles::Pointers { }
@@ -212,6 +211,35 @@ class CoglDepthState is repr<CStruct>        does GTK::Roles::Pointers is export
   has uint32   $.padding8;
   has uint32   $.padding9;
 }
+
+class CoglMatrix is repr<CStruct>            does GTK::Roles::Pointers is export {
+  # column 0
+  has gfloat $.xx is rw;
+  has gfloat $.yx is rw;
+  has gfloat $.zx is rw;
+  has gfloat $.wx is rw;
+
+  # column 1
+  has gfloat $.xy is rw;
+  has gfloat $.yy is rw;
+  has gfloat $.zy is rw;
+  has gfloat $.wy is rw;
+
+  # column 2
+  has gfloat $.xz is rw;
+  has gfloat $.yz is rw;
+  has gfloat $.zz is rw;
+  has gfloat $.wz is rw;
+
+  # column 3
+  has gfloat $.xw is rw;
+  has gfloat $.yw is rw;
+  has gfloat $.zw is rw;
+  has gfloat $.ww is rw;
+
+  has guint $!private;
+};
+
 
 our enum CoglAttributeType is export (
   COGL_ATTRIBUTE_TYPE_BYTE           => 0x1400,

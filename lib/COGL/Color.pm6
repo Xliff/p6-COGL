@@ -23,6 +23,7 @@ class COGL::Color {
   multi method new (CoglColor $color) {
     self.bless(:$color);
   }
+  # XXX - Will need same strategy here as was done for COGL::Matrix
   multi method new {
     self.bless( color => cogl_color_new() );
   }
@@ -184,15 +185,14 @@ class COGL::Color {
     unstable_get_type( self.^name, &cogl_color_get_gtype, $n, $t );
   }
 
-  method init_from_4f (Num() $red, Num() $green, Num() $blue, Num() $alpha) is also<init-from-4f> {
+  # Not aliased due to position of number in name
+  method init_from_4f (Num() $red, Num() $green, Num() $blue, Num() $alpha) {
     my gfloat ($r, $g, $b, $a) = ($red, $green, $blue, $alpha);
     cogl_color_init_from_4f($!cc, $r, $g, $b, $a);
+    self;
   }
 
-  proto method init_from_4fv (|)
-    is also<init-from-4fv>
-  { * }
-
+  # Not aliased due to position of number in name
   multi method init_from_4fv(Num @colors) {
     die "COGL::Color.init_from_4fv will only take an array with 4 { ''
          }floating point values."
@@ -204,18 +204,19 @@ class COGL::Color {
   }
   multi method init_from_4fv (CArray[gfloat] $color_array) {
     cogl_color_init_from_4fv($!cc, $color_array);
+    self;
   }
 
+  # Not aliased due to position of number in name
   method init_from_4ub (
     Int() $red,
     Int() $green,
     Int() $blue,
     Int() $alpha
-  )
-    is also<init-from-4ub>
-  {
+  ) {
     my uint8 ($r, $g, $b, $a) = resolve-uint8($red, $green, $blue, $alpha);
     cogl_color_init_from_4ub($!cc, $r, $g, $b, $a);
+    self;
   }
 
   method init_from_hsl (Num() $hue, Num() $saturation, Num() $luminance)
@@ -223,15 +224,15 @@ class COGL::Color {
   {
     my gfloat ($h, $s, $l) = ($hue, $saturation, $luminance);
     cogl_color_init_from_hsl($!cc, $h, $s, $l);
+    self;
   }
 
   method premultiply {
     cogl_color_premultiply($!cc);
   }
 
-  method set_from_4f (gfloat $red, gfloat $green, gfloat $blue, gfloat $alpha)
-    is also<set-from-4f>
-  {
+  # Not aliased due to position of number in name.
+  method set_from_4f (Num() $red, Num() $green, Num() $blue, Num() $alpha) {
     my gfloat ($r, $g, $b, $a) = ($red, $green, $blue, $alpha);
     cogl_color_set_from_4f($!cc, $r, $g, $b, $a);
   }
@@ -241,9 +242,7 @@ class COGL::Color {
     Int() $green,
     Int() $blue,
     Int() $alpha
-  )
-    is also<set-from-4ub>
-  {
+  ) {
     my uint8 ($r, $g, $b, $a) = resolve-uint8($red, $green, $blue, $alpha);
     cogl_color_set_from_4ub($!cc, $r, $g, $b, $a);
   }

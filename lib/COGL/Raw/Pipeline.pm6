@@ -177,7 +177,7 @@ sub cogl_pipeline_set_color4ub (
 
 sub cogl_pipeline_set_depth_state (
   CoglPipeline $pipeline,
-  guint $state, # CoglDepthState $state,
+  CoglDepthState $state,
   CArray[Pointer[CoglError]] $error
 )
   returns CoglBool

@@ -185,7 +185,7 @@ sub cogl_primitive_set_first_vertex (
 
 sub cogl_primitive_set_indices (
   CoglPrimitive $primitive,
-  CArray[CoglIndices] $indices,
+  Pointer $indices,
   gint $n_indices
 )
   is native(cogl)

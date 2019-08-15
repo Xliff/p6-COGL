@@ -24,7 +24,7 @@ sub cogl_matrix_copy (CoglMatrix $matrix)
   is export
 { * }
 
-sub cogl_matrix_equal (void $v1, void $v2)
+sub cogl_matrix_equal (CoglMatrix $v1, CoglMatrix $v2)
   returns CoglBool
   is native(cogl)
   is export
@@ -49,7 +49,7 @@ sub cogl_matrix_frustum (
 { * }
 
 sub cogl_matrix_get_array (CoglMatrix $matrix)
-  returns float
+  returns CArray[gfloat]
   is native(cogl)
   is export
 { * }
