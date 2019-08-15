@@ -60,7 +60,7 @@ DIE
     self.bless( :$matrix );
   }
       
-  method cogl_debug_matrix_print is also<cogl-debug-matrix-print> {
+  method debug_matrix_print is also<debug-matrix-print> {
     cogl_debug_matrix_print($!cm);
   }
 

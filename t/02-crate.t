@@ -68,24 +68,19 @@ my @v = (
  
 my $vertices;
 
-INIT {
-  $vertices = GTK::Compat::Roles::TypedBuffer[CoglVertexP3T2].new(
-    size => @v.elems
-  );
-  for @v.kv -> $k, $v {
-    $vertices.bind( $k, CoglVertexP3T2.new( |$v ) );
-  }
-}
-
 sub paint(%d) {
   CATCH { default { .message.say } } 
   
-  say 'Paint';
   with %d<fb> {
     .clear4f(COGL_BUFFER_BIT_COLOR +| COGL_BUFFER_BIT_DEPTH, 0, 0, 0, 1);
     .push-matrix;
     .translate(%d<framebuffer-width> / 2, %d<framebuffer-height> / 2, 0);
     .scale(75, 75, 75);
+    
+    # Update the rotation based on the time the application has been
+    # running so that we get a linear animation regardless of the frame
+    # rate 
+    my $rotation = %d<timer>.elapsed * 60;
     
     # Rotate the cube separately around each axis.
     #
@@ -95,7 +90,6 @@ sub paint(%d) {
     # in reverse order which is why the rotation is done last, since
     # we want it to be a rotation around the origin, before it is
     # scaled and translated.
-    my $rotation = %d<timer>.elapsed * 60;
     .rotate($rotation, 0, 0, 1);
     .rotate($rotation, 0, 1, 0);
     .rotate($rotation, 1, 0, 0);
@@ -116,6 +110,13 @@ sub paint(%d) {
 sub MAIN {
   my %data;
   
+  $vertices = GTK::Compat::Roles::TypedBuffer[CoglVertexP3T2].new(
+    size => @v.elems
+  );
+  for @v.kv -> $k, $v {
+    $vertices.bind( $k, CoglVertexP3T2.new( |$v ) );
+  }
+  
   %data<ctx> = COGL::Context.new;
   unless %data<ctx> {
     say "Failed to create context: { $ERROR.message }";
@@ -126,8 +127,6 @@ sub MAIN {
     .<fb> = COGL::OnScreen.new(.<ctx>, 640, 480);
     .<framebuffer-width framebuffer-height> = .<fb>.size;
     
-    say "{ .<framebuffer-width> }, { .<framebuffer-height> }";
-    
     .<timer> = GTK::Compat::Timer.new;
     .<fb>.show;
     .<fb>.set-viewport(
@@ -136,7 +135,7 @@ sub MAIN {
     );
   
     my ($fovy, $aspect, $z-near, $z_2d, $z-far) = 
-      (60, %data<fb>.get-aspect, 0.1, 1000, 2000); 
+      (60, .<fb>.get-aspect, 0.1, 1000, 2000); 
 
     .<fb>.perspective($fovy, $aspect, $z-near, $z-far);
   
@@ -155,8 +154,10 @@ sub MAIN {
     .<view> = COGL::Matrix.new(:identity);
     #?
     .<view>.view_2d_in_perspective(
-      $aspect, $fovy, $z-near, $z_2d, |.<fb>.size
+      $fovy, $aspect, $z-near, $z_2d, 
+      .<framebuffer-width>, .<framebuffer-height>
     );
+    .<view>.debug-matrix-print;
     #?
     .<fb>.modelview-matrix = .<view>;
     #?
