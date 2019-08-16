@@ -1,7 +1,7 @@
-GTK::Comat::Types
 GTK::Compat::Raw::Main
 GTK::Compat::Source
 GTK::Compat::Types
+GTK::Raw::Types
 GTK::Raw::Utils
 GTK::Roles::Pointers
 Method::Also
@@ -24,6 +24,7 @@ COGL::Raw::Matrix
 COGL::Raw::Object
 COGL::Raw::Offscreen
 COGL::Raw::OnScreen
+COGL::Raw::OnscreenTemplate
 COGL::Raw::Pango
 COGL::Raw::Pipeline
 COGL::Raw::Pipeline::LayerState
@@ -44,6 +45,7 @@ COGL::Indices
 COGL::Matrix
 COGL::Object
 COGL::Offscreen
+COGL::OnscreenTemplate
 COGL::Pango
 COGL::Pipeline
 COGL::Primitive

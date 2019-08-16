@@ -56,6 +56,7 @@ class CoglQuaternion       is repr('CPointer') is export does GTK::Roles::Pointe
 class CoglRenderer         is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglSource           is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglSnippet          is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglSwapChain        is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglTexture          is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglTexture2d        is repr('CPointer') is export does GTK::Roles::Pointers { }
 
