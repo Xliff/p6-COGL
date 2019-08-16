@@ -39,6 +39,7 @@ DIE
     die $die-single-msg  if     %origin.values.map( *.Int ).sum > 1;
     
     my $matrix = CoglMatrix.new;
+    memset( $matrix.p, 0, nativesizeof(CoglMatrix) );
     { 
       when %origin<identity>.so {
         COGL::Matrix.init_identity($matrix);
@@ -63,9 +64,17 @@ DIE
     self.bless( :$matrix );
   }
       
-  method debug_matrix_print is also<debug-matrix-print> {
-    cogl_debug_matrix_print($!cm);
+  proto method debug_matrix_print (|)
+    is also<debug-matrix-print>
+  { * }
+  
+  multi method debug_matrix_print {
+    COGL::Matrix.debug_matrix_print($!cm);
   }
+  multi method debug_matrix_print (COGL::Matrix:U: CoglMatrix() $m) {
+    cogl_debug_matrix_print($m);
+  }
+  
 
   method gtype_matrix_get_type is also<gtype-matrix-get-type> {
     state ($n, $t);

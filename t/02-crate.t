@@ -152,6 +152,7 @@ sub MAIN {
     
     #?
     .<view> = COGL::Matrix.new(:identity);
+    .<view>.debug-matrix-print;
     #?
     .<view>.view_2d_in_perspective(
       $fovy, $aspect, $z-near, $z_2d, 
@@ -243,7 +244,7 @@ sub MAIN {
     my $renderer = %data<ctx>.renderer;
     COGL::Poll.get-info($renderer, $poll_fds, $n_poll_fds, $timeout);
     GTK::Compat::MainLoop.poll(
-      $poll_fds[0], 
+      cast(Pointer, $poll_fds), 
       $n_poll_fds, 
       $timeout == -1 ?? -1 !! $timeout / 1000
     );
