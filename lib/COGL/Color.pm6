@@ -18,6 +18,7 @@ class COGL::Color {
   }
 
   method COGL::Raw::Types::CoglColor
+    is also<CoglColor>
   { $!cc }
 
   multi method new (CoglColor $color) {
@@ -35,7 +36,7 @@ class COGL::Color {
       },
       STORE => sub ($, Num() $alpha is copy) {
         my gfloat $a = $alpha;
-        
+
         cogl_color_set_alpha($!cc, $a);
       }
     );
@@ -48,7 +49,7 @@ class COGL::Color {
       },
       STORE => sub ($, Int() $alpha is copy) {
         my uint8 $a = resolve-uint8($alpha);
-        
+
         cogl_color_set_alpha_byte($!cc, $a);
       }
     );
@@ -61,7 +62,7 @@ class COGL::Color {
       },
       STORE => sub ($, Num() $blue is copy) {
         my gfloat $b = $blue;
-        
+
         cogl_color_set_blue($!cc, $b);
       }
     );
@@ -74,7 +75,7 @@ class COGL::Color {
       },
       STORE => sub ($, Int() $blue is copy) {
         my uint8 $b = resolve-uint8($blue);
-        
+
         cogl_color_set_blue_byte($!cc, $blue);
       }
     );
@@ -87,7 +88,7 @@ class COGL::Color {
       },
       STORE => sub ($, Num() $green is copy) {
         my gfloat $g = $green;
-        
+
         cogl_color_set_green($!cc, $g);
       }
     );
@@ -100,7 +101,7 @@ class COGL::Color {
       },
       STORE => sub ($, $green is copy) {
         my uint8 $g = resolve-uint8($green);
-        
+
         cogl_color_set_green_byte($!cc, $green);
       }
     );
@@ -113,7 +114,7 @@ class COGL::Color {
       },
       STORE => sub ($, Num() $red is copy) {
         my gfloat $r = $red;
-        
+
         cogl_color_set_red($!cc, $r);
       }
     );
@@ -126,7 +127,7 @@ class COGL::Color {
       },
       STORE => sub ($, Int() $red is copy) {
         my uint8 $r = resolve-uint8($red);
-        
+
         cogl_color_set_red_byte($!cc, $r);
       }
     );

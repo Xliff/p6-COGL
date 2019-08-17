@@ -96,16 +96,18 @@ sub paint(%d) {
     .rotate($rotation, 1, 0, 0);
 
     %d<prim>.draw($_, %d<crate-pipeline>);
-    %d<fb>.pop-matrix;
+    .pop-matrix;
 
     # And finally render our Pango layouts...
+    my $red = COGL::Color.new.init_from_4f(1, 0, 0, 1);
+
     COGL::Pango.show-layout(
       $_,
       %d<hello-label>,
-      %d<framebuffer-width> /  2 - %d<hello-label-width>  / 2,
-      %d<framebuffer-height> / 2 - %d<hello-label-height> / 2,
-      %d<white>
-    );
+      (%d<framebuffer-width> / 2)  - (%d<hello-label-width>  / 2),
+      (%d<framebuffer-height> / 2) - (%d<hello-label-height> / 2),
+      $red
+    )
   }
 }
 
@@ -212,6 +214,9 @@ sub MAIN {
     my ($, $ls) = .<hello-label>.get-extents;
     ( .<hello-label-width>, .<hello-label-height> ) = ($ls.width, $ls.height);
     .<swap-ready> = True;
+
+    say "{ .<framebuffer-width> }x{ .<framebuffer-height> }";
+    say ( .<hello-label-width>, .<hello-label-height> );
 
     .<fb>.add-frame-callback(-> *@a {
       .<swap-ready> = True if CoglFrameEvent( @a[1] ) == COGL_FRAME_EVENT_SYNC;
