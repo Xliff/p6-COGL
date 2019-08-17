@@ -1,5 +1,6 @@
 use v6.c;
 
+use Method::Also;
 use NativeCall;
 
 use GTK::Raw::Utils;
@@ -15,7 +16,14 @@ class COGL::Renderer {
     $!cr = $renderer;
   }
 
-  method new {
+  method COGL::Raw::Types::CoglRenderer
+    is also<CoglRenderer>
+  { $!cr }
+
+  multi method new (CoglRenderer $renderer) {
+    self.bless( :$renderer );
+  }
+  multi method new {
     self.bless( renderer => cogl_renderer_new() );
   }
 
@@ -31,7 +39,7 @@ class COGL::Renderer {
     );
   }
 
-  method winsys_id is rw {
+  method winsys_id is rw is also<winsys-id> {
     Proxy.new(
       FETCH => sub ($) {
         CoglWinsysID( cogl_renderer_get_winsys_id($!cr) );
@@ -43,7 +51,7 @@ class COGL::Renderer {
     );
   }
 
-  method add_constraint (Int() $constraint) {
+  method add_constraint (Int() $constraint) is also<add-constraint> {
     my guint $c = resolve-uint($constraint);
     cogl_renderer_add_constraint($!cr, $c);
   }
@@ -51,7 +59,9 @@ class COGL::Renderer {
   method check_onscreen_template (
     CoglOnscreenTemplate $onscreen_template,
     CArray[Pointer[CoglError]] $error = gerror
-  ) {
+  )
+    is also<check-onscreen-template>
+  {
     clear_error;
     my $rc = cogl_renderer_check_onscreen_template(
       $!cr,
@@ -62,7 +72,7 @@ class COGL::Renderer {
     $rc;
   }
 
-  method is_renderer (gpointer $object) {
+  method is_renderer (gpointer $object) is also<is-renderer> {
     cogl_is_renderer($object);
   }
 
@@ -73,27 +83,29 @@ class COGL::Renderer {
     $rc;
   }
 
-  method error_quark {
+  method error_quark is also<error-quark> {
     cogl_renderer_error_quark();
   }
 
   method foreach_output (
     CoglOutputCallback $callback,
     gpointer $user_data = Pointer
-  ) {
+  )
+    is also<foreach-output>
+  {
     cogl_renderer_foreach_output($!cr, $callback, $user_data);
   }
 
-  method get_gtype {
+  method get_gtype is also<get-gtype> {
     state ($n, $t);
     unstable_get_type( self.^name, &cogl_renderer_get_gtype, $n, $t );
   }
 
-  method get_n_fragment_texture_units {
+  method get_n_fragment_texture_units is also<get-n-fragment-texture-units> {
     cogl_renderer_get_n_fragment_texture_units($!cr);
   }
 
-  method remove_constraint (Int() $constraint) {
+  method remove_constraint (Int() $constraint) is also<remove-constraint> {
     my guint $c = resolve-uint($constraint);
     cogl_renderer_remove_constraint($!cr, $c);
   }

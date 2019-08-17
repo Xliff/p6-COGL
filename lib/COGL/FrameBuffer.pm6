@@ -20,15 +20,15 @@ class COGL::FrameBuffer is COGL::Object {
   also does COGL::Roles::Buffer;
 
   has CoglFrameBuffer $!cf;
- 
+
   submethod BUILD (CoglFrameBuffer :$framebuffer) {
     self.setFramebuffer($framebuffer) if $framebuffer;
   }
-  
+
   method COGL::Raw::Types::CoglFrameBuffer
     is also<CoglFrameBuffer>
   { $!cf }
- 
+
   method setFrameBuffer(FrameBufferAncestry $_) {
     my $to-parent;
     $!cf = do {
@@ -51,7 +51,7 @@ class COGL::FrameBuffer is COGL::Object {
     self.setObject($to-parent);
     $!cb //= cast(CoglBuffer, $!cf);          # COGL::Roles::Buffer
   }
-  
+
   method new (CoglFrameBuffer $framebuffer) {
     self.bless( :$framebuffer );
   }
@@ -63,7 +63,7 @@ class COGL::FrameBuffer is COGL::Object {
       },
       STORE => sub ($, Int() $color_mask is copy) {
         my guint $cm = resolve-uint($color_mask);
-        
+
         cogl_framebuffer_set_color_mask($!cf, $cm);
       }
     );
@@ -76,7 +76,7 @@ class COGL::FrameBuffer is COGL::Object {
       },
       STORE => sub ($, Int() $enabled is copy) {
         my gboolean $e = resolve-bool($enabled);
-        
+
         cogl_framebuffer_set_depth_texture_enabled($!cf, $e);
       }
     );
@@ -89,7 +89,7 @@ class COGL::FrameBuffer is COGL::Object {
       },
       STORE => sub ($, Int() $depth_write_enabled is copy) {
         my gboolean $e = resolve-bool($depth_write_enabled);
-        
+
         cogl_framebuffer_set_depth_write_enabled($!cf, $e);
       }
     );
@@ -102,14 +102,14 @@ class COGL::FrameBuffer is COGL::Object {
       },
       STORE => sub ($, $dither_enabled is copy) {
         my gboolean $e = resolve-bool($dither_enabled);
-        
+
         cogl_framebuffer_set_dither_enabled($!cf, $e);
       }
     );
   }
-  
+
   method modelview_matrix(:$raw = False) is rw is also<modelview-matrix> {
-    Proxy.new: 
+    Proxy.new:
       FETCH => -> $ { self.get-modelview-matrix(:$raw) },
       STORE => -> $, CoglMatrix() \mm { self.set-modelview-matrix(mm) };
   }
@@ -121,7 +121,7 @@ class COGL::FrameBuffer is COGL::Object {
       },
       STORE => sub ($, Int() $samples_per_pixel is copy) {
         my gint $s = resolve-int($samples_per_pixel);
-        
+
         cogl_framebuffer_set_samples_per_pixel($!cf, $s);
       }
     );
@@ -134,7 +134,7 @@ class COGL::FrameBuffer is COGL::Object {
       },
       STORE => sub ($, Int() $stereo_mode is copy) {
         my guint $sm = resolve-uint($stereo_mode);
-        
+
         cogl_framebuffer_set_stereo_mode($!cf, $sm);
       }
     );
@@ -257,7 +257,7 @@ class COGL::FrameBuffer is COGL::Object {
   }
 
   method draw_rectangle (
-    CoglPipeline $pipeline,
+    CoglPipeline() $pipeline,
     Num() $x_1,
     Num() $y_1,
     Num() $x_2,
@@ -271,7 +271,7 @@ class COGL::FrameBuffer is COGL::Object {
   }
 
   method draw_textured_rectangle (
-    CoglPipeline $pipeline,
+    CoglPipeline() $pipeline,
     Num() $x_1,
     Num() $y_1,
     Num() $x_2,
@@ -323,7 +323,7 @@ class COGL::FrameBuffer is COGL::Object {
   method get_alpha_bits is also<get-alpha-bits> {
     cogl_framebuffer_get_alpha_bits($!cf);
   }
-  
+
   method get_aspect is also<get-aspect> {
     self.width / self.height;
   }
@@ -353,21 +353,21 @@ class COGL::FrameBuffer is COGL::Object {
     unstable_get_type( self.^name, &cogl_framebuffer_get_gtype, $n, $t );
   }
 
-  method get_height 
+  method get_height
     is also<
       get-height
       height
-    > 
+    >
   {
     cogl_framebuffer_get_height($!cf);
   }
 
-  method get_is_stereo 
+  method get_is_stereo
     is also<
       get-is-stereo
       is-stereo
       is_stereo
-    > 
+    >
   {
     cogl_framebuffer_get_is_stereo($!cf);
   }
@@ -394,12 +394,14 @@ class COGL::FrameBuffer is COGL::Object {
   method get_red_bits is also<get-red-bits> {
     cogl_framebuffer_get_red_bits($!cf);
   }
-  
+
   method get_size is also<size> {
     (self.get-width, self.get-height);
   }
 
-  method get_viewport4fv (gfloat $viewport) is also<get-viewport4fv> {
+  method get_viewport4fv (Num() $viewport) is also<get-viewport4fv> {
+    my gfloat $v = $viewport;
+
     cogl_framebuffer_get_viewport4fv($!cf, $viewport);
   }
 
@@ -419,11 +421,11 @@ class COGL::FrameBuffer is COGL::Object {
     cogl_framebuffer_get_viewport_y($!cf);
   }
 
-  method get_width 
+  method get_width
     is also<
       get-width
       width
-    > 
+    >
   {
     cogl_framebuffer_get_width($!cf);
   }

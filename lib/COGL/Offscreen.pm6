@@ -6,12 +6,12 @@ use GTK::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::Offscreen;
 
-use COGL::Object;
+use COGL::FrameBuffer;
 
 our subset OffscreenAncestry is export of Mu
-  where CoglOffscreen | CoglObject;
+  where CoglOffscreen | FrameBufferAncestry;
 
-class COGL::Offscreen is COGL::Object {
+class COGL::Offscreen is COGL::FrameBuffer {
   has CoglOffscreen $!co;
 
   submethod BUILD (:$offscreen) {
@@ -20,7 +20,7 @@ class COGL::Offscreen is COGL::Object {
         my $to-parent;
         $!co = do {
           when CoglOffscreen {
-            $to-parent = cast(CoglObject, $_);
+            $to-parent = cast(CoglFrameBuffer, $_);
             $_;
           }
 
@@ -29,7 +29,7 @@ class COGL::Offscreen is COGL::Object {
             cast(CoglOffscreen, $_);
           }
         }
-        self.setObject($to-parent);
+        self.setFrameBuffer($to-parent);
       }
 
       when COGL::Offscreen {
