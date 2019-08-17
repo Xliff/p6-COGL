@@ -41,7 +41,7 @@ my @v = (
   [  1.0,  1.0, -1.0, 0.0, 1.0 ],
   [  1.0, -1.0, -1.0, 0.0, 0.0 ],
 
-  # Top face 
+  # Top face
   [ 1.0,  1.0, 1.0, 0.0, 1.0 ],
   [ 1.0,  1.0, 1.0, 0.0, 0.0 ],
   [ 1.0,  1.0, 1.0, 1.0, 0.0 ],
@@ -53,35 +53,35 @@ my @v = (
   [  1.0, -1.0,  1.0, 0.0, 0.0 ],
   [ -1.0, -1.0,  1.0, 1.0, 0.0 ],
 
-  # Right face 
+  # Right face
   [ 1.0, -1.0, -1.0, 1.0, 0.0 ],
   [ 1.0,  1.0, -1.0, 1.0, 1.0 ],
   [ 1.0,  1.0,  1.0, 0.0, 1.0 ],
   [ 1.0, -1.0,  1.0, 0.0, 0.0 ],
 
-  # Left face 
+  # Left face
   [ -1.0, -1.0, -1.0, 0.0, 0.0 ],
   [ -1.0, -1.0,  1.0, 1.0, 0.0 ],
   [ -1.0,  1.0,  1.0, 1.0, 1.0 ],
   [ -1.0,  1.0, -1.0, 0.0, 1.0 ]
 );
- 
+
 my $vertices;
 
 sub paint(%d) {
-  CATCH { default { .message.say } } 
-  
+  CATCH { default { .message.say } }
+
   with %d<fb> {
     .clear4f(COGL_BUFFER_BIT_COLOR +| COGL_BUFFER_BIT_DEPTH, 0, 0, 0, 1);
     .push-matrix;
     .translate(%d<framebuffer-width> / 2, %d<framebuffer-height> / 2, 0);
     .scale(75, 75, 75);
-    
+
     # Update the rotation based on the time the application has been
     # running so that we get a linear animation regardless of the frame
-    # rate 
+    # rate
     my $rotation = %d<timer>.elapsed * 60;
-    
+
     # Rotate the cube separately around each axis.
     #
     # Note: Cogl matrix manipulation follows the same rules as for
@@ -93,12 +93,12 @@ sub paint(%d) {
     .rotate($rotation, 0, 0, 1);
     .rotate($rotation, 0, 1, 0);
     .rotate($rotation, 1, 0, 0);
-    
+
     %d<prim>.draw($_, %d<crate-pipeline>);
-    
+
     # And finally render our Pango layouts...
     COGL::Pango.show-layout(
-      $_, 
+      $_,
       %d<hello-label>,
       %d<framebuffer-width> /  2 - %d<hello-label-width>  / 2,
       %d<framebuffer-height> / 2 - %d<hello-label-height> / 2,
@@ -109,36 +109,36 @@ sub paint(%d) {
 
 sub MAIN {
   my %data;
-  
+
   $vertices = GTK::Compat::Roles::TypedBuffer[CoglVertexP3T2].new(
     size => @v.elems
   );
   for @v.kv -> $k, $v {
     $vertices.bind( $k, CoglVertexP3T2.new( |$v ) );
   }
-  
+
   %data<ctx> = COGL::Context.new;
   unless %data<ctx> {
     say "Failed to create context: { $ERROR.message }";
     exit 1;
   }
-  
+
   with %data {
     .<fb> = COGL::OnScreen.new(.<ctx>, 640, 480);
     .<framebuffer-width framebuffer-height> = .<fb>.size;
-    
+
     .<timer> = GTK::Compat::Timer.new;
     .<fb>.show;
     .<fb>.set-viewport(
-      0, 0, 
+      0, 0,
       .<framebuffer-width>, .<framebuffer-height>
     );
-  
-    my ($fovy, $aspect, $z-near, $z_2d, $z-far) = 
-      (60, .<fb>.get-aspect, 0.1, 1000, 2000); 
+
+    my ($fovy, $aspect, $z-near, $z_2d, $z-far) =
+      (60, .<fb>.get-aspect, 0.1, 1000, 2000);
 
     .<fb>.perspective($fovy, $aspect, $z-near, $z-far);
-  
+
     # Since the pango renderer emits geometry in pixel/device coordinates
     # and the anti aliasing is implemented with the assumption that the
     # geometry *really* does end up pixel aligned, we setup a modelview
@@ -146,15 +146,15 @@ sub MAIN {
     # coordinates in the range [0, stage_width] and y coordinates in the
     # range [0,stage_height] to the framebuffer extents with (0,0) being
     # the top left.
-    # 
+    #
     # This is roughly what Clutter does for a ClutterStage, but this
     # demonstrates how it is done manually using Cogl
-    
+
     #?
     .<view> = COGL::Matrix.new(:identity);
     #?
     .<view>.view_2d_in_perspective(
-      $fovy, $aspect, $z-near, $z_2d, 
+      $fovy, $aspect, $z-near, $z_2d,
       .<framebuffer-width>, .<framebuffer-height>
     );
     .<view>.debug-matrix-print;
@@ -162,7 +162,7 @@ sub MAIN {
     .<fb>.modelview-matrix = .<view>;
     #?
     .<white> = COGL::Color.new.init_from_4ub(0xff, 0xff, 0xff, 0xff);
-  
+
     # rectangle indices allow the GPU to interpret a list of quads (the
     # faces of our cube) as a list of triangles.
     #
@@ -171,15 +171,15 @@ sub MAIN {
     # accessing internal index buffers that can be shared.
     .<indices> = COGL::Indices.get-rectangle-indices(.<ctx>, 6, :raw);
     .<prim> = COGL::Primitive.new-p3t2(
-      .<ctx>, 
+      .<ctx>,
       COGL_VERTICES_MODE_TRIANGLES,
       @v.elems,
       $vertices.p
     );
-  
+
     # Each face will have 6 indices so we have 6 * 6 indices in total...
     .<prim>.set-indices(.<indices>.p, 6 * 6);
-  
+
     # Load a jpeg crate texture from a file
     say "crate.jpg (CC by-nc-nd http://bit.ly/9kP45T) ShadowRunner27 http://bit.ly/m1YXLh\n";
     my $texture = COGL_EXAMPLES_DATA.IO.add('crate.jpg');
@@ -191,14 +191,14 @@ sub MAIN {
       say "Failed to load texture: { $ERROR.message }";
       exit 1;
     }
-      
+
     # a CoglPipeline conceptually describes all the state for vertex
     # * processing, fragment processing and blending geometry. When
     # * drawing the geometry for the crate this pipeline says to sample a
     # * single texture during fragment processing...
     .<crate-pipeline> = COGL::Pipeline.new(.<ctx>);
     .<crate-pipeline>.set-layer-texture(0, .<texture>);
-      
+
     # Since the box is made of multiple triangles that will overlap
     # * when drawn and we don't control the order they are drawn in, we
     # * enable depth testing to make sure that triangles that shouldn't
@@ -206,14 +206,14 @@ sub MAIN {
     my $depth-state = COGL::DepthState.new;
     $depth-state.test-enabled = True;
     .<crate-pipeline>.set-depth-state($depth-state);
-    
+
     # Setup a Pango font map and context
     .<font-map> = COGL::FontMap.new(.<ctx>);
     .<font-map>.use-mipmapping = True;
     .<pango-context> = .<font-map>.create-context;
     .<font-desc> = Pango::FontDescription.new;
     ( .<font-desc>.family, .<font-desc>.size ) = ('Sans', 30 * PANGO_SCALE);
-     
+
     # Setup the "Hello Cogl" text
     .<hello-label> = Pango::Layout.new(.<pango-context>);
     .<hello-label>.font-description = .<font-desc>;
@@ -221,33 +221,33 @@ sub MAIN {
     my ($, $ls) = .<hello-label>.get-extents;
     ( .<hello-label-width>, .<hello-label-height> ) = ($ls.width, $ls.height);
     .<swap-ready> = True;
-    
+
     .<fb>.add-frame-callback(-> *@a {
       .<swap-ready> = True if CoglFrameEvent( @a[1] ) == COGL_FRAME_EVENT_SYNC;
     });
   }
-  
-  while True {
+
+  loop {
     state $f = False;
     use NativeCall;
-    
+
     if %data<swap-ready> {
       paint(%data);
       %data<fb>.swap-buffers;
     }
-    
-    my ($poll_fds, $n_poll_fds, $timeout) = 
+
+    my ($poll_fds, $n_poll_fds, $timeout) =
       (CArray[Pointer[CoglPollFD]].new, 0, 0);
     $poll_fds[0] = Pointer[CoglPollFD].new;
-    
+
     my $renderer = %data<ctx>.renderer;
     COGL::Poll.get-info($renderer, $poll_fds, $n_poll_fds, $timeout);
     GTK::Compat::MainLoop.poll(
-      $poll_fds[0], 
-      $n_poll_fds, 
+      $poll_fds[0],
+      $n_poll_fds,
       $timeout == -1 ?? -1 !! $timeout / 1000
     );
     COGL::Poll.dispatch($renderer, $poll_fds[0], $n_poll_fds);
   }
-  
+
 }

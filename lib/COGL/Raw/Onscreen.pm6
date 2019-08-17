@@ -6,7 +6,7 @@ use GTK::Compat::Types;
 use COGL::Compat::Types;
 use COGL::Raw::Types;
 
-unit package COGL::Raw::OnScreen;
+unit package COGL::Raw::Onscreen;
 
 sub cogl_onscreen_add_dirty_callback (
   CoglOnscreen $onscreen,
