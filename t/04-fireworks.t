@@ -11,7 +11,7 @@ use COGL::Raw::Types;
 use COGL::Attribute;
 use COGL::AttributeBuffer;
 use COGL::Context;
-use COGL::OnScreen;
+use COGL::Onscreen;
 use COGL::Pipeline;
 use COGL::Primitive;
 use COGL::Source;
@@ -113,17 +113,17 @@ sub paint (%data) {
     }
 
     # Update the colour of each spark
-    # loop ($i = 0; $i < N_SPARKS; $i++) {
-    #   my $spark := %data<sparks>[
-    #     %data<next-spark-num> + $i +& (N_SPARKS - 1)
-    #   ];
-    # 
-    #   my $cv = $i / (N_SPARKS - 1);
-    #   $spark.base-color.red   *= $cv;
-    #   $spark.base-color.green *= $cv;
-    #   $spark.base-color.blue  *= $cv;
-    #   $spark.base-color.alpha  = 255 * $cv;
-    # }
+    loop (my gint $i = 0; $i < N_SPARKS; $i++) {
+      my $spark := %data<sparks>[
+        %data<next-spark-num> + $i +& (N_SPARKS - 1)
+      ];
+
+      my gfloat $cv = $i / (N_SPARKS - 1e0);
+      $spark.base-color.red   = $spark.base-color.red * $cv;
+      $spark.base-color.green = $spark.base-color.green * $cv;
+      $spark.base-color.blue  = $spark.base-color.blue * $cv;
+      $spark.base-color.alpha = 255e0 * $cv;
+    }
 
     %data<last-spark-time>.reset();
   }
@@ -212,7 +212,7 @@ sub MAIN {
     %data<sparks>[$i].x = %data<sparks>[$i].y = 2e0;
   }
 
-  %data<fb> = COGL::OnScreen.new(%data<context>, 800, 600);
+  %data<fb> = COGL::Onscreen.new(%data<context>, 800, 600);
   %data<fb>.show;
   %data<fb>.add_frame_callback(-> *@a {
     # CoglOnscreen, CoglFrameEvent, CoglFrameInfo, Pointer
@@ -229,11 +229,11 @@ sub MAIN {
   paint(%data);
 
   my $lock = Lock.new;
-  $*SCHEDULER.cue({ 
-    say "{ $frame_cb } calls made this second."; 
+  $*SCHEDULER.cue({
+    say "{ $frame_cb } calls made this second.";
     $lock.protect({ $frame_cb = 0 });
   }, every => 1);
-  
+
   $loop.run;
   $loop.unref;
 
