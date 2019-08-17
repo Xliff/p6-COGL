@@ -12,6 +12,7 @@ use COGL::Onscreen;
 use COGL::Pipeline;
 use COGL::Poll;
 use COGL::Primitive;
+use COGL::Source;
 use COGL::Texture2d;
 
 use GTK::Compat::Roles::TypedBuffer;
@@ -68,32 +69,63 @@ sub MAIN {
   );
   my $pipeline = COGL::Pipeline.new($ctx);
 
-  loop {
-    use NativeCall;
+  my $source = COGL::Source.new($ctx);
+  $source.attach;
 
-    $onscreen.clear4f(COGL_BUFFER_BIT_COLOR, 0, 0, 0, 1);
-    $onscreen.push_matrix;
-    $onscreen.scale(0.5, 1, 1);
-    $onscreen.translate(-1, 0, 0);
-    $triangle.draw($onscreen, $pipeline);
-    $offscreen.resolve-samples;
+  my ($redraw-idle, $is-dirty, $draw-ready) = (0, True, True);
+  my &maybe-redraw = sub {
+    $redraw-idle = COGL::Source.idle_add(-> *@a --> gboolean {
+      $redraw-idle = 0;
+      $is-dirty = $draw-ready = False;
 
-    my $texture-pipeline = COGL::Pipeline.new($ctx);
-    $texture-pipeline.set-layer-texture(0, $tex);
-    $onscreen.draw-rectangle($texture-pipeline, 0, 1, 1, -1);
-    $texture-pipeline.unref;
-    $onscreen.swap-buffers;
+      $onscreen.clear4f(COGL_BUFFER_BIT_COLOR, 0, 0, 0, 1);
+      $onscreen.push_matrix;
+      $onscreen.scale(0.5, 1, 1);
+      $onscreen.translate(-1, 0, 0);
+      $triangle.draw($onscreen, $pipeline);
+      $onscreen.pop-matrix;
+      $triangle.draw($onscreen, $pipeline);
+      $offscreen.resolve-samples;
 
-    my ($poll_fds, $n_poll_fds, $timeout) =
-      (CArray[Pointer[CoglPollFD]].new, 0, 0);
+      my $texture-pipeline = COGL::Pipeline.new($ctx);
+      $texture-pipeline.set-layer-texture(0, $tex);
+      $onscreen.draw-rectangle($texture-pipeline, 0, 1, 1, -1);
+      $texture-pipeline.unref;
+      $onscreen.swap-buffers;
 
-    $poll_fds[0] = Pointer[CoglPollFD].new;
-    COGL::Poll.get-info($ctx.get-renderer, $poll_fds, $n_poll_fds, $timeout);
-    GTK::Compat::MainLoop.poll(
-      cast(Pointer, $poll_fds),
-      $n_poll_fds,
-      $timeout == -1 ?? -1 !! $timeout / 1000
-    );
-    COGL::Poll.dispatch($ctx.get-renderer, $poll_fds[0], $n_poll_fds);
-  }
+      G_SOURCE_REMOVE;
+    }) if $is-dirty && $draw-ready && $redraw-idle == 0;
+  };
+
+  $onscreen.add-frame-callback(-> *@a {
+    if CoglFrameEvent( @a[1] ) == COGL_FRAME_EVENT_SYNC {
+      $draw-ready = True;
+      maybe-redraw;
+    }
+  });
+  $onscreen.add-dirty-callback(-> *@a {
+    $is-dirty = True;
+    maybe-redraw;
+  });
+
+  my $loop = GTK::Compat::MainLoop.new(GMainContext, True);
+  $loop.run;
+
+  # loop {
+  #   use NativeCall;
+  #
+  #
+  #
+  #   my ($poll_fds, $n_poll_fds, $timeout) =
+  #     (CArray[Pointer[CoglPollFD]].new, 0, 0);
+  #
+  #   $poll_fds[0] = Pointer[CoglPollFD].new;
+  #   COGL::Poll.get-info($ctx.get-renderer, $poll_fds, $n_poll_fds, $timeout);
+  #   GTK::Compat::MainLoop.poll(
+  #     cast(Pointer, $poll_fds),
+  #     $n_poll_fds,
+  #     $timeout == -1 ?? -1 !! $timeout / 1000
+  #   );
+  #   COGL::Poll.dispatch($ctx.get-renderer, $poll_fds[0], $n_poll_fds);
+  # }
 }
