@@ -17,11 +17,12 @@ use COGL::FontMap;
 use COGL::FrameBuffer;
 use COGL::Indices;
 use COGL::Matrix;
-use COGL::OnScreen;
+use COGL::Onscreen;
 use COGL::Pango;
 use COGL::Pipeline;
 use COGL::Poll;
 use COGL::Primitive;
+use COGL::Source;
 use COGL::Texture2d;
 
 use GTK::Compat::Roles::TypedBuffer;
@@ -42,10 +43,10 @@ my @v = (
   [  1.0, -1.0, -1.0, 0.0, 0.0 ],
 
   # Top face
-  [ 1.0,  1.0, 1.0, 0.0, 1.0 ],
-  [ 1.0,  1.0, 1.0, 0.0, 0.0 ],
-  [ 1.0,  1.0, 1.0, 1.0, 0.0 ],
-  [ 1.0,  1.0, 1.0, 1.0, 1.0 ],
+  [ -1.0,  1.0, -1.0, 0.0, 1.0 ],
+  [ -1.0,  1.0,  1.0, 0.0, 0.0 ],
+  [  1.0,  1.0,  1.0, 1.0, 0.0 ],
+  [  1.0,  1.0, -1.0, 1.0, 1.0 ],
 
   # Bottom face
   [ -1.0, -1.0, -1.0, 1.0, 1.0 ],
@@ -95,6 +96,7 @@ sub paint(%d) {
     .rotate($rotation, 1, 0, 0);
 
     %d<prim>.draw($_, %d<crate-pipeline>);
+    %d<fb>.pop-matrix;
 
     # And finally render our Pango layouts...
     COGL::Pango.show-layout(
@@ -124,15 +126,12 @@ sub MAIN {
   }
 
   with %data {
-    .<fb> = COGL::OnScreen.new(.<ctx>, 640, 480);
+    .<fb> = COGL::Onscreen.new(.<ctx>, 640, 480);
     .<framebuffer-width framebuffer-height> = .<fb>.size;
 
     .<timer> = GTK::Compat::Timer.new;
     .<fb>.show;
-    .<fb>.set-viewport(
-      0, 0,
-      .<framebuffer-width>, .<framebuffer-height>
-    );
+    .<fb>.set-viewport(0, 0, |.<fb>.size);
 
     my ($fovy, $aspect, $z-near, $z_2d, $z-far) =
       (60, .<fb>.get-aspect, 0.1, 1000, 2000);
@@ -150,17 +149,9 @@ sub MAIN {
     # This is roughly what Clutter does for a ClutterStage, but this
     # demonstrates how it is done manually using Cogl
 
-    #?
     .<view> = COGL::Matrix.new(:identity);
-    #?
-    .<view>.view_2d_in_perspective(
-      $fovy, $aspect, $z-near, $z_2d,
-      .<framebuffer-width>, .<framebuffer-height>
-    );
-    .<view>.debug-matrix-print;
-    #?
+    .<view>.view_2d_in_perspective($fovy, $aspect, $z-near, $z_2d, |.<fb>.size);
     .<fb>.modelview-matrix = .<view>;
-    #?
     .<white> = COGL::Color.new.init_from_4ub(0xff, 0xff, 0xff, 0xff);
 
     # rectangle indices allow the GPU to interpret a list of quads (the
