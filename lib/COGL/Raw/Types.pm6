@@ -52,6 +52,7 @@ class CoglPangoFontMap     is repr('CPointer') is export does GTK::Roles::Pointe
 class CoglPipeline         is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglPixelBuffer      is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglPrimitive        is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglOutput           is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglQuaternion       is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglRenderer         is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglSource           is repr('CPointer') is export does GTK::Roles::Pointers { }
@@ -71,7 +72,7 @@ class CoglPollFD is repr<CStruct>            does GTK::Roles::Pointers is export
 class CoglVertexP2 is repr<CStruct>          does GTK::Roles::Pointers is export {
   has gfloat $.x is rw;
   has gfloat $.y is rw;
-  
+
   method new(Num() $x, Num() $y) {
     self.bless(:$x, :$y)
   }
@@ -81,7 +82,7 @@ class CoglVertexP3 is repr<CStruct>          does GTK::Roles::Pointers is export
   has gfloat $.x is rw;
   has gfloat $.y is rw;
   has gfloat $.z is rw;
-  
+
   method new(Num() $x, Num() $y, Num() $z) {
     self.bless(:$x, :$y, :$z)
   }
@@ -94,7 +95,7 @@ class CoglVertexP2C4 is repr<CStruct>        does GTK::Roles::Pointers is export
   has uint8  $.g is rw;
   has uint8  $.b is rw;
   has uint8  $.a is rw;
-  
+
   method new(Num() $x, Num() $y, Int() $r, Int()$g, Int() $b, Int() $a) {
     self.bless(:$x, :$y, :$r, :$g, :$b, :$a)
   }
@@ -108,9 +109,9 @@ class CoglVertexP3C4 is repr<CStruct>        does GTK::Roles::Pointers is export
   has uint8  $.g is rw;
   has uint8  $.b is rw;
   has uint8  $.a is rw;
-  
+
   method new(
-    Num() $x, Num() $y, Num() $z, 
+    Num() $x, Num() $y, Num() $z,
     Int() $r, Int() $g, Int() $b, Int() $a
   ) {
     self.bless(:$x, :$y, :$z, :$r, :$g, :$b, :$a)
@@ -122,7 +123,7 @@ class CoglVertexP2T2 is repr<CStruct>        does GTK::Roles::Pointers is export
   has gfloat $.y is rw;
   has gfloat $.s is rw;
   has gfloat $.t is rw;
-  
+
   method new(Num() $x, Num() $y, Num() $s, Num() $t) {
     self.bless(:$x, :$y, :$s, :$t)
   }
@@ -134,11 +135,11 @@ class CoglVertexP3T2 is repr<CStruct>        does GTK::Roles::Pointers is export
   has gfloat $.z is rw;
   has gfloat $.s is rw;
   has gfloat $.t is rw;
-  
+
   method new(Num() $x, Num() $y, Num() $z, Num() $s, Num() $t) {
     self.bless(:$x, :$y, :$z, :$s, :$t)
   }
-  
+
 }
 
 class CoglVertexP2T2C4 is repr<CStruct>      does GTK::Roles::Pointers is export {
@@ -150,9 +151,9 @@ class CoglVertexP2T2C4 is repr<CStruct>      does GTK::Roles::Pointers is export
   has uint8  $.g is rw;
   has uint8  $.b is rw;
   has uint8  $.a is rw;
-  
+
   method new(
-    Num() $x, Num() $y, 
+    Num() $x, Num() $y,
     Num() $s, Num() $t,
     Int() $r, Int() $g, Int() $b, Int() $a
   ) {
@@ -170,7 +171,7 @@ class CoglVertexP3T2C4 is repr<CStruct>      does GTK::Roles::Pointers is export
   has uint8  $.g is rw;
   has uint8  $.b is rw;
   has uint8  $.a is rw;
-  
+
   method new(
     Num() $x, Num() $y, Num() $z,
     Num() $s, Num() $t,
