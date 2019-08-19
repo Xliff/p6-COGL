@@ -34,7 +34,6 @@ class CoglAttribute        is repr('CPointer') is export does GTK::Roles::Pointe
 class CoglAttributeBuffer  is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglBitmap           is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglBuffer           is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglColor            is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglContext          is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglDisplay          is repr('CPointer') is export does GTK::Roles::Pointers { }
 class CoglEuler            is repr('CPointer') is export does GTK::Roles::Pointers { }
@@ -62,6 +61,17 @@ class CoglTexture          is repr('CPointer') is export does GTK::Roles::Pointe
 class CoglTexture2d        is repr('CPointer') is export does GTK::Roles::Pointers { }
 
 constant CoglTexture2D is export := CoglTexture2d;
+
+class CoglColor is repr<CStruct>             does GTK::Roles::Pointers is export {
+  has gfloat $.red;
+  has gfloat $.green;
+  has gfloat $.blue;
+  has gfloat $.alpha;
+
+  method new ($red, $green, $blue, $alpha) {
+    self.bless(:$red, :$green, :$blue, :$alpha);
+  }
+}
 
 class CoglPollFD is repr<CStruct>            does GTK::Roles::Pointers is export {
   has gint  $.fd      is rw;

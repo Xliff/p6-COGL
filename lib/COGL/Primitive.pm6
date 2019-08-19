@@ -9,6 +9,8 @@ use GTK::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::Primitive;
 
+use GTK::Compat::Roles::TypedBuffer;
+
 use COGL::Object;
 
 our subset PrimitiveAncestry is export of Mu
@@ -43,72 +45,117 @@ class COGL::Primitive is COGL::Object {
     }
   }
 
-  method new_p2 (
+  proto method new_p2 (|)
+    is also<new-p2>
+  { * }
+
+  multi method new_p2 (
+    CoglContext() $context,
+    Int() $mode,
+    GTK::Compat::Roles::TypedBuffer[CoglVertexP2] $data # CoglVertexP2 *data
+  ) {
+    samewith($context, $mode, $data.elems, $data.p);
+  }
+  multi method new_p2 (
     CoglContext() $context,
     Int() $mode,
     Int() $n_vertices,
     gpointer $data # CoglVertexP2 *data
-  )
-    is also<new-p2>
-  {
+  ) {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
     self.bless( primitive => cogl_primitive_new_p2($context, $m, $nv, $data) );
   }
 
-  method new_p2c4 (
+  proto method new_p2c4 (|)
+    is also<new-p2c4>
+  { * }
+
+  multi method new_p2c4 (
+    CoglContext() $context,
+    Int() $mode,
+    GTK::Compat::Roles::TypedBuffer[CoglVertexP2C4] $data
+  ) {
+    samewith($context, $mode, $data.elems, $data.p);
+  }
+  multi method new_p2c4 (
     CoglContext() $context,
     Int() $mode,
     Int() $n_vertices,
     gpointer $data # CoglVertexP2C4 *data
-  )
-    is also<new-p2c4>
-  {
+  ) {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
     self.bless( primitive => cogl_primitive_new_p2c4($context, $m, $nv, $data) );
   }
 
-  method new_p2t2 (
+  proto method new_p2t2 (|)
+    is also<new-p2t2>
+  { * }
+
+  multi method new_p2t2 (
+    CoglContext() $context,
+    Int() $mode,
+    GTK::Compat::Roles::TypedBuffer[CoglVertexP2T2] $data
+  ) {
+    samewith($context, $mode, $data.elems, $data.p);
+  }
+  multi method new_p2t2 (
     CoglContext() $context,
     Int() $mode,
     Int() $n_vertices,
     gpointer $data # CoglVertexP2T2 *data
-  )
-    is also<new-p2t2>
-  {
+  ) {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
     self.bless( primitive => cogl_primitive_new_p2t2($context, $m, $nv, $data) );
   }
 
-  method new_p2t2c4 (
+  proto method new_p2t2c4 (|)
+    is also<new-p2t2c4>
+  { * }
+
+  multi method new_p2t2c4 (
+    CoglContext() $context,
+    Int() $mode,
+    GTK::Compat::Roles::TypedBuffer[CoglVertexP2T2C4] $data
+  ) {
+    samewith($context, $mode, $data.elems, $data.p);
+  }
+  multi method new_p2t2c4 (
     CoglContext() $context,
     Int() $mode,
     Int() $n_vertices,
     gpointer $data # CoglVertexP2T2C4 *data
-  )
-    is also<new-p2t2c4>
-  {
+  ) {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
-    self.bless( 
-      primitive => cogl_primitive_new_p2t2c4($context, $m, $nv, $data) 
+    self.bless(
+      primitive => cogl_primitive_new_p2t2c4($context, $m, $nv, $data)
     );
   }
 
-  method new_p3 (
+  proto method new_p3 (|)
+    is also<new-p3>
+  { * }
+
+  multi method new_p3 (
+    CoglContext() $context,
+    Int() $mode,
+    GTK::Compat::Roles::TypedBuffer[CoglVertexP3] $data
+  ) {
+    samewith($context, $mode, $data.elems, $data.p);
+  }
+  multi method new_p3 (
     CoglContext() $context,
     Int() $mode,
     Int() $n_vertices,
     gpointer $data # CoglVertexP3 *data
-  )
-    is also<new-p3>
-  {
+  ) {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
@@ -117,30 +164,50 @@ class COGL::Primitive is COGL::Object {
     );
   }
 
-  method new_p3c4 (
+  proto method new_p3c4 (|)
+    is also<new-p3c4>
+  { * }
+
+  multi method new_p3c4 (
+    CoglContext() $context,
+    Int() $mode,
+    GTK::Compat::Roles::TypedBuffer[CoglVertexP3C4] $data
+  ) {
+    samewith($context, $mode, $data.elems, $data.p);
+  }
+  multi method new_p3c4 (
     CoglContext() $context,
     Int() $mode,
     Int() $n_vertices,
     gpointer $data # CoglVertexP3C4 *data
   )
-    is also<new-p3c4>
+
   {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
-    self.bless( 
+    self.bless(
       primitive => cogl_primitive_new_p3c4($context, $m, $nv, $data)
     );
   }
 
-  method new_p3t2 (
+  proto method new_p3t2 (|)
+    is also<new-p3t2>
+  { * }
+
+  multi method new_p3t2 (
+    CoglContext() $context,
+    Int() $mode,
+    GTK::Compat::Roles::TypedBuffer[CoglVertexP3T2] $data
+  ) {
+    samewith($context, $mode, $data.elems, $data.p);
+  }
+  multi method new_p3t2 (
     CoglContext() $context,
     Int() $mode,
     Int() $n_vertices,
     gpointer $data # CoglVertexP3T2 *data
-  )
-    is also<new-p3t2>
-  {
+  ) {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
@@ -149,14 +216,23 @@ class COGL::Primitive is COGL::Object {
     );
   }
 
-  method new_p3t2c4 (
+  proto method new_p3t2c4 (|)
+    is also<new-p3t2c4>
+  { * }
+
+  multi method new_p3t2c4 (
+    CoglContext() $context,
+    Int() $mode,
+    GTK::Compat::Roles::TypedBuffer[CoglVertexP3T2C4] $data
+  ) {
+    samewith($context, $mode, $data.elems, $data.p);
+  }
+  multi method new_p3t2c4 (
     CoglContext() $context,
     Int() $mode,
     Int() $n_vertices,
     gpointer $data # CoglVertexP3T2C4 *data
-  )
-    is also<new-p3t2c4>
-  {
+  ) {
     my guint $m = resolve-uint($mode);
     my gint $nv = resolve-int($n_vertices);
 
@@ -178,9 +254,9 @@ class COGL::Primitive is COGL::Object {
 
     self.bless(
       primitive => cogl_primitive_new_with_attributes(
-        $m, 
-        $nv, 
-        $attributes, 
+        $m,
+        $nv,
+        $attributes,
         $na
       )
     );

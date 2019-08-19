@@ -625,6 +625,16 @@ class COGL::FrameBuffer is COGL::Object {
   #   cogl_color_clear($!cf, $bm, $color)
   # }
 
+  method clear (Int() $buffer-mask, CoglColor() $color) {
+    self.clear4f(
+      $buffer-mask,
+      $color.red,
+      $color.green,
+      $color.blue,
+      $color.alpha
+    );
+  }
+
   method clear4f (
     Int() $buffer-mask,
     Num() $red,
