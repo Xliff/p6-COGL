@@ -75,7 +75,12 @@ class COGL::Display {
     unstable_get_type( self.^name, &cogl_display_get_gtype, $n, $t );
   }
 
-  method get_renderer (:$raw = False) is also<get-renderer> {
+  method get_renderer (:$raw = False)
+    is also<
+      get-renderer
+      renderer
+    >
+  {
     my $r = cogl_display_get_renderer($!cd);
     $r ??
       ( $raw ?? $r !! COGL::Renderer.new($r) )

@@ -42,7 +42,9 @@ class COGL::Color {
     );
   }
 
+
   method alpha_byte is rw is also<alpha-byte> {
+    warn 'alpha_byte currently throws a SEGV!';
     Proxy.new(
       FETCH => sub ($) {
         cogl_color_get_alpha_byte($!cc);
@@ -69,6 +71,7 @@ class COGL::Color {
   }
 
   method blue_byte is rw is also<blue-byte> {
+    warn 'blue_byte currently throws a SEGV!';
     Proxy.new(
       FETCH => sub ($) {
         cogl_color_get_blue_byte($!cc);
@@ -95,6 +98,7 @@ class COGL::Color {
   }
 
   method green_byte is rw is also<green-byte> {
+    warn 'green_byte currently throws a SEGV!';
     Proxy.new(
       FETCH => sub ($) {
         cogl_color_get_green_byte($!cc);
@@ -121,6 +125,7 @@ class COGL::Color {
   }
 
   method red_byte is rw is also<red-byte> {
+    warn 'red_byte currently throws a SEGV!';
     Proxy.new(
       FETCH => sub ($) {
         cogl_color_get_red_byte($!cc);

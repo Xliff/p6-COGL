@@ -9,11 +9,39 @@ use GTK::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::Renderer;
 
-class COGL::Renderer {
+use COGL::Output;
+
+our subset RendererAncestry is export of Mu
+  where CoglRenderer | CoglOutput;
+
+class COGL::Renderer is COGL::Output {
   has CoglRenderer $!cr;
 
   submethod BUILD (:$renderer) {
-    $!cr = $renderer;
+    given $renderer {
+      when RendererAncestry {
+        my $to-parent;
+
+        $!cr = do {
+          when CoglRenderer {
+            $to-parent = cast(CoglOutput, $_);
+            $_;
+          }
+
+          default {
+            $to-parent = $_;
+            cast(CoglRenderer, $_);
+          }
+        };
+        self.setOutput($to-parent);
+      }
+
+      when COGL::Renderer {
+      }
+
+      default {
+      }
+    }
   }
 
   method COGL::Raw::Types::CoglRenderer
@@ -46,6 +74,7 @@ class COGL::Renderer {
       },
       STORE => sub ($, Int() $winsys_id is copy) {
         my guint $w = resolve-uint($winsys_id);
+
         cogl_renderer_set_winsys_id($!cr, $w);
       }
     );
@@ -88,16 +117,17 @@ class COGL::Renderer {
   }
 
   method foreach_output (
-    CoglOutputCallback $callback,
+    &callback,
     gpointer $user_data = Pointer
   )
     is also<foreach-output>
   {
-    cogl_renderer_foreach_output($!cr, $callback, $user_data);
+    cogl_renderer_foreach_output($!cr, &callback, $user_data);
   }
 
   method get_gtype is also<get-gtype> {
     state ($n, $t);
+
     unstable_get_type( self.^name, &cogl_renderer_get_gtype, $n, $t );
   }
 

@@ -48,7 +48,7 @@ sub cogl_renderer_error_quark ()
 
 sub cogl_renderer_foreach_output (
   CoglRenderer $renderer,
-  CoglOutputCallback $callback,
+  &callback (CoglOutput, Pointer),
   Pointer $user_data
 )
   is native(cogl)

@@ -14,7 +14,7 @@ unit package COGL::Raw::Context;
 
 sub cogl_foreach_feature (
   CoglContext $context,
-  CoglFeatureCallback $callback,
+  &callback (guint, Pointer),
   Pointer $user_data
 )
   is native(cogl)
