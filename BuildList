@@ -1,7 +1,7 @@
 GTK::Compat::Raw::Main
+GTK::Compat::Roles::TypedBuffer
 GTK::Compat::Source
 GTK::Compat::Types
-GTK::Raw::Types
 GTK::Raw::Utils
 GTK::Roles::Pointers
 Method::Also
@@ -37,6 +37,7 @@ COGL::Raw::Texture
 COGL::Raw::Texture2d
 COGL::Roles::Buffer
 COGL::Source
+COGL::SwapChain
 COGL::Bitmap
 COGL::Color
 COGL::DepthState
