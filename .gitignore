@@ -4,3 +4,4 @@ scripts/
 LastBuildResults
 LastBuildResults.*
 .precomp
+*.old
