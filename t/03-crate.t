@@ -99,14 +99,19 @@ sub paint(%d) {
     .pop-matrix;
 
     # And finally render our Pango layouts...
-    my $red = COGL::Color.new.init_from_4f(1, 0, 0, 1);
+    # say qq:to/D/;
+    #   { $_ }
+    #   { %d<hello-label> }
+    #   { (%d<framebuffer-width> / 2)  - (%d<hello-label-width>  / 2) }
+    #   { (%d<framebuffer-height> / 2) - (%d<hello-label-height> / 2) }
+    #   D
 
     COGL::Pango.show-layout(
       $_,
       %d<hello-label>,
       (%d<framebuffer-width> / 2)  - (%d<hello-label-width>  / 2),
       (%d<framebuffer-height> / 2) - (%d<hello-label-height> / 2),
-      $red
+      %d<white>
     )
   }
 }
@@ -152,7 +157,13 @@ sub MAIN {
     # demonstrates how it is done manually using Cogl
 
     .<view> = COGL::Matrix.new(:identity);
-    .<view>.view_2d_in_perspective($fovy, $aspect, $z-near, $z_2d, |.<fb>.size);
+    .<view>.view_2d_in_perspective(
+      $fovy,
+      $aspect,
+      $z-near,
+      $z_2d,
+      |.<fb>.size
+    );
     .<fb>.modelview-matrix = .<view>;
     .<white> = COGL::Color.new.init_from_4ub(0xff, 0xff, 0xff, 0xff);
 
@@ -162,7 +173,7 @@ sub MAIN {
     # Since this is a very common thing to do
     # cogl_get_rectangle_indices() is a convenience function for
     # accessing internal index buffers that can be shared.
-    .<indices> = COGL::Indices.get-rectangle-indices(.<ctx>, 6, :raw);
+    .<indices> = COGL::Indices.get-rectangle-indices( .<ctx>, 6, :raw );
     .<prim> = COGL::Primitive.new-p3t2(
       .<ctx>,
       COGL_VERTICES_MODE_TRIANGLES,
@@ -179,7 +190,7 @@ sub MAIN {
     $texture = COGL_EXAMPLES_DATA.IO.add('t').add('crate.jpg')
       unless $texture.IO.e;
     die "Cannot find texture file `{ $texture.path }`!" unless $texture.IO.e;
-    .<texture> = COGL::Texture2d.new-from-file(.<ctx>, $texture);
+    .<texture> = COGL::Texture2d.new-from-file( .<ctx>, $texture );
     unless .<texture> {
       say "Failed to load texture: { $ERROR.message }";
       exit 1;
@@ -189,8 +200,8 @@ sub MAIN {
     # * processing, fragment processing and blending geometry. When
     # * drawing the geometry for the crate this pipeline says to sample a
     # * single texture during fragment processing...
-    .<crate-pipeline> = COGL::Pipeline.new(.<ctx>);
-    .<crate-pipeline>.set-layer-texture(0, .<texture>);
+    .<crate-pipeline> = COGL::Pipeline.new( .<ctx> );
+    .<crate-pipeline>.set-layer-texture( 0, .<texture> );
 
     # Since the box is made of multiple triangles that will overlap
     # * when drawn and we don't control the order they are drawn in, we
@@ -201,18 +212,19 @@ sub MAIN {
     .<crate-pipeline>.set-depth-state($depth-state);
 
     # Setup a Pango font map and context
-    .<font-map> = COGL::FontMap.new(.<ctx>);
+    .<font-map> = COGL::FontMap.new( .<ctx> );
     .<font-map>.use-mipmapping = True;
     .<pango-context> = .<font-map>.create-context;
     .<font-desc> = Pango::FontDescription.new;
     ( .<font-desc>.family, .<font-desc>.size ) = ('Sans', 30 * PANGO_SCALE);
 
     # Setup the "Hello Cogl" text
-    .<hello-label> = Pango::Layout.new(.<pango-context>);
+    .<hello-label> = Pango::Layout.new( .<pango-context> );
     .<hello-label>.font-description = .<font-desc>;
     .<hello-label>.text = 'Hello Cogl';
     my ($, $ls) = .<hello-label>.get-extents;
-    ( .<hello-label-width>, .<hello-label-height> ) = ($ls.width, $ls.height);
+    ( .<hello-label-width>, .<hello-label-height> ) =
+      ($ls.width, $ls.height).map({ PANGO_PIXELS($_) });
     .<swap-ready> = True;
 
     say "{ .<framebuffer-width> }x{ .<framebuffer-height> }";
