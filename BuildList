@@ -1,6 +1,6 @@
+GLib::Source
 GTK::Compat::Raw::Main
 GTK::Compat::Roles::TypedBuffer
-GTK::Compat::Source
 GTK::Compat::Types
 GTK::Raw::Utils
 GTK::Roles::Pointers

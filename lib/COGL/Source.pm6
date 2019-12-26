@@ -10,36 +10,66 @@ use COGL::Raw::Types;
 
 use GTK::Compat::Raw::Main;
 
-use GTK::Compat::Source;
+use GLib::Source;
 
-class COGL::Source is GTK::Compat::Source {
+our subset CoglSourceAncestry is export of Mu
+  where CoglSource | GSource;
+
+class COGL::Source is GLib::Source {
   has CoglSource $!cs;
-  
-  submethod BUILD (CoglSource :$coglsource) {
-    self.setSource( cast(GSource, $!cs = $coglsource) );
+
+  submethod BUILD (:$coglsource) {
+    given $coglsource {
+      when CoglSourceAncestry { self.setCoglSource($coglsource) }
+      when COGL::Source       { }
+      default                 { }
+    }
   }
-  
-  method COGL::Raw::Types::CoglSource 
+
+  method setCoglSource (CoglSourceAncestry $_) {
+    my $to-parent;
+    $!cs = do {
+      when CoglSource {
+        $to-parent = cast(GSource, $_);
+        $_;
+      }
+
+      default {
+        $to-parent = $_;
+        cast(CoglSource, $_);
+      }
+    }
+    self.setSource($to-parent);
+  }
+
+  method COGL::Raw::Types::CoglSource
     is also<CoglSource>
   { $!cs }
-  
-  method renderer_source_new (CoglRenderer() $renderer, Int() $priority = 0) 
+
+  method renderer_source_new (CoglRenderer() $renderer, Int() $priority = 0)
     is also<renderer-source-new>
   {
     my gint $p = resolve-int($priority);
-    
-    self.bless(
-      coglsource => cogl_glib_renderer_source_new($renderer, $priority)
-    );
+    my $coglsource = cogl_glib_renderer_source_new($renderer, $priority);
+
+    $coglsource ?? self.bless( :$coglsource ) !! Nil;
   }
 
-  method new (CoglContext() $context, Int() $priority = 0) {
-    my gint $p = resolve-int($priority);
-    my $coglsource = cogl_glib_source_new($context, $priority);
-    
+  proto method new (|)
+  { * }
+
+  multi method new (CoglSourceAncestry $coglsource) {
+    return Nil unless $coglsource;
+
     self.bless( :$coglsource );
   }
-  
+  multi method new (CoglContext() $context, Int() $priority = 0) {
+    my gint $p = resolve-int($priority);
+    my $coglsource = cogl_glib_source_new($context, $priority);
+
+    $coglsource ?? self.bless( :$coglsource ) !! Nil;
+  }
+
 }
 
 sub cogl_glib_renderer_source_new (CoglRenderer $renderer, gint $priority)
