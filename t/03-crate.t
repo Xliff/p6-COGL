@@ -7,7 +7,7 @@ use COGL::Raw::Types;
 use Pango::FontDescription;
 use Pango::Layout;
 
-use GTK::Compat::MainLoop;
+use GLib::MainLoop;
 use GTK::Compat::Timer;
 
 use COGL::Color;
@@ -250,7 +250,7 @@ sub MAIN {
 
     my $renderer = %data<ctx>.renderer;
     COGL::Poll.get-info($renderer, $poll_fds, $n_poll_fds, $timeout);
-    GTK::Compat::MainLoop.poll(
+    GLib::MainLoop.poll(
       $poll_fds[0],
       $n_poll_fds,
       $timeout == -1 ?? -1 !! $timeout / 1000

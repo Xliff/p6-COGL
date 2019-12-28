@@ -4,7 +4,7 @@ use v6.c;
 use GTK::Compat::Types;
 use COGL::Raw::Types;
 
-use GTK::Compat::MainLoop;
+use GLib::MainLoop;
 use GTK::Compat::Roles::TypedBuffer;
 
 use COGL::Context;
@@ -95,6 +95,6 @@ sub MAIN {
       %data<scale-y> = 256e0 / @a[2];
     });
   }
-  my $loop = GTK::Compat::MainLoop.new(GMainContext, True);
+  my $loop = GLib::MainLoop.new(GMainContext, True);
   $loop.run;
 }

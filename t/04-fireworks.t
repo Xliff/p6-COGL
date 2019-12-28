@@ -17,7 +17,7 @@ use COGL::Primitive;
 use COGL::Source;
 use COGL::Texture2d;
 
-use GTK::Compat::MainLoop;
+use GLib::MainLoop;
 
 use GTK::Compat::Roles::TypedBuffer;
 
@@ -225,7 +225,7 @@ sub MAIN {
   my $source = COGL::Source.new(%data<context>);
   $source.attach;
 
-  my $loop = GTK::Compat::MainLoop.new(GMainContext, True);
+  my $loop = GLib::MainLoop.new(GMainContext, True);
   paint(%data);
 
   my $lock = Lock.new;

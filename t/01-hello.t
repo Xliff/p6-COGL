@@ -3,7 +3,7 @@ use v6.c;
 use GTK::Compat::Types;
 use COGL::Raw::Types;
 
-use GTK::Compat::MainLoop;
+use GLib::MainLoop;
 
 use COGL::Onscreen;
 use COGL::Context;
@@ -72,6 +72,6 @@ sub MAIN {
     maybe-redraw;
   });
 
-  my $loop = GTK::Compat::MainLoop.new(GMainContext, True);
+  my $loop = GLib::MainLoop.new(GMainContext, True);
   $loop.run;
 }

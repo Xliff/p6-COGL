@@ -3,7 +3,7 @@ use v6.c;
 use GTK::Compat::Types;
 use COGL::Raw::Types;
 
-use GTK::Compat::MainLoop;
+use GLib::MainLoop;
 
 use COGL::Context;
 use COGL::Display;
@@ -108,7 +108,7 @@ sub MAIN {
     maybe-redraw;
   });
 
-  my $loop = GTK::Compat::MainLoop.new(GMainContext, True);
+  my $loop = GLib::MainLoop.new(GMainContext, True);
   $loop.run;
 
   # loop {
@@ -121,7 +121,7 @@ sub MAIN {
   #
   #   $poll_fds[0] = Pointer[CoglPollFD].new;
   #   COGL::Poll.get-info($ctx.get-renderer, $poll_fds, $n_poll_fds, $timeout);
-  #   GTK::Compat::MainLoop.poll(
+  #   GLib::MainLoop.poll(
   #     cast(Pointer, $poll_fds),
   #     $n_poll_fds,
   #     $timeout == -1 ?? -1 !! $timeout / 1000
