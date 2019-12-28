@@ -9,7 +9,7 @@ use GTK::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::Primitive;
 
-use GTK::Compat::Roles::TypedBuffer;
+use GLib::Roles::TypedBuffer;
 
 use COGL::Object;
 
@@ -52,7 +52,7 @@ class COGL::Primitive is COGL::Object {
   multi method new_p2 (
     CoglContext() $context,
     Int() $mode,
-    GTK::Compat::Roles::TypedBuffer[CoglVertexP2] $data # CoglVertexP2 *data
+    GLib::Roles::TypedBuffer[CoglVertexP2] $data # CoglVertexP2 *data
   ) {
     samewith($context, $mode, $data.elems, $data.p);
   }
@@ -75,7 +75,7 @@ class COGL::Primitive is COGL::Object {
   multi method new_p2c4 (
     CoglContext() $context,
     Int() $mode,
-    GTK::Compat::Roles::TypedBuffer[CoglVertexP2C4] $data
+    GLib::Roles::TypedBuffer[CoglVertexP2C4] $data
   ) {
     samewith($context, $mode, $data.elems, $data.p);
   }
@@ -98,7 +98,7 @@ class COGL::Primitive is COGL::Object {
   multi method new_p2t2 (
     CoglContext() $context,
     Int() $mode,
-    GTK::Compat::Roles::TypedBuffer[CoglVertexP2T2] $data
+    GLib::Roles::TypedBuffer[CoglVertexP2T2] $data
   ) {
     samewith($context, $mode, $data.elems, $data.p);
   }
@@ -121,7 +121,7 @@ class COGL::Primitive is COGL::Object {
   multi method new_p2t2c4 (
     CoglContext() $context,
     Int() $mode,
-    GTK::Compat::Roles::TypedBuffer[CoglVertexP2T2C4] $data
+    GLib::Roles::TypedBuffer[CoglVertexP2T2C4] $data
   ) {
     samewith($context, $mode, $data.elems, $data.p);
   }
@@ -146,7 +146,7 @@ class COGL::Primitive is COGL::Object {
   multi method new_p3 (
     CoglContext() $context,
     Int() $mode,
-    GTK::Compat::Roles::TypedBuffer[CoglVertexP3] $data
+    GLib::Roles::TypedBuffer[CoglVertexP3] $data
   ) {
     samewith($context, $mode, $data.elems, $data.p);
   }
@@ -171,7 +171,7 @@ class COGL::Primitive is COGL::Object {
   multi method new_p3c4 (
     CoglContext() $context,
     Int() $mode,
-    GTK::Compat::Roles::TypedBuffer[CoglVertexP3C4] $data
+    GLib::Roles::TypedBuffer[CoglVertexP3C4] $data
   ) {
     samewith($context, $mode, $data.elems, $data.p);
   }
@@ -198,7 +198,7 @@ class COGL::Primitive is COGL::Object {
   multi method new_p3t2 (
     CoglContext() $context,
     Int() $mode,
-    GTK::Compat::Roles::TypedBuffer[CoglVertexP3T2] $data
+    GLib::Roles::TypedBuffer[CoglVertexP3T2] $data
   ) {
     samewith($context, $mode, $data.elems, $data.p);
   }
@@ -223,7 +223,7 @@ class COGL::Primitive is COGL::Object {
   multi method new_p3t2c4 (
     CoglContext() $context,
     Int() $mode,
-    GTK::Compat::Roles::TypedBuffer[CoglVertexP3T2C4] $data
+    GLib::Roles::TypedBuffer[CoglVertexP3T2C4] $data
   ) {
     samewith($context, $mode, $data.elems, $data.p);
   }

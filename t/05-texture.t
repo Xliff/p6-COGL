@@ -5,7 +5,7 @@ use GTK::Compat::Types;
 use COGL::Raw::Types;
 
 use GLib::MainLoop;
-use GTK::Compat::Roles::TypedBuffer;
+use GLib::Roles::TypedBuffer;
 
 use COGL::Context;
 use COGL::Color;
@@ -24,7 +24,7 @@ my @p = (
   CoglVertexP2T2.new( 1,  1, 1, 0),
   CoglVertexP2T2.new(-1,  1, 0, 0)
 );
-my $picture-vertices = GTK::Compat::Roles::TypedBuffer[CoglVertexP2T2].new(@p);
+my $picture-vertices = GLib::Roles::TypedBuffer[CoglVertexP2T2].new(@p);
 
 sub maybe-redraw {
   if %data<is-dirty> && %data<draw-ready> && %data<redraw-idle> == 0 {

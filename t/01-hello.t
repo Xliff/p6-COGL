@@ -11,11 +11,11 @@ use COGL::Pipeline;
 use COGL::Primitive;
 use COGL::Source;
 
-use GTK::Compat::Roles::TypedBuffer;
+use GLib::Roles::TypedBuffer;
 
 sub MAIN {
   my %data;
-  my $triangle-verticies = GTK::Compat::Roles::TypedBuffer[CoglVertexP2C4].new(
+  my $triangle-verticies = GLib::Roles::TypedBuffer[CoglVertexP2C4].new(
     size => 3
   );
   $triangle-verticies.bind( $_[0], CoglVertexP2C4.new( |$_[1 .. *-1] ) ) for (

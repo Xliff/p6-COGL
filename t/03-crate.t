@@ -25,7 +25,7 @@ use COGL::Primitive;
 use COGL::Source;
 use COGL::Texture2d;
 
-use GTK::Compat::Roles::TypedBuffer;
+use GLib::Roles::TypedBuffer;
 
 constant COGL_EXAMPLES_DATA = '.';
 
@@ -119,7 +119,7 @@ sub paint(%d) {
 sub MAIN {
   my %data;
 
-  $vertices = GTK::Compat::Roles::TypedBuffer[CoglVertexP3T2].new(
+  $vertices = GLib::Roles::TypedBuffer[CoglVertexP3T2].new(
     size => @v.elems
   );
   for @v.kv -> $k, $v {

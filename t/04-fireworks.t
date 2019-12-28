@@ -19,7 +19,7 @@ use COGL::Texture2d;
 
 use GLib::MainLoop;
 
-use GTK::Compat::Roles::TypedBuffer;
+use GLib::Roles::TypedBuffer;
 
 use lib <. t>;
 
@@ -178,10 +178,10 @@ sub MAIN {
   my $frame_cb = 0;
   my %data;
 
-  %data<fireworks> = GTK::Compat::Roles::TypedBuffer[Firework].new(
+  %data<fireworks> = GLib::Roles::TypedBuffer[Firework].new(
     size => N_FIREWORKS
   );
-  %data<sparks>    = GTK::Compat::Roles::TypedBuffer[Spark].new(
+  %data<sparks>    = GLib::Roles::TypedBuffer[Spark].new(
     size => N_SPARKS
   );
 

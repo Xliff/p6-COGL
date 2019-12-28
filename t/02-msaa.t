@@ -15,11 +15,11 @@ use COGL::Primitive;
 use COGL::Source;
 use COGL::Texture2d;
 
-use GTK::Compat::Roles::TypedBuffer;
+use GLib::Roles::TypedBuffer;
 
 sub MAIN {
   my $v = 0;
-  my $vertices = GTK::Compat::Roles::TypedBuffer[CoglVertexP2C4].new(
+  my $vertices = GLib::Roles::TypedBuffer[CoglVertexP2C4].new(
     size => 3
   );
   $vertices.bind( $v++, CoglVertexP2C4.new( |$_ ) ) for
