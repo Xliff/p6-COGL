@@ -8,7 +8,7 @@ use GTK::Raw::Utils;
 use GTK::Compat::Types;
 use COGL::Raw::Types;
 
-use GTK::Compat::Raw::Main;
+use GLib::Raw::Main;
 
 use GLib::Source;
 
