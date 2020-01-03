@@ -3,7 +3,7 @@ use v6.c;
 use NativeCall;
 
 use GTK::Compat::Types;
-use GTK::Roles::Pointers;
+use GLib::Roles::Pointers;
 
 unit package COGL::Raw::Types;
 
@@ -30,39 +30,39 @@ constant CoglOnscreenResizeClosure          is export := Pointer;
 constant CoglSwapBuffersNotify              is export := Pointer;
 constant CoglOnscreenX11MaskCallback        is export := Pointer;
 
-class CoglAttribute        is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglAttributeBuffer  is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglBitmap           is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglBuffer           is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglContext          is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglDisplay          is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglEuler            is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglFrameBuffer      is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglFrameInfo        is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglHandle           is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglIndices          is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglIndexBuffer      is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglMaterial         is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglObject           is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglOffscreen        is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglOnscreen         is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglOnscreenTemplate is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglPangoFontMap     is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglPipeline         is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglPixelBuffer      is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglPrimitive        is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglOutput           is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglQuaternion       is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglRenderer         is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglSource           is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglSnippet          is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglSwapChain        is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglTexture          is repr('CPointer') is export does GTK::Roles::Pointers { }
-class CoglTexture2d        is repr('CPointer') is export does GTK::Roles::Pointers { }
+class CoglAttribute        is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglAttributeBuffer  is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglBitmap           is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglBuffer           is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglContext          is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglDisplay          is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglEuler            is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglFrameBuffer      is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglFrameInfo        is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglHandle           is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglIndices          is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglIndexBuffer      is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglMaterial         is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglObject           is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglOffscreen        is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglOnscreen         is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglOnscreenTemplate is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglPangoFontMap     is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglPipeline         is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglPixelBuffer      is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglPrimitive        is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglOutput           is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglQuaternion       is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglRenderer         is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglSource           is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglSnippet          is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglSwapChain        is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglTexture          is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglTexture2d        is repr('CPointer') is export does GLib::Roles::Pointers { }
 
 constant CoglTexture2D is export := CoglTexture2d;
 
-class CoglColor is repr<CStruct>             does GTK::Roles::Pointers is export {
+class CoglColor is repr<CStruct>             does GLib::Roles::Pointers is export {
   has gfloat $.red;
   has gfloat $.green;
   has gfloat $.blue;
@@ -73,13 +73,13 @@ class CoglColor is repr<CStruct>             does GTK::Roles::Pointers is export
   }
 }
 
-class CoglPollFD is repr<CStruct>            does GTK::Roles::Pointers is export {
+class CoglPollFD is repr<CStruct>            does GLib::Roles::Pointers is export {
   has gint  $.fd      is rw;
   has int16 $.events  is rw;
   has int16 $.revents is rw;
 }
 
-class CoglVertexP2 is repr<CStruct>          does GTK::Roles::Pointers is export {
+class CoglVertexP2 is repr<CStruct>          does GLib::Roles::Pointers is export {
   has gfloat $.x is rw;
   has gfloat $.y is rw;
 
@@ -88,7 +88,7 @@ class CoglVertexP2 is repr<CStruct>          does GTK::Roles::Pointers is export
   }
 }
 
-class CoglVertexP3 is repr<CStruct>          does GTK::Roles::Pointers is export {
+class CoglVertexP3 is repr<CStruct>          does GLib::Roles::Pointers is export {
   has gfloat $.x is rw;
   has gfloat $.y is rw;
   has gfloat $.z is rw;
@@ -98,7 +98,7 @@ class CoglVertexP3 is repr<CStruct>          does GTK::Roles::Pointers is export
   }
 }
 
-class CoglVertexP2C4 is repr<CStruct>        does GTK::Roles::Pointers is export {
+class CoglVertexP2C4 is repr<CStruct>        does GLib::Roles::Pointers is export {
   has gfloat $.x is rw;
   has gfloat $.y is rw;
   has uint8  $.r is rw;
@@ -111,7 +111,7 @@ class CoglVertexP2C4 is repr<CStruct>        does GTK::Roles::Pointers is export
   }
 }
 
-class CoglVertexP3C4 is repr<CStruct>        does GTK::Roles::Pointers is export {
+class CoglVertexP3C4 is repr<CStruct>        does GLib::Roles::Pointers is export {
   has gfloat $.x is rw;
   has gfloat $.y is rw;
   has gfloat $.z is rw;
@@ -128,7 +128,7 @@ class CoglVertexP3C4 is repr<CStruct>        does GTK::Roles::Pointers is export
   }
 }
 
-class CoglVertexP2T2 is repr<CStruct>        does GTK::Roles::Pointers is export {
+class CoglVertexP2T2 is repr<CStruct>        does GLib::Roles::Pointers is export {
   has gfloat $.x is rw;
   has gfloat $.y is rw;
   has gfloat $.s is rw;
@@ -139,7 +139,7 @@ class CoglVertexP2T2 is repr<CStruct>        does GTK::Roles::Pointers is export
   }
 }
 
-class CoglVertexP3T2 is repr<CStruct>        does GTK::Roles::Pointers is export {
+class CoglVertexP3T2 is repr<CStruct>        does GLib::Roles::Pointers is export {
   has gfloat $.x is rw;
   has gfloat $.y is rw;
   has gfloat $.z is rw;
@@ -152,7 +152,7 @@ class CoglVertexP3T2 is repr<CStruct>        does GTK::Roles::Pointers is export
 
 }
 
-class CoglVertexP2T2C4 is repr<CStruct>      does GTK::Roles::Pointers is export {
+class CoglVertexP2T2C4 is repr<CStruct>      does GLib::Roles::Pointers is export {
   has gfloat $.x is rw;
   has gfloat $.y is rw;
   has gfloat $.s is rw;
@@ -171,7 +171,7 @@ class CoglVertexP2T2C4 is repr<CStruct>      does GTK::Roles::Pointers is export
   }
 }
 
-class CoglVertexP3T2C4 is repr<CStruct>      does GTK::Roles::Pointers is export {
+class CoglVertexP3T2C4 is repr<CStruct>      does GLib::Roles::Pointers is export {
   has gfloat $.x is rw;
   has gfloat $.y is rw;
   has gfloat $.z is rw;
@@ -191,18 +191,18 @@ class CoglVertexP3T2C4 is repr<CStruct>      does GTK::Roles::Pointers is export
   }
 }
 
-class CoglUserDataKey is repr<CStruct>       does GTK::Roles::Pointers is export {
+class CoglUserDataKey is repr<CStruct>       does GLib::Roles::Pointers is export {
   has gint $.unused;
 }
 
-class CoglOnscreenDirtyInfo is repr<CStruct> does GTK::Roles::Pointers is export {
+class CoglOnscreenDirtyInfo is repr<CStruct> does GLib::Roles::Pointers is export {
   has gint $.x      is rw;
   has gint $.y      is rw;
   has gint $.width  is rw;
   has gint $.height is rw;
 }
 
-class CoglDepthState is repr<CStruct>        does GTK::Roles::Pointers is export {
+class CoglDepthState is repr<CStruct>        does GLib::Roles::Pointers is export {
   # private >
   has uint32   $.magic;
 
@@ -224,7 +224,7 @@ class CoglDepthState is repr<CStruct>        does GTK::Roles::Pointers is export
   has uint32   $.padding9;
 }
 
-class CoglMatrix is repr<CStruct>            does GTK::Roles::Pointers is export {
+class CoglMatrix is repr<CStruct>            does GLib::Roles::Pointers is export {
   # column 0
   has gfloat $.xx is rw;
   has gfloat $.yx is rw;
