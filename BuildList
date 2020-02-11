@@ -7,7 +7,6 @@ GLib::Raw::Subs
 GLib::Roles::Pointers
 GLib::Roles::TypedBuffer
 GLib::Source
-GTK::Raw::Utils
 Method::Also
 Pango::FontMap
 Pango::Raw::Types

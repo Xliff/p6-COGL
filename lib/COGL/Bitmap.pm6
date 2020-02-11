@@ -22,10 +22,10 @@ class COGL::Bitmap {
     CArray[uint8] $data
   ) {
     my gint ($w, $h, $r) = ($width, $height, $rowstride);
-    my guint $f = resolve-uint($format);
-    self.bless(
-      bitmap => cogl_bitmap_new_for_data($context, $w, $h, $f, $r, $data)
-    );
+    my guint $f = $format;
+    my $bitmap = cogl_bitmap_new_for_data($context, $w, $h, $f, $r, $data);
+
+    $bitmap ?? self.bless(:$bitmap) !! Nil;
   }
 
   method new_from_buffer (
@@ -37,10 +37,10 @@ class COGL::Bitmap {
     Int() $offset
   ) {
     my gint ($w, $h, $r, $o) = ($width, $height, $rowstride, $offset);
-    my guint $f = resolve-uint($format);
-    self.bless(
-      bitmap => cogl_bitmap_new_from_buffer($buffer, $f, $w, $h, $r, $o)
-    );
+    my guint $f = $format;
+    my $bitmap = cogl_bitmap_new_from_buffer($buffer, $f, $w, $h, $r, $o);
+
+    $bitmap ?? self.bless(:$bitmap) !! Nil;
   }
 
   method new_from_file (
@@ -48,9 +48,10 @@ class COGL::Bitmap {
     CArray[Pointer[CoglError]] $error = gerror
   ) {
     clear_error;
-    my $rc = cogl_bitmap_new_from_file($filename, $error);
+    my $bitmap = cogl_bitmap_new_from_file($filename, $error);
     set_error($error);
-    self.bless( bitmap => $rc );
+
+    $bitmap ?? self.bless(:$bitmap) !! Nil;
   }
 
   method is_bitmap (COGL::Bitmap:U: gpointer $candidate) {
@@ -67,11 +68,12 @@ class COGL::Bitmap {
   }
 
   method get_format {
-    CoglPixelFormat( cogl_bitmap_get_format($!cbm) );
+    CoglPixelFormatEnum( cogl_bitmap_get_format($!cbm) );
   }
 
   method get_gtype {
     state ($n, $t);
+
     unstable_get_type( self.^name, &cogl_bitmap_get_gtype, $n, $t );
   }
 
@@ -87,16 +89,16 @@ class COGL::Bitmap {
     COGL::Bitmap:U:
     Str() $filename
   ) {
-    my Int ($w, $h);
-    samewith($filename, $w, $h);
+    samewith($filename, $, $);
   }
   multi method get_size_from_file (
     COGL::Bitmap:U:
     Str() $filename,
-    Int $width is rw,
-    Int $height is rw
+    $width is rw,
+    $height is rw
   ) {
     my gint ($w, $h) = 0 xx 2;
+
     cogl_bitmap_get_size_from_file($filename, $w, $h);
     ($width, $height) = ($w, $h);
   }
