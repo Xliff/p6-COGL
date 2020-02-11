@@ -120,7 +120,7 @@ class COGL::Attribute is COGL::Object {
     is also<new-const-3f>
   {
     my gfloat ($c0, $c1, $c2) = ($component0, $component1, $component2);
-    my $attribute => cogl_attribute_new_const_3f(
+    my $attribute = cogl_attribute_new_const_3f(
       $context,
       $name,
       $c0,
@@ -172,11 +172,15 @@ class COGL::Attribute is COGL::Object {
     my gfloat ($c0, $c1, $c2, $c3) =
       ($component0, $component1, $component2, $component3);
 
-    self.bless(
-      attribute => cogl_attribute_new_const_4f(
-        $context, $name, $c0, $c1, $c2, $c3
-      )
+    my $attribute = cogl_attribute_new_const_4f(
+      $context,
+      $name,
+      $c0,
+      $c1,
+      $c2,
+      $c3
     );
+
     $attribute ?? self.bless(:$attribute) !! Nil;
   }
 
@@ -198,7 +202,7 @@ class COGL::Attribute is COGL::Object {
     is also<new-const-4x4fv>
   {
     my gboolean $t = $transpose.so.Int;
-    my attribute = cogl_attribute_new_const_4x4fv(
+    my $attribute = cogl_attribute_new_const_4x4fv(
       $context,
       $name,
       $matrix4x4,
