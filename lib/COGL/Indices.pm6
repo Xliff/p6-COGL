@@ -6,7 +6,7 @@ use Method::Also;
 use COGL::Raw::Types;
 use COGL::Raw::Indices;
 
-use GTK::Raw::Utils;
+
 
 class COGL::Indices {
   has CoglIndices $!ci;

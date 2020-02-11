@@ -7,7 +7,7 @@ use NativeCall;
 use COGL::Raw::Types;
 use COGL::Raw::Matrix;
 
-use GTK::Raw::Utils;
+
 
 class COGL::Matrix {
   my @valid-origins = <identity quaternion array euler translation>;

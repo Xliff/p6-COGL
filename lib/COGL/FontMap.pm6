@@ -7,7 +7,7 @@ use Pango::Raw::Types;
 use COGL::Raw::Types;
 use COGL::Raw::Pango;
 
-use GTK::Raw::Utils;
+
 
 use Pango::FontMap;
 

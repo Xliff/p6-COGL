@@ -5,7 +5,7 @@ use NativeCall;
 
 use COGL::Raw::Types;
 
-use GTK::Raw::Utils;
+
 
 class COGL::IndexBuffer {
   has CoglIndexBuffer $!cib;
