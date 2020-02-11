@@ -4,7 +4,7 @@ use NativeCall;
 
 use GTK::Raw::Utils;
 
-use GTK::Compat::Types;
+
 use COGL::Raw::Types;
 use COGL::Raw::Buffer;
 

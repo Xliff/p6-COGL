@@ -1,6 +1,6 @@
 use v6.c;
 
-use GTK::Compat::Types;
+
 use COGL::Raw::Types;
 use COGL::Raw::Euler;
 

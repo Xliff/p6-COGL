@@ -4,7 +4,7 @@ use Method::Also;
 
 use GTK::Raw::Utils;
 
-use GTK::Compat::Types;
+
 use COGL::Raw::Types;
 use COGL::Raw::Object;
 

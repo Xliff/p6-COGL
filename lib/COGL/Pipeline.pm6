@@ -5,7 +5,7 @@ use NativeCall;
 
 use GTK::Raw::Utils;
 
-use GTK::Compat::Types;
+
 use COGL::Raw::Types;
 use COGL::Raw::Pipeline;
 use COGL::Raw::Pipeline::LayerState;
