@@ -2,9 +2,6 @@ use v6.c;
 
 use Method::Also;
 
-
-
-
 use COGL::Raw::Types;
 use COGL::Raw::OnscreenTemplate;
 
@@ -21,7 +18,9 @@ class COGL::OnscreenTemplate {
   { $!cot }
 
   method new (CoglSwapChain() $sc = CoglSwapChain) {
-    self.bless(template => cogl_onscreen_template_new($sc) );
+    my $template = cogl_onscreen_template_new($sc);
+
+    $template ?? self.bless($template) !! Nil;
   }
 
   proto method is_onscreen_template (|)
@@ -29,7 +28,7 @@ class COGL::OnscreenTemplate {
   { * }
 
   multi method is_onscreen_template {
-    COGL::OnscreenTemplate.is_onscreen_template($!cot.p);
+    samewith($!cot.p);
   }
   multi method is_onscreen_template (gpointer $candidate) {
     so cogl_is_onscreen_template($candidate);
@@ -42,19 +41,19 @@ class COGL::OnscreenTemplate {
   }
 
   method set_samples_per_pixel (Int() $n) is also<set-samples-per-pixel> {
-    my gint $nn = resolve-int(%!attr<samples-perl-pixel> = $n);
+    my gint $nn = %!attr<samples-perl-pixel> = $n;
 
     cogl_onscreen_template_set_samples_per_pixel($!cot, $nn);
   }
 
   method set_stereo_enabled (Int() $enabled) is also<set-stereo-enabled> {
-    my gboolean $e = resolve-bool(%!attr<stereo-enabled> = $enabled);
+    my gboolean $e = %!attr<stereo-enabled> = $enabled.so.Int;
 
     cogl_onscreen_template_set_stereo_enabled($!cot, $e);
   }
 
   method set_swap_throttled (CoglBool $throttled) is also<set-swap-throttled> {
-    my gboolean $t = resolve-bool(%!attr<swap-throttled> = $throttled);
+    my gboolean $t = %!attr<swap-throttled> = $throttled.so.Int;
 
     cogl_onscreen_template_set_swap_throttled($!cot, $t);
   }
