@@ -3,9 +3,6 @@ use v6.c;
 use Method::Also;
 use NativeCall;
 
-
-
-
 use COGL::Raw::Types;
 use COGL::Raw::Display;
 
@@ -24,7 +21,7 @@ class COGL::Display {
   { $!cd }
 
   multi method new (CoglDisplay $display) {
-    self.bless( :$display );
+    $display ?? self.bless( :$display ) !! Nil
   }
   multi method new (CoglRenderer $renderer) {
     samewith($renderer, CoglOnscreenTemplate);
@@ -34,13 +31,14 @@ class COGL::Display {
   }
   multi method new ($param is copy) {
     do given $param {
-      when COGL::OnscreenTemplate { $param .= CoglOnscreenTemplate; proceed }
-      when COGL::Renderer         { $param .= CoglRenderer;         proceed }
+      when COGL::OnscreenTemplate { $_ .= CoglOnscreenTemplate;     proceed }
+      when COGL::Renderer         { $_ .= CoglRenderer;             proceed }
+      when COGL::Display          { samewith( .CoglDisplay )                }
       when CoglOnscreenTemplate   { samewith(CoglRenderer, $_)              }
       when CoglRenderer           { samewith($_, CoglOnscreenTemplate)      }
 
       default {
-        die "Invalid type passed to COGL::Display.new: { .^name }";
+        die "Invalid type passed to \$param.new: { .^name }";
       }
     }
   }
@@ -48,11 +46,13 @@ class COGL::Display {
     CoglRenderer() $renderer,
     CoglOnscreenTemplate() $onscreen_template
   ) {
-    self.bless( display => cogl_display_new($renderer, $onscreen_template) );
+    my $display = cogl_display_new($renderer, $onscreen_template);
+
+    $display ?? self.bless( :$display ) !! Nil
   }
 
   method gdl_display_set_plane (Int() $plane) is also<gdl-display-set-plane> {
-    my guint $p = resolve-uint($plane);
+    my guint $p = $plane;
 
     cogl_gdl_display_set_plane($!cd, $plane);
   }
@@ -82,6 +82,7 @@ class COGL::Display {
     >
   {
     my $r = cogl_display_get_renderer($!cd);
+
     $r ??
       ( $raw ?? $r !! COGL::Renderer.new($r) )
       !!
@@ -96,9 +97,9 @@ class COGL::Display {
 
   method setup (CArray[Pointer[CoglError]] $error = gerror) {
     clear_error;
-    my $rc = cogl_display_setup($!cd, $error);
+    my $rv = so cogl_display_setup($!cd, $error);
     set_error($error);
-    so $rc;
+    $rv;
   }
 
 }
