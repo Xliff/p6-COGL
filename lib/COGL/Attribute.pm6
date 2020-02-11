@@ -52,9 +52,9 @@ class COGL::Attribute is COGL::Object {
     Int() $components,
     Int() $type
   ) {
-    my uint64 ($s, $o) = resolve-uint64($stride, $offset);
-    my gint $c = resolve-int($components);
-    my guint $t = resolve-uint($type);
+    my uint64 ($s, $o) = ($stride, $offset);
+    my gint $c = $components;
+    my guint $t = $type;
     my $attribute = cogl_attribute_new($ab, $name, $s, $o, $c, $t);
 
     $attribute ?? self.bless(:$attribute) !! Nil;
@@ -184,10 +184,8 @@ class COGL::Attribute is COGL::Object {
     is also<new-const-4fv>
   {
     my gfloat $v = $value;
+    my $attribute = cogl_attribute_new_const_4fv($context, $name, $v);
 
-    self.bless(
-      attribute =>cogl_attribute_new_const_4fv($context, $name, $v)
-    );
     $attribute ?? self.bless(:$attribute) !! Nil;
   }
 
@@ -199,7 +197,7 @@ class COGL::Attribute is COGL::Object {
   )
     is also<new-const-4x4fv>
   {
-    my gboolean $t = resolve-bool($transpose);
+    my gboolean $t = $transpose.so.Int;
     my attribute = cogl_attribute_new_const_4x4fv(
       $context,
       $name,
