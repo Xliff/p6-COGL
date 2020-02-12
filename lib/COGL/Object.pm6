@@ -2,9 +2,6 @@ use v6.c;
 
 use Method::Also;
 
-
-
-
 use COGL::Raw::Types;
 use COGL::Raw::Object;
 
@@ -34,6 +31,7 @@ class COGL::Object {
 
   method object_get_gtype is also<object-get-gtype> {
     state ($n, $t);
+
     unstable_get_type( self.^name, &cogl_object_get_gtype, $n, $t );
   }
 
@@ -46,6 +44,8 @@ class COGL::Object {
     self;
   }
   multi method ref (COGL::Object:U: $obj) {
+    return Nil unless $obj;
+
     die '$obj must be a CPointer!' unless $obj.REPR eq 'CPointer';
     my $o = $obj;
     $o = cast(gpointer, $o) unless $o ~~ gpointer;
@@ -66,6 +66,8 @@ class COGL::Object {
     COGL::Object.unref($!co);
   }
   multi method unref (COGL::Object:U: $obj) {
+    return Nil unless $obj;
+    
     die '$obj must be a CPointer!' unless $obj.REPR eq 'CPointer';
     my $o = $obj;
     $o = cast(gpointer, $obj) unless $o ~~ gpointer;
