@@ -5,6 +5,8 @@ use Method::Also;
 use COGL::Raw::Types;
 use COGL::Raw::OnscreenTemplate;
 
+use COGL::SwapChain;
+
 class COGL::OnscreenTemplate {
   has CoglOnscreenTemplate $!cot;
   has %!attr;
@@ -17,10 +19,18 @@ class COGL::OnscreenTemplate {
     is also<CoglOnscreenTemplate>
   { $!cot }
 
-  method new (CoglSwapChain() $sc = CoglSwapChain) {
+  multi method new (CoglOnscreenTemplate $template) {
+    $template ?? self.bless($template) !! Nil;
+  }
+  multi method new (CoglSwapChain $sc = CoglSwapChain) {
     my $template = cogl_onscreen_template_new($sc);
 
     $template ?? self.bless($template) !! Nil;
+  }
+  multi method new (COGL::SwapChain $sc) {
+    return Nil unless $sc;
+
+    samewith($sc.CoglSwapChain);
   }
 
   proto method is_onscreen_template (|)
