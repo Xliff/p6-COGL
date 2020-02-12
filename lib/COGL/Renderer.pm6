@@ -39,6 +39,7 @@ class COGL::Renderer is COGL::Output {
       default {
       }
     }
+
   }
 
   method COGL::Raw::Definitions::CoglRenderer

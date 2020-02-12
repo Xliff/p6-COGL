@@ -20,12 +20,12 @@ class COGL::OnscreenTemplate {
   { $!cot }
 
   multi method new (CoglOnscreenTemplate $template) {
-    $template ?? self.bless($template) !! Nil;
+    $template ?? self.bless(:$template) !! Nil;
   }
   multi method new (CoglSwapChain $sc = CoglSwapChain) {
     my $template = cogl_onscreen_template_new($sc);
 
-    $template ?? self.bless($template) !! Nil;
+    $template ?? self.bless(:$template) !! Nil;
   }
   multi method new (COGL::SwapChain $sc) {
     return Nil unless $sc;

@@ -1,7 +1,6 @@
 use v6.c;
 # Ported from:
 # https://github.com/tpimh/vala-cogl/blob/master/cogl-texture/cogl-texture.vala
-use GTK::Compat::Types;
 use COGL::Raw::Types;
 
 use GLib::MainLoop;
@@ -78,7 +77,7 @@ sub MAIN {
 
   with %data<fb> {
     .add-frame-callback(-> *@a {
-      if CoglFrameEvent( @a[1] ) == COGL_FRAME_EVENT_SYNC {
+      if CoglFrameEventEnum( @a[1] ) == COGL_FRAME_EVENT_SYNC {
         %data<draw-ready> = True;
         maybe-redraw;
       }

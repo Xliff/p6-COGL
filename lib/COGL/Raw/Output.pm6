@@ -44,7 +44,7 @@ sub cogl_output_get_refresh_rate (CoglOutput $output)
 { * }
 
 sub cogl_output_get_subpixel_order (CoglOutput $output)
-  returns guint # CoglSubpixelOrder
+  returns CoglSubpixelOrder
   is native(cogl)
   is export
 { * }
