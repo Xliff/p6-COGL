@@ -15,7 +15,7 @@ class COGL::Euler {
     $!ce = $euler;
   }
 
-  method COGL::Raw::Types::CoglEuler
+  method COGL::Raw::Structs::CoglEuler
     is also<CoglEuler>
   { $!ce }
 
