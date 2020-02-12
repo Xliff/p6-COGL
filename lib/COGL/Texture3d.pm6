@@ -1,9 +1,12 @@
 use v6.c;
 
 use Method::Also;
+use NativeCall;
 
 use COGL::Raw::Types;
 use COGL::Raw::Texture3d;
+
+use COGL::Texture;
 
 our subset Texture3dAncestry is export of Mu
   where CoglTexture3d | TextureAncestry;
@@ -11,7 +14,7 @@ our subset Texture3dAncestry is export of Mu
 class COGL::Texture3d is COGL::Texture {
   has CoglTexture3d $!ct3d;
 
-  submethod BUILD (:$texture23) {
+  submethod BUILD (:$texture3d) {
     given $texture3d {
       when Texture3dAncestry {
         my $to-parent;
@@ -74,19 +77,19 @@ class COGL::Texture3d is COGL::Texture {
     Int() $format,
     Int() $rowstride,
     Int() $image_stride,
-    CArray[uint8] $data,
+    CArray[uint8] $d,
     CArray[Pointer[CoglError]] $error = gerror,
     :from_data(:from-data(:$data)) is required
   ) {
     COGL::Texture3d.new_from_data(
-      $context
-      $width
-      $height
-      $depth
-      $format
-      $rowstride
-      $image_stride
-      $data
+      $context,
+      $width,
+      $height,
+      $depth,
+      $format,
+      $rowstride,
+      $image_stride,
+      $d,
       $error
     );
   }
@@ -144,13 +147,18 @@ class COGL::Texture3d is COGL::Texture {
   {
     my gint ($w, $h, $d) = ($width, $height, $depth);
 
-    cogl_texture_3d_new_with_size($!ct3d, $context, $w, $h, $d);
+    my $texture3d = cogl_texture_3d_new_with_size($context, $w, $h, $d);
 
     $texture3d ?? self.bless(:$texture3d) !! Nil;
   }
 
-  method cogl_is_texture_3d is also<cogl-is-texture-3d> {
-    so cogl_is_texture_3d($!ct3d);
+  method cogl_is_texture_3d  (
+    COGL::Texture3d:U:
+    Pointer $candidate
+  )
+    is also<cogl-is-texture-3d>
+  {
+    so cogl_is_texture_3d($candidate);
   }
 
   method get_gtype is also<get-gtype> {
