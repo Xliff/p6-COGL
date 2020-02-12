@@ -52,7 +52,6 @@ class CoglPipeline         is repr('CPointer') is export does GLib::Roles::Point
 class CoglPixelBuffer      is repr('CPointer') is export does GLib::Roles::Pointers { }
 class CoglPrimitive        is repr('CPointer') is export does GLib::Roles::Pointers { }
 class CoglOutput           is repr('CPointer') is export does GLib::Roles::Pointers { }
-class CoglQuaternion       is repr('CPointer') is export does GLib::Roles::Pointers { }
 class CoglRenderer         is repr('CPointer') is export does GLib::Roles::Pointers { }
 class CoglSource           is repr('CPointer') is export does GLib::Roles::Pointers { }
 class CoglSnippet          is repr('CPointer') is export does GLib::Roles::Pointers { }

@@ -203,4 +203,11 @@ class CoglMatrix is repr<CStruct>            does GLib::Roles::Pointers is expor
   has gfloat $.ww is rw;
 
   has guint $!private;
+}
+
+class CoglQuaternion is repr<CStruct>        does GLib::Roles::Pointers is export {
+  has gfloat $.w;
+  has gfloat $.x;
+  has gfloat $.y;
+  has gfloat $.z;
 };
