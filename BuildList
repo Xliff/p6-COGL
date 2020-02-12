@@ -46,7 +46,9 @@ COGL::Raw::Quaternion
 COGL::Raw::Renderer
 COGL::Raw::Texture
 COGL::Raw::Texture2d
+COGL::Raw::Texture3d
 COGL::Roles::Buffer
+COGL::Texture3d
 COGL::Bitmap
 COGL::Color
 COGL::DepthState

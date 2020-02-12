@@ -58,5 +58,7 @@ class CoglSnippet          is repr('CPointer') is export does GLib::Roles::Point
 class CoglSwapChain        is repr('CPointer') is export does GLib::Roles::Pointers { }
 class CoglTexture          is repr('CPointer') is export does GLib::Roles::Pointers { }
 class CoglTexture2d        is repr('CPointer') is export does GLib::Roles::Pointers { }
+class CoglTexture3d        is repr('CPointer') is export does GLib::Roles::Pointers { }
 
 constant CoglTexture2D is export := CoglTexture2d;
+constant CoglTexture3D is export := CoglTexture3d;
