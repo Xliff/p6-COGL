@@ -98,3 +98,22 @@ sub cogl_texture_set_premultiplied (
   is native(cogl)
   is export
 { * }
+
+sub cogl_texture_set_region (
+  CoglTexture $texture,
+  gint $src_x,
+  gint $src_y,
+  gint $dst_x,
+  gint $dst_y,
+  guint $dst_width,
+  guint $dst_height,
+  gint $width,
+  gint $height,
+  CoglPixelFormat $format,
+  guint $rowstride,
+  CArray[uint8] $data
+)
+  returns CoglBool
+  is native(cogl)
+  is export
+{ * }

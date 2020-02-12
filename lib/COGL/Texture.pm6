@@ -3,9 +3,6 @@ use v6.c;
 use Method::Also;
 use NativeCall;
 
-
-
-
 use COGL::Raw::Types;
 use COGL::Raw::Texture;
 
@@ -37,14 +34,14 @@ class COGL::Texture is COGL::Object {
     is also<CoglTexture>
   { $!ct }
 
-
   method components is rw {
     Proxy.new(
       FETCH => sub ($) {
-        CoglTextureComponents( cogl_texture_get_components($!ct) );
+        CoglTextureComponentsEnum( cogl_texture_get_components($!ct) );
       },
       STORE => sub ($, Int() $components is copy) {
-        my guint $c = resolve-uint($components);
+        my guint $c = $components;
+
         cogl_texture_set_components($!ct, $c);
       }
     );
@@ -56,14 +53,18 @@ class COGL::Texture is COGL::Object {
         so cogl_texture_get_premultiplied($!ct);
       },
       STORE => sub ($, Int() $premultiplied is copy) {
-        my gboolean $p = resolve-bool($premultiplied);
+        my gboolean $p = $premultiplied.so.Int;
+
         cogl_texture_set_premultiplied($!ct, $p);
       }
     );
   }
 
   method allocate (CArray[Pointer[CoglError]] $error = gerror) {
-    cogl_texture_allocate($!ct, $error);
+    clear_error;
+    my $rv = so cogl_texture_allocate($!ct, $error);
+    set_error($error);
+    $rv;
   }
 
   method is_texture (COGL::Texture:U: gpointer $candidate)
@@ -78,6 +79,7 @@ class COGL::Texture is COGL::Object {
 
   method get_gtype is also<get-gtype> {
     state ($n, $t);
+
     unstable_get_type( self.^name, &cogl_texture_get_gtype, $n, $t );
   }
 
@@ -106,13 +108,49 @@ class COGL::Texture is COGL::Object {
   )
     is also<set-data>
   {
-    my guint $f = resolve-uint($format);
-    my gint ($r, $l) = resolve-int($rowstride, $level);
+    my guint $f = $format;
+    my gint ($r, $l) = ($rowstride, $level);
 
     clear_error;
     my $rc = cogl_texture_set_data($!ct, $f, $r, $data, $l, $error);
     set_error($error);
     so $rc;
+  }
+
+  method set_region (
+    Int() $src_x,
+    Int() $src_y,
+    Int() $dst_x,
+    Int() $dst_y,
+    Int() $dst_width,
+    Int() $dst_height,
+    Int() $width,
+    Int() $height,
+    Int() $format,
+    Int() $rowstride,
+    CArray[uint8] $data
+  )
+    is also<set-region>
+  {
+    my gint ($sx, $sy, $dx, $dy, $w, $h) =
+      ($src_x, $src_y, $dst_x, $dst_y, $width, $height);
+    my guint ($dw, $dh, $r) = ($dst_width, $dst_height, $rowstride);
+    my CoglPixelFormat $f = $format;
+
+    so cogl_texture_set_region(
+      $!ct,
+      $sx,
+      $sy,
+      $dx,
+      $dy,
+      $dw,
+      $dh,
+      $w,
+      $h,
+      $f,
+      $r,
+      $data
+    );
   }
 
 }
