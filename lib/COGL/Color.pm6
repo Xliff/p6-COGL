@@ -13,7 +13,7 @@ class COGL::Color {
     $!cc = $color;
   }
 
-  method COGL::Raw::Definitions::CoglColor
+  method COGL::Raw::Structs::CoglColor
     is also<CoglColor>
   { $!cc }
 
@@ -268,7 +268,7 @@ class COGL::Color {
     is also<to-hsl>
   {
     my gfloat ($h, $s, $l) = ($hue, $saturation, $luminance);
-    
+
     cogl_color_to_hsl($!cc, $h, $s, $l);
   }
 

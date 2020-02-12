@@ -12,7 +12,7 @@ class COGL::DepthState {
     $!cds = $depth;
   }
 
-  method COGL::Raw::Definitions::CoglDepthState
+  method COGL::Raw::Structs::CoglDepthState
     is also<CoglDepthState>
   { $!cds }
 

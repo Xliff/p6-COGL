@@ -3,11 +3,8 @@ use v6.c;
 use Method::Also;
 use NativeCall;
 
-
 use COGL::Raw::Types;
 use COGL::Raw::Matrix;
-
-
 
 class COGL::Matrix {
   my @valid-origins = <identity quaternion array euler translation>;
@@ -27,7 +24,7 @@ DIE
     $!cm = $matrix;
   }
 
-  method COGL::Raw::Definitions::CoglMatrix
+  method COGL::Raw::Structs::CoglMatrix
     is also<CoglMatrix>
   { $!cm }
 
