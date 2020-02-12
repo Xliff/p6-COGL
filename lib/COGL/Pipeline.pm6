@@ -3,14 +3,12 @@ use v6.c;
 use Method::Also;
 use NativeCall;
 
-
-
-
 use COGL::Raw::Types;
 use COGL::Raw::Pipeline;
 use COGL::Raw::Pipeline::LayerState;
 
 use COGL::Object;
+use COGL::Context;
 
 our subset PipelineAncestry is export of Mu
   where CoglPipeline | CoglObject;
@@ -48,8 +46,18 @@ class COGL::Pipeline is COGL::Object {
     is also<CoglPipeline>
   { $!cp }
 
-  method new (CoglContext() $context) {
-    self.bless( pipeline => cogl_pipeline_new($context) );
+  multi method new (CoglPipeline $pipeline) {
+    $pipeline ?? self.bless(:$pipeline) !! Nil;
+  }
+  multi method new (CoglContext $context) {
+    my $pipeline = cogl_pipeline_new($context);
+
+    $pipeline ?? self.bless(:$pipeline) !! Nil;
+  }
+  multi method new (COGL::Context $c) {
+    return Nil unless $c;
+
+    samewith($c.CoglContext);
   }
 
   method is_pipeline (COGL::Pipeline:U: gpointer $candidate)
@@ -61,10 +69,11 @@ class COGL::Pipeline is COGL::Object {
   method color_mask is rw {
     Proxy.new(
       FETCH => sub ($) {
-        CoglColorMask( cogl_pipeline_get_color_mask($!cp) );
+        CoglColorMaskEnum( cogl_pipeline_get_color_mask($!cp) );
       },
       STORE => sub ($, Int() $color_mask is copy) {
-        my uint64 $m = resolve-uint64($color_mask);
+        my uint64 $m = $color_mask;
+
         cogl_pipeline_set_color_mask($!cp, $m);
       }
     );
@@ -76,7 +85,8 @@ class COGL::Pipeline is COGL::Object {
         CoglPipelineCullFaceMode( cogl_pipeline_get_cull_face_mode($!cp) );
       },
       STORE => sub ($, Int() $cull_face_mode is copy) {
-        my guint $m = resolve-uint($cull_face_mode);
+        my guint $m = $cull_face_mode;
+
         cogl_pipeline_set_cull_face_mode($!cp, $m);
       }
     );
@@ -85,10 +95,11 @@ class COGL::Pipeline is COGL::Object {
   method front_face_winding is rw {
     Proxy.new(
       FETCH => sub ($) {
-        CoglWinding( cogl_pipeline_get_front_face_winding($!cp) );
+        CoglWindingEnum( cogl_pipeline_get_front_face_winding($!cp) );
       },
       STORE => sub ($, Int() $front_winding is copy) {
-        my guint $w = resolve-uint($front_winding);
+        my guint $w = $front_winding;
+
         cogl_pipeline_set_front_face_winding($!cp, $w);
       }
     );
@@ -101,6 +112,7 @@ class COGL::Pipeline is COGL::Object {
       },
       STORE => sub ($, Num() $point_size is copy) {
         my gfloat $p = $point_size;
+
         cogl_pipeline_set_point_size($!cp, $p);
       }
     );
@@ -113,6 +125,7 @@ class COGL::Pipeline is COGL::Object {
       },
       STORE => sub ($, Num() $shininess is copy) {
         my gfloat $s = $shininess;
+
         cogl_pipeline_set_shininess($!cp, $s);
       }
     );
@@ -129,8 +142,13 @@ class COGL::Pipeline is COGL::Object {
     );
   }
 
-  method copy {
-    self.bless( pipeline => cogl_pipeline_copy($!cp) );
+  method copy (:$raw = False) {
+    my $p = cogl_pipeline_copy($!cp);
+
+    $p ??
+      ( $raw ?? $p !! COGL::Pipeline.new($p) )
+      !!
+      Nil;
   }
 
   method foreach_layer (
@@ -144,6 +162,7 @@ class COGL::Pipeline is COGL::Object {
 
   method get_gtype is also<get-gtype> {
     state ($n, $t);
+
     unstable_get_type( self.^name, &cogl_pipeline_get_gtype, $n, $t );
   }
 
@@ -157,7 +176,7 @@ class COGL::Pipeline is COGL::Object {
   method add_layer_snippet (Int() $layer, CoglSnippet() $snippet)
     is also<add-layer-snippet>
   {
-    my gint $l = resolve-int($layer);
+    my gint $l = $layer;
 
     cogl_pipeline_add_layer_snippet($!cp, $l, $snippet);
   }
@@ -165,7 +184,7 @@ class COGL::Pipeline is COGL::Object {
   method get_layer_mag_filter (Int() $layer_index)
     is also<get-layer-mag-filter>
   {
-    my gint $li = resolve-int($layer_index);
+    my gint $li = $layer_index;
 
     cogl_pipeline_get_layer_mag_filter($!cp, $li);
   }
@@ -173,19 +192,21 @@ class COGL::Pipeline is COGL::Object {
   method get_layer_min_filter (Int() $layer_index)
     is also<get-layer-min-filter>
   {
-    my gint $li = resolve-int($layer_index);
+    my gint $li = $layer_index;
+
     cogl_pipeline_get_layer_min_filter($!cp, $li);
   }
 
   method get_layer_point_sprite_coords_enabled (Int() $layer_index)
     is also<get-layer-point-sprite-coords-enabled>
   {
-    my gint $li = resolve-int($layer_index);
+    my gint $li = $layer_index;
+
     cogl_pipeline_get_layer_point_sprite_coords_enabled($!cp, $li);
   }
 
   method get_layer_texture (Int() $layer_index) is also<get-layer-texture> {
-    my gint $li = resolve-int($layer_index);
+    my gint $li = $layer_index;
 
     cogl_pipeline_get_layer_texture($!cp, $li);
   }
@@ -193,7 +214,7 @@ class COGL::Pipeline is COGL::Object {
   method get_layer_wrap_mode_p (Int() $layer_index)
     is also<get-layer-wrap-mode-p>
   {
-    my gint $li = resolve-int($layer_index);
+    my gint $li = $layer_index;
 
     cogl_pipeline_get_layer_wrap_mode_p($!cp, $li);
   }
@@ -201,7 +222,7 @@ class COGL::Pipeline is COGL::Object {
   method get_layer_wrap_mode_s (Int() $layer_index)
     is also<get-layer-wrap-mode-s>
   {
-    my gint $li = resolve-int($layer_index);
+    my gint $li = $layer_index;
 
     cogl_pipeline_get_layer_wrap_mode_s($!cp, $li);
   }
@@ -209,7 +230,7 @@ class COGL::Pipeline is COGL::Object {
   method get_layer_wrap_mode_t (Int() $layer_index)
     is also<get-layer-wrap-mode-t>
   {
-    my gint $li = resolve-int($layer_index);
+    my gint $li = $layer_index;
 
     cogl_pipeline_get_layer_wrap_mode_t($!cp, $li);
   }
@@ -219,26 +240,31 @@ class COGL::Pipeline is COGL::Object {
   }
 
   method remove_layer (Int() $layer_index) is also<remove-layer> {
-    my gint $li = resolve-int($layer_index);
+    my gint $li = $layer_index;
 
     cogl_pipeline_remove_layer($!cp, $li);
   }
 
   method set_layer_combine (
     Int() $layer_index,
-    Str $blend_string,
+    Str() $blend_string,
     CArray[Pointer[CoglError]] $error = gerror
   )
     is also<set-layer-combine>
   {
-    my gint $li = resolve-int($layer_index);
-    cogl_pipeline_set_layer_combine($!cp, $li, $blend_string, $error);
+    my gint $li = $layer_index;
+
+    clear_error;
+    my $rv = cogl_pipeline_set_layer_combine($!cp, $li, $blend_string, $error);
+    set_error($error);
+    $rv;
   }
 
   method set_layer_combine_constant (Int() $layer_index, CoglColor() $constant)
     is also<set-layer-combine-constant>
   {
-    my gint $li = resolve-int($layer_index);
+    my gint $li = $layer_index;
+
     cogl_pipeline_set_layer_combine_constant($!cp, $li, $constant);
   }
 
@@ -249,8 +275,8 @@ class COGL::Pipeline is COGL::Object {
   )
     is also<set-layer-filters>
   {
-    my gint $li = resolve-int($layer_index);
-    my guint ($mnf, $mgf) = resolve-uint($min_filter, $mag_filter);
+    my gint $li = $layer_index;
+    my guint ($mnf, $mgf) = $min_filter, $mag_filter;
 
     cogl_pipeline_set_layer_filters($!cp, $li, $mnf, $mgf);
   }
@@ -258,7 +284,8 @@ class COGL::Pipeline is COGL::Object {
   method set_layer_matrix (Int() $layer_index, CoglMatrix() $matrix)
     is also<set-layer-matrix>
   {
-    my gint $li = resolve-int($layer_index);
+    my gint $li = $layer_index;
+
     cogl_pipeline_set_layer_matrix($!cp, $li, $matrix);
   }
 
@@ -268,8 +295,8 @@ class COGL::Pipeline is COGL::Object {
   )
     is also<set-layer-null-texture>
   {
-    my gint $li = resolve-int($layer_index);
-    my guint $tt = resolve-uint($texture_type);
+    my gint $li = $layer_index;
+    my guint $tt = $texture_type;
 
     cogl_pipeline_set_layer_null_texture($!cp, $li, $tt);
   }
@@ -281,16 +308,24 @@ class COGL::Pipeline is COGL::Object {
   )
     is also<set-layer-point-sprite-coords-enabled>
   {
-    my gint $li = resolve-int($layer_index);
-    my gboolean $e = resolve-bool($enable);
+    my gint $li = $layer_index;
+    my gboolean $e = $enable;
 
-    cogl_pipeline_set_layer_point_sprite_coords_enabled($!cp, $li, $e, $error);
+    clear_error;
+    my $rv = cogl_pipeline_set_layer_point_sprite_coords_enabled(
+      $!cp,
+      $li,
+      $e,
+      $error
+    );
+    set_error($error);
+    $rv;
   }
 
   method set_layer_texture (Int() $layer_index, CoglTexture() $texture)
     is also<set-layer-texture>
   {
-    my gint $li = resolve-int($layer_index);
+    my gint $li = $layer_index;
 
     cogl_pipeline_set_layer_texture($!cp, $li, $texture);
   }
@@ -298,8 +333,8 @@ class COGL::Pipeline is COGL::Object {
   method set_layer_wrap_mode (Int() $layer_index, Int() $mode)
     is also<set-layer-wrap-mode>
   {
-    my gint $li = resolve-int($layer_index);
-    my guint $m = resolve-uint($mode);
+    my gint $li = $layer_index;
+    my guint $m = $mode;
 
     cogl_pipeline_set_layer_wrap_mode($!cp, $li, $m);
   }
@@ -310,8 +345,8 @@ class COGL::Pipeline is COGL::Object {
   )
     is also<set-layer-wrap-mode-p>
   {
-    my gint $li = resolve-int($layer_index);
-    my guint $m = resolve-uint($mode);
+    my gint $li = $layer_index;
+    my guint $m = $mode;
 
     cogl_pipeline_set_layer_wrap_mode_p($!cp, $li, $m);
   }
@@ -322,8 +357,8 @@ class COGL::Pipeline is COGL::Object {
   )
     is also<set-layer-wrap-mode-s>
   {
-    my gint $li = resolve-int($layer_index);
-    my guint $m = resolve-uint($mode);
+    my gint $li = $layer_index;
+    my guint $m = $mode;
 
     cogl_pipeline_set_layer_wrap_mode_s($!cp, $li, $m);
   }
@@ -334,8 +369,8 @@ class COGL::Pipeline is COGL::Object {
   )
     is also<set-layer-wrap-mode-t>
   {
-    my gint $li = resolve-int($layer_index);
-    my guint $m = resolve-uint($mode);
+    my gint $li = $layer_index;
+    my guint $m = $mode;
 
     cogl_pipeline_set_layer_wrap_mode_t($!cp, $li, $m);
   }
@@ -360,8 +395,8 @@ class COGL::Pipeline is COGL::Object {
     cogl_pipeline_get_color($!cp, $color);
   }
 
-  method get_depth_state (CoglDepthState() $state_out) 
-    is also<get-depth-state> 
+  method get_depth_state (CoglDepthState() $state_out)
+    is also<get-depth-state>
   {
     cogl_pipeline_get_depth_state($!cp, $state_out);
   }
@@ -388,7 +423,7 @@ class COGL::Pipeline is COGL::Object {
   )
     is also<set-alpha-test-function>
   {
-    my guint $af = resolve-uint($alpha_func);
+    my guint $af = $alpha_func;
     my gfloat $ar = $alpha_reference;
 
     cogl_pipeline_set_alpha_test_function($!cp, $af, $ar);
@@ -411,9 +446,9 @@ class COGL::Pipeline is COGL::Object {
     is also<set-blend>
   {
     clear_error;
-    my $rc = cogl_pipeline_set_blend($!cp, $blend_string, $error);
+    my $rv = cogl_pipeline_set_blend($!cp, $blend_string, $error);
     set_error($error);
-    $rc;
+    $rv;
   }
 
   method set_blend_constant (CoglColor() $constant_color)
@@ -447,7 +482,7 @@ class COGL::Pipeline is COGL::Object {
   )
     is also<set-color4ub>
   {
-    my uint8 ($r, $g, $b, $a) = resolve-uint8($red, $green, $blue, $alpha);
+    my uint8 ($r, $g, $b, $a) = $red, $green, $blue, $alpha;
 
     cogl_pipeline_set_color4ub($!cp, $r, $g, $b, $a);
   }
@@ -459,9 +494,9 @@ class COGL::Pipeline is COGL::Object {
     is also<set-depth-state>
   {
     clear_error;
-    my $rc = cogl_pipeline_set_depth_state($!cp, $state, $error);
+    my $rv = cogl_pipeline_set_depth_state($!cp, $state, $error);
     set_error($error);
-    $rc;
+    $rv;
   }
 
   method set_diffuse (CoglColor() $diffuse) is also<set-diffuse> {
@@ -478,12 +513,12 @@ class COGL::Pipeline is COGL::Object {
   )
     is also<set-per-vertex-point-size>
   {
-    my gboolean $e = resolve-bool($enable);
+    my gboolean $e = $enable.so.Int;
 
     clear_error;
-    my $rc = cogl_pipeline_set_per_vertex_point_size($!cp, $e, $error);
+    my $rv = cogl_pipeline_set_per_vertex_point_size($!cp, $e, $error);
     set_error($error);
-    $rc;
+    $rv;
   }
 
   method set_specular (CoglColor() $specular) is also<set-specular> {
@@ -493,7 +528,7 @@ class COGL::Pipeline is COGL::Object {
   method set_uniform_1f (Int() $uniform_location, Num() $value)
     is also<set-uniform-1f>
   {
-    my gint $u = resolve-int($uniform_location);
+    my gint $u = $uniform_location;
     my gfloat $v = $value;
 
     cogl_pipeline_set_uniform_1f($!cp, $uniform_location, $value);
@@ -502,7 +537,7 @@ class COGL::Pipeline is COGL::Object {
   method set_uniform_1i (Int() $uniform_location, Int() $value)
     is also<set-uniform-1i>
   {
-    my gint ($u, $v) = resolve-int($uniform_location, $value);
+    my gint ($u, $v) = $uniform_location, $value;
 
     cogl_pipeline_set_uniform_1i($!cp, $uniform_location, $value);
   }
@@ -515,19 +550,20 @@ class COGL::Pipeline is COGL::Object {
   )
     is also<set-uniform-float>
   {
-    my gint ($u, $n, $c) = resolve-int($uniform_location, $n_components, $count);
+    my gint ($u, $n, $c) = $uniform_location, $n_components, $count;
     cogl_pipeline_set_uniform_float($!cp, $u, $n, $c, $value);
   }
 
-  method set_uniform_int (
+  # This could probably use a multi for TypedBuffer and Buf
+  multi method set_uniform_int (
     Int() $uniform_location,
     Int() $n_components,
     Int() $count,
     CArray[gint] $value
   )
-    is also<set-uniform-int>
+
   {
-    my gint ($u, $n, $c) = resolve-int($uniform_location, $n_components, $count);
+    my gint ($u, $n, $c) = ($uniform_location, $n_components, $count);
 
     cogl_pipeline_set_uniform_int(
       $!cp,
@@ -538,6 +574,7 @@ class COGL::Pipeline is COGL::Object {
     );
   }
 
+  # This could probably use a multi for TypedBuffer and Buf
   method set_uniform_matrix (
     Int() $uniform_location,
     Int() $dimensions,
@@ -547,8 +584,8 @@ class COGL::Pipeline is COGL::Object {
   )
     is also<set-uniform-matrix>
   {
-    my gint ($u, $d, $c) = resolve-int($uniform_location, $dimensions, $count);
-    my gboolean $t = resolve-bool($transpose);
+    my gint ($u, $d, $c) = $uniform_location, $dimensions, $count;
+    my gboolean $t = $transpose.so.Int;
 
     cogl_pipeline_set_uniform_matrix($!cp, $u, $d, $c, $t, $value);
   }
