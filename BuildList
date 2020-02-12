@@ -64,10 +64,10 @@ COGL::Texture2d
 COGL::AttributeBuffer
 COGL::Display
 COGL::Euler
-COGL::FrameBuffer
-COGL::Offscreen
-COGL::Onscreen
 COGL::Attribute
 COGL::Context
 COGL::FontMap
+COGL::FrameBuffer
+COGL::Offscreen
+COGL::Onscreen
 COGL::Pipeline
