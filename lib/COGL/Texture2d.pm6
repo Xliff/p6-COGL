@@ -3,16 +3,16 @@ use v6.c;
 use NativeCall;
 use Method::Also;
 
-
-
-
 use COGL::Raw::Types;
 use COGL::Raw::Texture2d;
 
 use COGL::Texture;
+use COGL::Bitmap;
 
 our subset Texture2dAncestry is export of Mu
   where CoglTexture2d | TextureAncestry;
+
+class COGL::Texture2d { ... }
 
 class COGL::Texture2d is COGL::Texture {
   has CoglTexture2d $!ct2d;
@@ -43,8 +43,41 @@ class COGL::Texture2d is COGL::Texture {
     }
   }
 
+  multi method new (CoglTexture2d $texture2d) {
+    $texture2d ?? self.bless(:$texture2d) !! Nil;
+  }
+  multi method new (COGL::Bitmap $b, :$bitmap is required) {
+    COGL::Texture2d.new_from_bitmap( bitmap => $b.CoglBitmap );
+  }
+  multi method new (CoglBitmap $b, :$bitmap is required) {
+    COGL::Texture2d.new_from_bitmap( bitmap => $b );
+  }
+
   method new_from_bitmap (CoglBitmap() $bitmap) is also<new-from-bitmap> {
-    self.bless( texture2d => cogl_texture_2d_new_from_bitmap($bitmap) );
+    my $texture2d = cogl_texture_2d_new_from_bitmap($bitmap);
+
+    $texture2d ?? self.bless(:$texture2d) !! Nil;
+  }
+
+  multi method new (
+    CoglContext() $context,
+    Int() $width,
+    Int() $height,
+    Int() $format,
+    Int() $rowstride,
+    CArray[uint8] $d,
+    CArray[Pointer[CoglError]] $error = gerror,
+    :from_data(:from-data(:$data)) is required
+  ) {
+    COGL::Texture2d.new_from_data(
+      $context,
+      $width,
+      $height,
+      $format,
+      $rowstride,
+      $d,
+      $error
+    );
   }
 
   method new_from_data (
@@ -58,11 +91,11 @@ class COGL::Texture2d is COGL::Texture {
   )
     is also<new-from-data>
   {
-    my gint ($w, $h, $rs) = resolve-int($width, $height, $rowstride);
-    my guint $f = resolve-uint($format);
+    my gint ($w, $h, $rs) = ($width, $height, $rowstride);
+    my guint $f = $format;
 
     clear_error;
-    my $rc = cogl_texture_2d_new_from_data(
+    my $texture2d = cogl_texture_2d_new_from_data(
       $context,
       $width,
       $height,
@@ -72,7 +105,17 @@ class COGL::Texture2d is COGL::Texture {
       $error
     );
     set_error($error);
-    self.bless( texture2d => $rc );
+
+    $texture2d ?? self.bless(:$texture2d) !! Nil;
+  }
+
+  multi method new (
+    CoglContext() $context,
+    Str() $filename,
+    CArray[Pointer[CoglError]] $error = gerror,
+    :from_file(:from-file(:$file)) is required
+  ) {
+    COGL::Texture2d.new_from_file($context, $filename, $error);
   }
 
   method new_from_file (
@@ -82,17 +125,27 @@ class COGL::Texture2d is COGL::Texture {
   )
     is also<new-from-file>
   {
-    self.bless(
-      texture2d => cogl_texture_2d_new_from_file($context, $filename, $error)
-    );
+    my $texture2d = cogl_texture_2d_new_from_file($context, $filename, $error);
+
+    $texture2d ?? self.bless(:$texture2d) !! Nil;
+  }
+
+  multi method new (
+    CoglContext() $context,
+    Int() $width,
+    Int() $height,
+    :with_size(:with-size(:$size)) is required
+  ) {
+    COGL::Texture2d.new_with_size($context, $width, $height);
   }
 
   method new_with_size (CoglContext() $context, Int() $width, Int() $height)
     is also<new-with-size>
   {
-    my gint ($w, $h) = resolve-int($width, $height);
-
-    self.bless( texture2d => cogl_texture_2d_new_with_size($context, $w, $h) );
+    my gint ($w, $h) = ($width, $height);
+    my $texture2d = cogl_texture_2d_new_with_size($context, $w, $h);
+    
+    $texture2d ?? self.bless(:$texture2d) !! Nil;
   }
 
   method is_texture_2d (COGL::Texture2d:U: gpointer $candidate)
@@ -103,6 +156,7 @@ class COGL::Texture2d is COGL::Texture {
 
   method get_gtype is also<get-gtype> {
     state ($n, $t);
+
     unstable_get_type( self.^name, &cogl_texture_2d_get_gtype, $n, $t );
   }
 
