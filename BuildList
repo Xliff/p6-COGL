@@ -9,6 +9,7 @@ GLib::Roles::TypedBuffer
 GLib::Source
 Method::Also
 Pango::FontMap
+Pango::Raw::Definitions
 Pango::Raw::Types
 COGL::Compat::Types
 COGL::Raw::Definitions
@@ -48,7 +49,6 @@ COGL::Roles::Buffer
 COGL::Bitmap
 COGL::Color
 COGL::DepthState
-COGL::FontMap
 COGL::Indices
 COGL::Matrix
 COGL::Object
@@ -69,3 +69,4 @@ COGL::Offscreen
 COGL::Onscreen
 COGL::Attribute
 COGL::Context
+COGL::FontMap

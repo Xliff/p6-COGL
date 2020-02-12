@@ -45,7 +45,6 @@
       "COGL::Bitmap"                    :  "lib/COGL/Bitmap.pm6"                  ,
       "COGL::Color"                     :  "lib/COGL/Color.pm6"                   ,
       "COGL::DepthState"                :  "lib/COGL/DepthState.pm6"              ,
-      "COGL::FontMap"                   :  "lib/COGL/FontMap.pm6"                 ,
       "COGL::Indices"                   :  "lib/COGL/Indices.pm6"                 ,
       "COGL::Matrix"                    :  "lib/COGL/Matrix.pm6"                  ,
       "COGL::Object"                    :  "lib/COGL/Object.pm6"                  ,
@@ -65,7 +64,8 @@
       "COGL::Offscreen"                 :  "lib/COGL/Offscreen.pm6"               ,
       "COGL::Onscreen"                  :  "lib/COGL/Onscreen.pm6"                ,
       "COGL::Attribute"                 :  "lib/COGL/Attribute.pm6"               ,
-      "COGL::Context"                   :  "lib/COGL/Context.pm6"                 
+      "COGL::Context"                   :  "lib/COGL/Context.pm6"                 ,
+      "COGL::FontMap"                   :  "lib/COGL/FontMap.pm6"                 
     },
     "name": "Perl6-COGL",
     "perl": "6.c",
