@@ -3,11 +3,7 @@ use v6.c;
 use NativeCall;
 use Method::Also;
 
-
-
-
 use COGL::Raw::Types;
-
 use GLib::Raw::Main;
 
 use GLib::Source;
@@ -49,7 +45,7 @@ class COGL::Source is GLib::Source {
   method renderer_source_new (CoglRenderer() $renderer, Int() $priority = 0)
     is also<renderer-source-new>
   {
-    my gint $p = resolve-int($priority);
+    my gint $p = $priority;
     my $coglsource = cogl_glib_renderer_source_new($renderer, $priority);
 
     $coglsource ?? self.bless( :$coglsource ) !! Nil;
@@ -59,12 +55,10 @@ class COGL::Source is GLib::Source {
   { * }
 
   multi method new (CoglSourceAncestry $coglsource) {
-    return Nil unless $coglsource;
-
-    self.bless( :$coglsource );
+    $coglsource ?? self.bless( :$coglsource ) !! Nil
   }
   multi method new (CoglContext() $context, Int() $priority = 0) {
-    my gint $p = resolve-int($priority);
+    my gint $p = $priority;
     my $coglsource = cogl_glib_source_new($context, $priority);
 
     $coglsource ?? self.bless( :$coglsource ) !! Nil;
