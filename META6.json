@@ -51,7 +51,6 @@
       "COGL::OnscreenTemplate"          :  "lib/COGL/OnscreenTemplate.pm6"        ,
       "COGL::Output"                    :  "lib/COGL/Output.pm6"                  ,
       "COGL::Pango"                     :  "lib/COGL/Pango.pm6"                   ,
-      "COGL::Pipeline"                  :  "lib/COGL/Pipeline.pm6"                ,
       "COGL::Primitive"                 :  "lib/COGL/Primitive.pm6"               ,
       "COGL::Quaternion"                :  "lib/COGL/Quaternion.pm6"              ,
       "COGL::Renderer"                  :  "lib/COGL/Renderer.pm6"                ,
@@ -65,7 +64,8 @@
       "COGL::Onscreen"                  :  "lib/COGL/Onscreen.pm6"                ,
       "COGL::Attribute"                 :  "lib/COGL/Attribute.pm6"               ,
       "COGL::Context"                   :  "lib/COGL/Context.pm6"                 ,
-      "COGL::FontMap"                   :  "lib/COGL/FontMap.pm6"                 
+      "COGL::FontMap"                   :  "lib/COGL/FontMap.pm6"                 ,
+      "COGL::Pipeline"                  :  "lib/COGL/Pipeline.pm6"                
     },
     "name": "Perl6-COGL",
     "perl": "6.c",

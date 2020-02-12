@@ -15,7 +15,7 @@ our subset AttributeBufferAncestry is export of Mu
 class COGL::AttributeBuffer is COGL::Object {
   also does COGL::Roles::Buffer;
 
-  has CoglAttributeBuffer $!cab;
+  has CoglAttributeBuffer $!cab is implementor;
 
   submethod BUILD (:$attribute) {
     given $attribute {
@@ -29,7 +29,7 @@ class COGL::AttributeBuffer is COGL::Object {
 
           when CoglBuffer {
             $to-parent = cast(CoglObject, $_);
-            $!cb = cast(CoglBuffer, $_);        # COGL::Roles::Buffer
+            $!cb = cast(CoglBuffer, $_);            # COGL::Roles::Buffer
             cast(CoglAttributeBuffer, $_);
           }
 
@@ -38,7 +38,7 @@ class COGL::AttributeBuffer is COGL::Object {
             cast(CoglAttributeBuffer, $_);
           }
         };
-        $!cb //= cast(CoglBuffer, $!cab);       # COGL::Roles::Buffer
+        self.roleInit-CoglBuffer unless $!cb;       # COGL::Roles::Buffer
         self.setObject($to-parent);
       }
 
@@ -86,7 +86,7 @@ class COGL::AttributeBuffer is COGL::Object {
 
   method get_gtype is also<get-gtype> {
     state ($n, $t);
-    
+
     unstable_get_type( self.^name, &cogl_attribute_buffer_get_gtype, $n, $t );
   }
 

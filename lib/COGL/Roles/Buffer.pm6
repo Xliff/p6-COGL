@@ -8,7 +8,7 @@ use COGL::Raw::Buffer;
 role COGL::Roles::Buffer {
   has CoglBuffer $!cb;
 
-  method roleInit-Object {
+  method roleInit-CoglBuffer {
     my \i = findProperImplementor(self.^attributes);
 
     $!cb = cast(CoglBuffer, i.get_value(self) );

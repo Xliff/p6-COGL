@@ -19,7 +19,7 @@ our subset FrameBufferAncestry of Mu
 class COGL::FrameBuffer is COGL::Object {
   also does COGL::Roles::Buffer;
 
-  has CoglFrameBuffer $!cf;
+  has CoglFrameBuffer $!cf is implementor;
 
   submethod BUILD (CoglFrameBuffer :$framebuffer) {
     self.setFramebuffer($framebuffer) if $framebuffer;
@@ -48,8 +48,8 @@ class COGL::FrameBuffer is COGL::Object {
         cast(CoglFrameBuffer, $_);
       }
     };
+    self.roleInit-CoglBuffer unless $!cb;
     self.setObject($to-parent);
-    $!cb //= cast(CoglBuffer, $!cf);          # COGL::Roles::Buffer
   }
 
   method new (CoglFrameBuffer $framebuffer) {

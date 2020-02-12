@@ -56,7 +56,6 @@ COGL::Object
 COGL::OnscreenTemplate
 COGL::Output
 COGL::Pango
-COGL::Pipeline
 COGL::Primitive
 COGL::Quaternion
 COGL::Renderer
@@ -71,3 +70,4 @@ COGL::Onscreen
 COGL::Attribute
 COGL::Context
 COGL::FontMap
+COGL::Pipeline
