@@ -2,7 +2,6 @@ use v6.c;
 
 use Method::Also;
 
-
 use COGL::Raw::Types;
 use COGL::Raw::Output;
 
@@ -25,7 +24,7 @@ class COGL::Output {
     COGL::Output.is_output($!co);
   }
   multi method is_output (COGL::Output:U: gpointer $candidate) {
-    cogl_is_output($candidate);
+    so cogl_is_output($candidate);
   }
 
   method get_gtype is also<get-gtype> {
@@ -80,7 +79,7 @@ class COGL::Output {
       subpixel-order
     >
   {
-    CoglSubpixelOrder( cogl_output_get_subpixel_order($!co) );
+    CoglSubpixelOrderEnum( cogl_output_get_subpixel_order($!co) );
   }
 
   method get_width
