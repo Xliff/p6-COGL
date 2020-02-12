@@ -4,9 +4,6 @@ use Method::Also;
 
 use NativeCall;
 
-
-
-
 use COGL::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::Onscreen;
@@ -29,6 +26,7 @@ class COGL::Onscreen is COGL::FrameBuffer {
             $to-parent = cast(CoglFrameBuffer, $_);
             $_;
           }
+
           default {
             $to-parent = $_;
             cast(CoglOnscreen, $_);
@@ -50,9 +48,14 @@ class COGL::Onscreen is COGL::FrameBuffer {
     is also<CoglOnscreen>
   { $!co }
 
-  method new (CoglContext() $context, Int() $width, Int() $height) {
-    my gint ($w, $h) = resolve-int($width, $height);
-    self.bless( onscreen => cogl_onscreen_new($context, $w, $h) )
+  multi method new (CoglOnscreen $onscreen) {
+    $onscreen ?? self.bless(:$onscreen) !! Nil;
+  }
+  multi method new (CoglContext() $context, Int() $width, Int() $height) {
+    my gint ($w, $h) = ($width, $height);
+    my $onscreen = cogl_onscreen_new($context, $w, $h);
+
+    $onscreen ?? self.bless(:$onscreen) !! Nil;
   }
 
   method resizable is rw {
@@ -61,7 +64,8 @@ class COGL::Onscreen is COGL::FrameBuffer {
         so cogl_onscreen_get_resizable($!co);
       },
       STORE => sub ($, Int() $resizable is copy) {
-        my gboolean $r = resolve-bool($resizable);
+        my gboolean $r = $resizable.so.Int;
+
         cogl_onscreen_set_resizable($!co, $r);
       }
     );
@@ -108,13 +112,14 @@ class COGL::Onscreen is COGL::FrameBuffer {
 
   method frame_closure_get_gtype is also<frame-closure-get-gtype> {
     state ($n, $t);
+
     unstable_get_type( self.^name, &cogl_frame_closure_get_gtype, $n , $t );
   }
 
   method is_onscreen (COGL::Onscreen:U: gpointer $candidate)
     is also<is-onscreen>
   {
-    cogl_is_onscreen($candidate);
+    so cogl_is_onscreen($candidate);
   }
 
   method mir_get_surface is also<mir-get-surface> {
@@ -122,7 +127,8 @@ class COGL::Onscreen is COGL::FrameBuffer {
   }
 
   method mir_resize (Int() $width, Int() $height) is also<mir-resize> {
-    my gint ($w, $h) = resolve-int($width, $height);
+    my gint ($w, $h) = ($width, $height);
+
     cogl_mir_onscreen_resize($!co, $width, $height);
   }
 
@@ -142,8 +148,7 @@ class COGL::Onscreen is COGL::FrameBuffer {
   )
     is also<wayland-resize>
   {
-    my gint ($w, $h, $ox, $oy) =
-      resolve-int($width, $height, $offset_x, $offset_y);
+    my gint ($w, $h, $ox, $oy) = ($width, $height, $offset_x, $offset_y);
 
     cogl_wayland_onscreen_resize($!co, $w, $h, $ox, $oy);
   }
@@ -173,12 +178,14 @@ class COGL::Onscreen is COGL::FrameBuffer {
   )
     is also<x11-set-foreign-window-xid>
   {
-    my $xxid = resolve-uint($xid);
+    my guint32 $xxid = $xid;
+
     cogl_x11_onscreen_set_foreign_window_xid($!co, $xxid, $update, $user_data);
   }
 
   method dirty_closure_get_gtype is also<dirty-closure-get-gtype> {
     state ($n, $t);
+
     unstable_get_type(
       self.^name,
       &cogl_onscreen_dirty_closure_get_gtype,
@@ -197,6 +204,7 @@ class COGL::Onscreen is COGL::FrameBuffer {
 
   method get_gtype is also<get-gtype> {
     state ($n, $t);
+
     unstable_get_type( self.^name, &cogl_onscreen_get_gtype, $n, $t );
   }
 
@@ -224,6 +232,7 @@ class COGL::Onscreen is COGL::FrameBuffer {
 
   method resize_closure_get_gtype is also<resize-closure-get-gtype> {
     state ($n, $t);
+
     unstable_get_type(
       self.^name,
       &cogl_onscreen_resize_closure_get_gtype,
@@ -233,7 +242,8 @@ class COGL::Onscreen is COGL::FrameBuffer {
   }
 
   method set_swap_throttled (Int() $throttled) is also<set-swap-throttled> {
-    my gboolean $t = resolve-bool($throttled);
+    my gboolean $t = $throttled.so.Int;
+
     cogl_onscreen_set_swap_throttled($!co, $t);
   }
 
@@ -245,18 +255,26 @@ class COGL::Onscreen is COGL::FrameBuffer {
     cogl_onscreen_swap_buffers($!co);
   }
 
-  method swap_buffers_with_damage (Int() $rectangles, Int() $n_rectangles)
+  method swap_buffers_with_damage (
+    CArray[gint] $rectangles,
+    Int() $n_rectangles
+  )
     is also<swap-buffers-with-damage>
   {
-    my gint ($r, $nr) = ($rectangles, $n_rectangles);
+    my gint $nr = $n_rectangles;
 
-    cogl_onscreen_swap_buffers_with_damage($!co, $rectangles, $n_rectangles);
+    cogl_onscreen_swap_buffers_with_damage($!co, $rectangles, $nr);
   }
 
-  method swap_region (Int() $rectangles, Int() $n_rectangles)
+  method swap_region (
+    CArray[gint] $rectangles,
+    Int() $n_rectangles
+  )
     is also<swap-region>
   {
-    cogl_onscreen_swap_region($!co, $rectangles, $n_rectangles);
+    my gint $nr = $n_rectangles;
+
+    cogl_onscreen_swap_region($!co, $rectangles, $nr);
   }
 
 }

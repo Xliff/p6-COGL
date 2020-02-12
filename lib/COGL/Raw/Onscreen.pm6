@@ -219,7 +219,7 @@ sub cogl_onscreen_swap_buffers (CoglOnscreen $onscreen)
 
 sub cogl_onscreen_swap_buffers_with_damage (
   CoglOnscreen $onscreen,
-  gint $rectangles,
+  CArray[gint] $rectangles,
   gint $n_rectangles
 )
   is native(cogl)
@@ -228,7 +228,7 @@ sub cogl_onscreen_swap_buffers_with_damage (
 
 sub cogl_onscreen_swap_region (
   CoglOnscreen $onscreen,
-  gint $rectangles,
+  CArray[gint] $rectangles,
   gint $n_rectangles
 )
   is native(cogl)
