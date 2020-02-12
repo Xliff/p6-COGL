@@ -20,6 +20,12 @@ class CoglColor is repr<CStruct>             does GLib::Roles::Pointers is expor
   }
 }
 
+class CoglEuler is repr<CStruct>             does GLib::Roles::Pointers is export {
+  has gfloat $.heading is rw;
+  has gfloat $.pitch   is rw;
+  has gfloat $.roll    is rw;
+}
+
 class CoglPollFD is repr<CStruct>            does GLib::Roles::Pointers is export {
   has gint  $.fd      is rw;
   has int16 $.events  is rw;

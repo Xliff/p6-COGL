@@ -16,7 +16,7 @@ our enum CoglAttributeTypeEnum is export (
 constant CoglBitmapError is export := guint32;
 our enum CoglBitmapErrorEnum is export <
   COGL_BITMAP_ERROR_FAILED
-  COGL_BITMAP_ERROR_UNKNOWN_TYPE
+  COGL_BITMAP_ ERROR_UNKNOWN_TYPE
   COGL_BITMAP_ERROR_CORRUPT_IMAGE
 >;
 

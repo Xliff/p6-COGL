@@ -48,7 +48,6 @@ COGL::Roles::Buffer
 COGL::Bitmap
 COGL::Color
 COGL::DepthState
-COGL::Euler
 COGL::FontMap
 COGL::Indices
 COGL::Matrix
@@ -64,6 +63,7 @@ COGL::Texture
 COGL::Texture2d
 COGL::AttributeBuffer
 COGL::Display
+COGL::Euler
 COGL::FrameBuffer
 COGL::Offscreen
 COGL::Onscreen

@@ -37,7 +37,6 @@ class CoglBitmap           is repr('CPointer') is export does GLib::Roles::Point
 class CoglBuffer           is repr('CPointer') is export does GLib::Roles::Pointers { }
 class CoglContext          is repr('CPointer') is export does GLib::Roles::Pointers { }
 class CoglDisplay          is repr('CPointer') is export does GLib::Roles::Pointers { }
-class CoglEuler            is repr('CPointer') is export does GLib::Roles::Pointers { }
 class CoglFrameBuffer      is repr('CPointer') is export does GLib::Roles::Pointers { }
 class CoglFrameInfo        is repr('CPointer') is export does GLib::Roles::Pointers { }
 class CoglHandle           is repr('CPointer') is export does GLib::Roles::Pointers { }
