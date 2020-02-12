@@ -51,7 +51,7 @@ class COGL::AttributeBuffer is COGL::Object {
 
   }
 
-  method COGL::Raw::Types::CoglAttributeBuffer
+  method COGL::Raw::Definitions::CoglAttributeBuffer
     is also<CoglAttributeBuffer>
   { $!cab }
 

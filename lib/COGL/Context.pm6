@@ -42,7 +42,7 @@ class COGL::Context is COGL::Object {
     }
   }
 
-  method COGL::Raw::Types::CoglContext
+  method COGL::Raw::Definitions::CoglContext
     is also<CoglContext>
   { $!cc }
 

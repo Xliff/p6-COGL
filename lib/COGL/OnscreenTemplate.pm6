@@ -13,7 +13,7 @@ class COGL::OnscreenTemplate {
     $!cot = $template;
   }
 
-  method COGL::Raw::Types::CoglOnscreenTemplate
+  method COGL::Raw::Definitions::CoglOnscreenTemplate
     is also<CoglOnscreenTemplate>
   { $!cot }
 

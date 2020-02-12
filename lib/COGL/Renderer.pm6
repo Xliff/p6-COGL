@@ -41,7 +41,7 @@ class COGL::Renderer is COGL::Output {
     }
   }
 
-  method COGL::Raw::Types::CoglRenderer
+  method COGL::Raw::Definitions::CoglRenderer
     is also<CoglRenderer>
   { $!cr }
 

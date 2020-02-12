@@ -40,7 +40,7 @@ class COGL::Attribute is COGL::Object {
     }
   }
 
-  method COGL::Raw::Types::CoglAttribute
+  method COGL::Raw::Definitions::CoglAttribute
     is also<CoglAttribute>
   { $!ca }
 

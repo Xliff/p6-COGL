@@ -7,7 +7,7 @@ use COGL::Raw::Quaternion;
 class COGL::Quaternion {
   has CoglQuaternion $!cq;
 
-  method COGL::Raw::Types::CoglQuaternion
+  method COGL::Raw::Definitions::CoglQuaternion
   { $!cq }
 
   method identity ( COGL::Quaternion:U: ) {

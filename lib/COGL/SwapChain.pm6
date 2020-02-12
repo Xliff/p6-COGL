@@ -16,7 +16,7 @@ class COGL::SwapChain {
     $!csc = $chain;
   }
   
-  method COGL::Raw::Types::CoglSwapChain
+  method COGL::Raw::Definitions::CoglSwapChain
     is also<CoglSwapChain>
   { $!csc }
   

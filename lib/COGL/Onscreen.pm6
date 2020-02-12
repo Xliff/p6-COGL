@@ -46,7 +46,7 @@ class COGL::Onscreen is COGL::FrameBuffer {
     }
   }
 
-  method COGL::Raw::Types::CoglOnscreen
+  method COGL::Raw::Definitions::CoglOnscreen
     is also<CoglOnscreen>
   { $!co }
 

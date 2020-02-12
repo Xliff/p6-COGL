@@ -13,7 +13,7 @@ class COGL::Output {
     $!co = $output;
   }
 
-  method COGL::Raw::Types::CoglOutput
+  method COGL::Raw::Definitions::CoglOutput
     is also<CoglOutput>
   { $!co }
 

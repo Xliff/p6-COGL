@@ -44,7 +44,7 @@ class COGL::Pipeline is COGL::Object {
     }
   }
 
-  method COGL::Raw::Types::CoglPipeline
+  method COGL::Raw::Definitions::CoglPipeline
     is also<CoglPipeline>
   { $!cp }
 

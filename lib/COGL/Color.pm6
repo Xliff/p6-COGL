@@ -13,7 +13,7 @@ class COGL::Color {
     $!cc = $color;
   }
 
-  method COGL::Raw::Types::CoglColor
+  method COGL::Raw::Definitions::CoglColor
     is also<CoglColor>
   { $!cc }
 

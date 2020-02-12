@@ -25,7 +25,7 @@ class COGL::FrameBuffer is COGL::Object {
     self.setFramebuffer($framebuffer) if $framebuffer;
   }
 
-  method COGL::Raw::Types::CoglFrameBuffer
+  method COGL::Raw::Definitions::CoglFrameBuffer
     is also<CoglFrameBuffer>
   { $!cf }
 

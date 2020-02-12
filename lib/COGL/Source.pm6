@@ -42,7 +42,7 @@ class COGL::Source is GLib::Source {
     self.setSource($to-parent);
   }
 
-  method COGL::Raw::Types::CoglSource
+  method COGL::Raw::Definitions::CoglSource
     is also<CoglSource>
   { $!cs }
 

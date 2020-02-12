@@ -15,7 +15,7 @@ class COGL::Indices {
     $!ci = $indices;
   }
   
-  method COGL::Raw::Types::CoglIndices
+  method COGL::Raw::Definitions::CoglIndices
   { $!ci }
   
   method new (

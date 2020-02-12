@@ -11,7 +11,7 @@ use COGL::Raw::Object;
 class COGL::Object {
   has CoglObject $!co;
 
-  method COGL::Raw::Types::CoglObject
+  method COGL::Raw::Definitions::CoglObject
     is also<CoglObject>
   { $!co }
 

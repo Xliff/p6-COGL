@@ -16,7 +16,7 @@ class COGL::Display {
     $!cd = $display;
   }
 
-  method COGL::Raw::Types::CoglDisplay
+  method COGL::Raw::Definitions::CoglDisplay
     is also<CoglDisplay>
   { $!cd }
 

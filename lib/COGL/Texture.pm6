@@ -33,7 +33,7 @@ class COGL::Texture is COGL::Object {
     self.setObject($to-parent);
   }
 
-  method COGL::Raw::Types::CoglTexture
+  method COGL::Raw::Definitions::CoglTexture
     is also<CoglTexture>
   { $!ct }
 
