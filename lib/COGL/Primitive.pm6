@@ -42,6 +42,10 @@ class COGL::Primitive is COGL::Object {
     }
   }
 
+  method new (CoglPrimitive $primitive) {
+    $primitive ?? self.bless(:$primitive) !! Nil;
+  }
+
   proto method new_p2 (|)
     is also<new-p2>
   { * }
@@ -86,7 +90,7 @@ class COGL::Primitive is COGL::Object {
     my guint $m = $mode;
     my gint $nv = $n_vertices;
     my $primitive = cogl_primitive_new_p2c4($context, $m, $nv, $data);
-    
+
     $primitive ?? self.bless(:$primitive) !! Nil;
   }
 
