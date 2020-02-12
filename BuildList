@@ -5,6 +5,7 @@ GLib::Raw::Main
 GLib::Raw::Structs
 GLib::Raw::Subs
 GLib::Roles::Pointers
+GLib::Roles::StaticClass
 GLib::Roles::TypedBuffer
 GLib::Source
 Method::Also
