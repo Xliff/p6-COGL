@@ -62,7 +62,7 @@ class COGL::FrameBuffer is COGL::Object {
         CoglColorMask( cogl_framebuffer_get_color_mask($!cf) );
       },
       STORE => sub ($, Int() $color_mask is copy) {
-        my guint $cm = resolve-uint($color_mask);
+        my guint $cm = $color_mask;
 
         cogl_framebuffer_set_color_mask($!cf, $cm);
       }
@@ -75,7 +75,7 @@ class COGL::FrameBuffer is COGL::Object {
         so cogl_framebuffer_get_depth_texture_enabled($!cf);
       },
       STORE => sub ($, Int() $enabled is copy) {
-        my gboolean $e = resolve-bool($enabled);
+        my gboolean $e = $enabled;
 
         cogl_framebuffer_set_depth_texture_enabled($!cf, $e);
       }
@@ -88,7 +88,7 @@ class COGL::FrameBuffer is COGL::Object {
         so cogl_framebuffer_get_depth_write_enabled($!cf);
       },
       STORE => sub ($, Int() $depth_write_enabled is copy) {
-        my gboolean $e = resolve-bool($depth_write_enabled);
+        my gboolean $e = $depth_write_enabled;
 
         cogl_framebuffer_set_depth_write_enabled($!cf, $e);
       }
@@ -101,7 +101,7 @@ class COGL::FrameBuffer is COGL::Object {
         so cogl_framebuffer_get_dither_enabled($!cf);
       },
       STORE => sub ($, $dither_enabled is copy) {
-        my gboolean $e = resolve-bool($dither_enabled);
+        my gboolean $e = $dither_enabled;
 
         cogl_framebuffer_set_dither_enabled($!cf, $e);
       }
@@ -120,7 +120,7 @@ class COGL::FrameBuffer is COGL::Object {
         cogl_framebuffer_get_samples_per_pixel($!cf);
       },
       STORE => sub ($, Int() $samples_per_pixel is copy) {
-        my gint $s = resolve-int($samples_per_pixel);
+        my gint $s = $samples_per_pixel;
 
         cogl_framebuffer_set_samples_per_pixel($!cf, $s);
       }
@@ -133,7 +133,7 @@ class COGL::FrameBuffer is COGL::Object {
         CoglStereoMode( cogl_framebuffer_get_stereo_mode($!cf) );
       },
       STORE => sub ($, Int() $stereo_mode is copy) {
-        my guint $sm = resolve-uint($stereo_mode);
+        my guint $sm = $stereo_mode;
 
         cogl_framebuffer_set_stereo_mode($!cf, $sm);
       }
@@ -182,9 +182,9 @@ class COGL::FrameBuffer is COGL::Object {
   )
     is also<draw-attributes>
   {
-    my guint $m = resolve-uint($mode);
+    my guint $m = $mode;
     my gint ($fv, $nv, $na) =
-      resolve-int($first_vertex, $n_vertices, $n_attributes);
+      $first_vertex, $n_vertices, $n_attributes;
 
     cogl_framebuffer_draw_attributes(
       $!cf,
@@ -208,9 +208,9 @@ class COGL::FrameBuffer is COGL::Object {
   )
     is also<draw-indexed-attributes>
   {
-    my guint $m = resolve-uint($mode);
+    my guint $m = $mode;
     my gint ($fv, $nv, $na) =
-      resolve-int($first_vertex, $n_vertices, $n_attributes);
+      $first_vertex, $n_vertices, $n_attributes;
 
     cogl_framebuffer_draw_indexed_attributes(
       $!cf,
@@ -236,7 +236,7 @@ class COGL::FrameBuffer is COGL::Object {
     is also<draw-multitextured-rectangle>
   {
     my gfloat ($x1, $y1, $x2, $y2) = ($x_1, $y_1, $x_2, $y_2);
-    my gint $l = resolve-int($tex_coords_len);
+    my gint $l = $tex_coords_len;
 
     cogl_framebuffer_draw_multitextured_rectangle(
       $!cf,
@@ -515,7 +515,7 @@ class COGL::FrameBuffer is COGL::Object {
   )
     is also<push-scissor-clip>
   {
-    my gint ($xx, $yy, $w, $h) = resolve-int($x, $y, $width, $height);
+    my gint ($xx, $yy, $w, $h) = $x, $y, $width, $height;
 
     cogl_framebuffer_push_scissor_clip($!cf, $xx, $yy, $w, $h);
   }
@@ -530,8 +530,8 @@ class COGL::FrameBuffer is COGL::Object {
   )
     is also<read-pixels>
   {
-    my gint ($xx, $yy, $w, $h) = resolve-int($x, $y, $width, $height);
-    my guint $f = resolve-uint($format);
+    my gint ($xx, $yy, $w, $h) = $x, $y, $width, $height;
+    my guint $f = $format;
 
     cogl_framebuffer_read_pixels($!cf, $xx, $yy, $w, $h, $f, $pixels);
   }
@@ -544,8 +544,8 @@ class COGL::FrameBuffer is COGL::Object {
   )
     is also<read-pixels-into-bitmap>
   {
-    my gint ($xx, $yy) = resolve-int($x, $y);
-    my guint $s = resolve-uint($source);
+    my gint ($xx, $yy) = $x, $y;
+    my guint $s = $source;
 
     cogl_framebuffer_read_pixels_into_bitmap($!cf, $x, $y, $source, $bitmap);
   }
@@ -562,7 +562,7 @@ class COGL::FrameBuffer is COGL::Object {
   )
     is also<resolve-samples-region>
   {
-    my gint ($xx, $yy, $w, $h) = resolve-int($x, $y, $width, $height);
+    my gint ($xx, $yy, $w, $h) = $x, $y, $width, $height;
 
     cogl_framebuffer_resolve_samples_region($!cf, $xx, $yy, $w, $h);
   }
@@ -620,7 +620,7 @@ class COGL::FrameBuffer is COGL::Object {
   }
 
   # method clear (Int() $buffer_mask, CoglColor() $color) {
-  #   my uint64 $bm = resolve-ulong($buffer_mask);
+  #   my uint64 $bm = $buffer_mask;
   #
   #   cogl_color_clear($!cf, $bm, $color)
   # }
@@ -642,7 +642,7 @@ class COGL::FrameBuffer is COGL::Object {
     Num() $blue,
     Num() $alpha
   ) {
-    my uint64 $bm = resolve-ulong($buffer-mask);
+    my uint64 $bm = $buffer-mask;
     my gfloat ($r, $g, $b, $a) = ($red, $green, $blue, $alpha);
 
     cogl_framebuffer_clear4f($!cf, $bm, $r, $g, $b, $a);
@@ -655,7 +655,7 @@ class COGL::FrameBuffer is COGL::Object {
   )
     is also<draw-rectangles>
   {
-    my guint $nr = resolve-uint($n_rectangles);
+    my guint $nr = $n_rectangles;
 
     cogl_framebuffer_draw_rectangles($!cf, $pipeline, $coordinates, $nr);
   }
@@ -667,7 +667,7 @@ class COGL::FrameBuffer is COGL::Object {
   )
     is also<draw-textured-rectangles>
   {
-    my guint $nr = resolve-uint($n_rectangles);
+    my guint $nr = $n_rectangles;
 
     cogl_framebuffer_draw_textured_rectangles(
       $!cf,
@@ -680,7 +680,7 @@ class COGL::FrameBuffer is COGL::Object {
   method discard_buffers (Int() $buffer_mask)
     is also<discard-buffers>
   {
-    my uint64 $bm = resolve-ulong($buffer_mask);
+    my uint64 $bm = $buffer_mask;
 
     cogl_framebuffer_discard_buffers($!cf, $bm);
   }
