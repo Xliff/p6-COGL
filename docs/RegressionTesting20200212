@@ -1,0 +1,6 @@
+01: PASSED
+02: PASSED
+03: PASSED
+04: MARGINAL - Capability information is correct, however output resolution info looks to be corrupted
+05: PASSED
+06: MARGINAL - We have output. We have color. However, the output is nowhere close to the original
