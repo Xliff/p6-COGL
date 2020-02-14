@@ -93,7 +93,7 @@ sub paint (%data) {
 
     $firework.y = $firework.start-y +
                   $firework.initial-y-velocity * $diff-time +
-                  0.5 * GRAVITY * $diff-time * $diff-time;
+                  0.5 * GRAVITY * $diff-time²;
   }
 
   $diff-time = %data<last-spark-time>.elapsed;

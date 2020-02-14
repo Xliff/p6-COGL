@@ -65,17 +65,88 @@ class Color is repr<CStruct> is export does GLib::Roles::Pointers {
 class Firework is repr<CStruct> is export does GLib::Roles::Pointers {
   my $timer-attr = Firework.^attributes[* - 1];
 
-  has gfloat $.size               is rw;
-  has gfloat $.x                  is rw;
-  has gfloat $.y                  is rw;
-  has gfloat $.start-x            is rw;
-  has gfloat $.start-y            is rw;
-  has gfloat $.initial-x-velocity is rw;
-  has gfloat $.initial-y-velocity is rw;
+  has gfloat $!size              ;
+  has gfloat $!x                 ;
+  has gfloat $!y                 ;
+  has gfloat $!start-x           ;
+  has gfloat $!start-y           ;
+  has gfloat $!initial-x-velocity;
+  has gfloat $!initial-y-velocity;
 
   HAS Color  $.color;
 
   has GTimer $!timer;
+
+  # Make things easier on the user.
+  method x is rw {
+    Proxy.new:
+      FETCH => -> $ { $!x },
+      STORE => -> $, Num() $x {
+        my gfloat $xx = $x;
+
+        $!x = $xx;
+      };
+  }
+
+  method y is rw {
+    Proxy.new:
+      FETCH => -> $ { $!y },
+      STORE => -> $, Num() $y {
+        my gfloat $yy = $y;
+
+        $!y = $yy;
+      };
+  }
+
+  method size is rw {
+    Proxy.new:
+      FETCH => -> $ { $!size },
+      STORE => -> $, Num() $size {
+        my gfloat $s = $size;
+
+        $!size = $s;
+      };
+  }
+
+  method start-x is rw {
+    Proxy.new:
+      FETCH => -> $ { $!start-x },
+      STORE => -> $, Num() $start-x {
+        my gfloat $sx = $start-x;
+
+        $!start-x = $sx;
+      };
+  }
+
+  method start-y is rw {
+    Proxy.new:
+      FETCH => -> $ { $!start-y },
+      STORE => -> $, Num() $start-y {
+        my gfloat $sy = $start-y;
+
+        $!start-y = $sy;
+      };
+  }
+
+  method initial-x-velocity is rw {
+    Proxy.new:
+      FETCH => -> $ { $!initial-x-velocity },
+      STORE => -> $, Num() $initial-x-velocity {
+        my gfloat $ix = $initial-x-velocity;
+
+        $!initial-x-velocity = $ix
+      };
+  }
+
+  method initial-y-velocity is rw {
+    Proxy.new:
+      FETCH => -> $ { $!initial-y-velocity },
+      STORE => -> $, Num() $initial-y-velocity {
+        my gfloat $iy = $initial-y-velocity;
+
+        $!initial-y-velocity = $iy
+      };
+  }
 
   method timer(:$raw) is rw {
     Proxy.new:
@@ -89,8 +160,8 @@ class Spark is repr<CStruct> is export does GLib::Roles::Pointers {
   my $color-attr      = Spark.^attributes[* - 2];
   my $base-color-attr = Spark.^attributes[* - 1];
 
-  has gfloat $.x is rw;
-  has gfloat $.y is rw;
+  has gfloat $!x;
+  has gfloat $!y;
 
   HAS Color  $!color;
   HAS Color  $!base-color;
