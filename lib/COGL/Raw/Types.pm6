@@ -10,6 +10,7 @@ unit package GLib::Raw::Types;
 need GLib::Raw::Definitions;
 need GLib::Raw::Enums;
 need GLib::Raw::Structs;
+need GLib::Raw::Struct_Subs;
 need GLib::Raw::Subs;
 need COGL::Raw::Definitions;
 need COGL::Raw::Enums;
