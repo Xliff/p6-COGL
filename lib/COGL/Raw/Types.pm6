@@ -5,7 +5,7 @@ use CompUnit::Util :re-export;
 use GLib::Raw::Exports;
 use COGL::Raw::Exports;
 
-unit package GLib::Raw::Types;
+unit package COGL::Raw::Types;
 
 need GLib::Raw::Definitions;
 need GLib::Raw::Enums;
