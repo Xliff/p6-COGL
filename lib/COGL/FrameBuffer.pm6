@@ -108,7 +108,7 @@ class COGL::FrameBuffer is COGL::Object {
 
   method modelview_matrix(:$raw = False) is rw is also<modelview-matrix> {
     Proxy.new:
-      FETCH => -> $ { self.get-modelview-matrix(:$raw) },
+      FETCH => sub ($) { self.get-modelview-matrix(:$raw) },
       STORE => -> $, CoglMatrix() \mm { self.set-modelview-matrix(mm) };
   }
 

@@ -98,7 +98,7 @@ class COGL::FontMap is Pango::FontMap {
 
   method use_mipmapping is also<use-mipmapping> is rw {
     Proxy.new:
-      FETCH => -> $           { self.get-use-mipmapping },
+      FETCH => sub ($)           { self.get-use-mipmapping },
       STORE => -> $, Int() $v { self.set-use-mipmapping($v) };
   }
 

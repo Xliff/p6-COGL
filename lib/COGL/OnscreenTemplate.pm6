@@ -70,19 +70,19 @@ class COGL::OnscreenTemplate {
 
   method samples_per_pixel is rw is also<samples-per-pixel> {
     Proxy.new:
-      FETCH => -> $           { %!attr<samples-per-pixel> },
+      FETCH => sub ($)           { %!attr<samples-per-pixel> },
       STORE => -> $, Int() $n { self.set-samples-per-pixel($n) };
   }
 
   method stereo_enabled is rw is also<stereo-enabled> {
     Proxy.new:
-      FETCH => -> $           { %!attr<stereo-enabled> },
+      FETCH => sub ($)           { %!attr<stereo-enabled> },
       STORE => -> $, Int() $e { self.set-stereo-enabled($e) };
   }
 
   method swap_throttled is rw is also<swap-throttled> {
     Proxy.new:
-      FETCH => -> $           { %!attr<swap-throttled> },
+      FETCH => sub ($)           { %!attr<swap-throttled> },
       STORE => -> $, Int() $t { self.set-swap-throttled($t) };
   }
 

@@ -59,13 +59,13 @@ class COGL::SwapChain {
 
   method has_alpha is rw is also<has-alpha> {
     Proxy.new:
-      FETCH => -> $            { %!attr<has-alpha> },
+      FETCH => sub ($)            { %!attr<has-alpha> },
       STORE => -> $, Int() $ha { self.set_has_alpha($ha) };
   }
 
   method length is rw {
     Proxy.new:
-      FETCH => -> $           { %!attr<length> },
+      FETCH => sub ($)           { %!attr<length> },
       STORE => -> $, Int() $l { self.set_length($l) };
   }
 
