@@ -1,6 +1,5 @@
 use v6.c;
 
-use GTK::Compat::Types;
 use COGL::Raw::Types;
 
 use GLib::MainLoop;
@@ -62,7 +61,7 @@ sub MAIN {
   };
 
   %data<fb>.add-frame-callback(-> *@a {
-    if CoglFrameEvent( @a[1] ) == COGL_FRAME_EVENT_SYNC {
+    if CoglFrameEventEnum( @a[1] ) == COGL_FRAME_EVENT_SYNC {
       %data<draw-ready> = True;
       maybe-redraw;
     }

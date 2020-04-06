@@ -1,12 +1,8 @@
 use v6.c;
 
 use Method::Also;
-
 use NativeCall;
 
-use GTK::Raw::Utils;
-
-use GTK::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::Color;
 
@@ -17,16 +13,18 @@ class COGL::Color {
     $!cc = $color;
   }
 
-  method COGL::Raw::Types::CoglColor
+  method COGL::Raw::Structs::CoglColor
     is also<CoglColor>
   { $!cc }
 
   multi method new (CoglColor $color) {
-    self.bless(:$color);
+    $color ?? self.bless(:$color) !! Nil;
   }
   # XXX - Will need same strategy here as was done for COGL::Matrix
   multi method new {
-    self.bless( color => cogl_color_new() );
+    my $color = cogl_color_new();
+
+    $color ?? self.bless(:$color) !! Nil;
   }
 
   method alpha is rw {
@@ -50,7 +48,7 @@ class COGL::Color {
         cogl_color_get_alpha_byte($!cc);
       },
       STORE => sub ($, Int() $alpha is copy) {
-        my uint8 $a = resolve-uint8($alpha);
+        my uint8 $a = $alpha;
 
         cogl_color_set_alpha_byte($!cc, $a);
       }
@@ -77,7 +75,7 @@ class COGL::Color {
         cogl_color_get_blue_byte($!cc);
       },
       STORE => sub ($, Int() $blue is copy) {
-        my uint8 $b = resolve-uint8($blue);
+        my uint8 $b = $blue;
 
         cogl_color_set_blue_byte($!cc, $blue);
       }
@@ -104,7 +102,7 @@ class COGL::Color {
         cogl_color_get_green_byte($!cc);
       },
       STORE => sub ($, $green is copy) {
-        my uint8 $g = resolve-uint8($green);
+        my uint8 $g = $green;
 
         cogl_color_set_green_byte($!cc, $green);
       }
@@ -131,19 +129,24 @@ class COGL::Color {
         cogl_color_get_red_byte($!cc);
       },
       STORE => sub ($, Int() $red is copy) {
-        my uint8 $r = resolve-uint8($red);
+        my uint8 $r = $red;
 
         cogl_color_set_red_byte($!cc, $r);
       }
     );
   }
 
-  method copy {
-    cogl_color_copy($!cc);
+  method copy (:$raw = False) {
+    my $c = cogl_color_copy($!cc);
+
+    $c ??
+      ( $raw ?? $c !! COGL::Color.new($c) )
+      !!
+      Nil;
   }
 
   method equal (CoglColor() $v2) {
-    cogl_color_equal($!cc, $v2);
+    so cogl_color_equal($!cc, $v2);
   }
 
   method free {
@@ -168,32 +171,38 @@ class COGL::Color {
 
   method set_alpha_float (Num() $float) is also<set-alpha-float> {
     my gfloat $f = $float;
+
     cogl_color_set_alpha_float($!cc, $f);
   }
 
   method set_red_float (Num() $float) is also<set-red-float> {
     my gfloat $f = $float;
+
     cogl_color_set_alpha_float($!cc, $f);
   }
 
   method set_green_float (Num() $float) is also<set-green-float> {
     my gfloat $f = $float;
+
     cogl_color_set_green_float($!cc, $f);
   }
 
   method set_blue_float (Num() $float) is also<set-blue-float> {
     my gfloat $f = $float;
+
     cogl_color_set_blue_float($!cc, $f);
   }
 
   method get_gtype is also<get-gtype> {
     state ($n, $t);
+
     unstable_get_type( self.^name, &cogl_color_get_gtype, $n, $t );
   }
 
   # Not aliased due to position of number in name
   method init_from_4f (Num() $red, Num() $green, Num() $blue, Num() $alpha) {
     my gfloat ($r, $g, $b, $a) = ($red, $green, $blue, $alpha);
+
     cogl_color_init_from_4f($!cc, $r, $g, $b, $a);
     self;
   }
@@ -204,9 +213,7 @@ class COGL::Color {
          }floating point values."
       unless @colors.elems == 4;
 
-    my $ca = CArray[gfloat].new;
-    $ca[$_] = @colors[$_] for @colors;
-    samewith($ca);
+    samewith( ArrayToCArray(gfloat, @colors) );
   }
   multi method init_from_4fv (CArray[gfloat] $color_array) {
     cogl_color_init_from_4fv($!cc, $color_array);
@@ -220,7 +227,8 @@ class COGL::Color {
     Int() $blue,
     Int() $alpha
   ) {
-    my uint8 ($r, $g, $b, $a) = resolve-uint8($red, $green, $blue, $alpha);
+    my uint8 ($r, $g, $b, $a) = ($red, $green, $blue, $alpha)
+    ;
     cogl_color_init_from_4ub($!cc, $r, $g, $b, $a);
     self;
   }
@@ -229,6 +237,7 @@ class COGL::Color {
     is also<init-from-hsl>
   {
     my gfloat ($h, $s, $l) = ($hue, $saturation, $luminance);
+
     cogl_color_init_from_hsl($!cc, $h, $s, $l);
     self;
   }
@@ -240,6 +249,7 @@ class COGL::Color {
   # Not aliased due to position of number in name.
   method set_from_4f (Num() $red, Num() $green, Num() $blue, Num() $alpha) {
     my gfloat ($r, $g, $b, $a) = ($red, $green, $blue, $alpha);
+
     cogl_color_set_from_4f($!cc, $r, $g, $b, $a);
   }
 
@@ -249,7 +259,8 @@ class COGL::Color {
     Int() $blue,
     Int() $alpha
   ) {
-    my uint8 ($r, $g, $b, $a) = resolve-uint8($red, $green, $blue, $alpha);
+    my uint8 ($r, $g, $b, $a) = ($red, $green, $blue, $alpha);
+
     cogl_color_set_from_4ub($!cc, $r, $g, $b, $a);
   }
 
@@ -257,6 +268,7 @@ class COGL::Color {
     is also<to-hsl>
   {
     my gfloat ($h, $s, $l) = ($hue, $saturation, $luminance);
+
     cogl_color_to_hsl($!cc, $h, $s, $l);
   }
 

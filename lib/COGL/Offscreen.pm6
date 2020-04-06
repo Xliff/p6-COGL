@@ -2,7 +2,6 @@ use v6.c;
 
 use Method::Also;
 
-use GTK::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::Offscreen;
 
@@ -40,17 +39,41 @@ class COGL::Offscreen is COGL::FrameBuffer {
     }
   }
 
+  method COGL::Raw::Definitions::CoglOffscreen
+    is also<CoglOffscreen>
+  { $!co }
+
+  multi method new (CoglOffscreen $offscreen) {
+    $offscreen ?? self.bless(:$offscreen) !! Nil;
+  }
+  multi method new (
+    CoglTexture() $texture,
+    :to_texture(:to-texture(:$to)) is required
+  ) {
+    COGL::Offscreen.new_to_texture($texture);
+  }
+  multi method new (
+    CoglTexture() $texture,
+    :with_texture(:with-texture(:$with)) is required
+  ) {
+    COGL::Offscreen.new_with_texture($texture);
+  }
+
   method new_to_texture (CoglTexture() $texture)
     is DEPRECATED<COGL::Offscreen.new_with_texture>
     is also<new-to-texture>
   {
-    self.bless( offscreen => cogl_offscreen_new_to_texture($texture) );
+    my $offscreen = cogl_offscreen_new_to_texture($texture);
+
+    $offscreen ?? self.bless(:$offscreen) !! Nil;
   }
 
   method new_with_texture (CoglTexture() $texture)
     is also<new-with-texture>
   {
-    self.bless( offscreen => cogl_offscreen_new_with_texture($texture) );
+    my $offscreen = cogl_offscreen_new_with_texture($texture);
+
+    $offscreen ?? self.bless(:$offscreen) !! Nil;
   }
 
   method is_offscreen (COGL::Offscreen:U: gpointer $candidate)
@@ -61,6 +84,7 @@ class COGL::Offscreen is COGL::FrameBuffer {
 
   method get_gtype is also<get-gtype> {
     state ($n, $t);
+
     unstable_get_type( self.^name, &cogl_offscreen_get_gtype, $n, $t );
   }
 

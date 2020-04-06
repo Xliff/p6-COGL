@@ -2,7 +2,6 @@ use v6.c;
 
 use NativeCall;
 
-use GTK::Compat::Types;
 use COGL::Raw::Types;
 
 unit package COGL::Raw::Bitmap;

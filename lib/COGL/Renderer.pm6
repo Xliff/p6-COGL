@@ -3,9 +3,6 @@ use v6.c;
 use Method::Also;
 use NativeCall;
 
-use GTK::Raw::Utils;
-
-use GTK::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::Renderer;
 
@@ -42,26 +39,30 @@ class COGL::Renderer is COGL::Output {
       default {
       }
     }
+
   }
 
-  method COGL::Raw::Types::CoglRenderer
+  method COGL::Raw::Definitions::CoglRenderer
     is also<CoglRenderer>
   { $!cr }
 
   multi method new (CoglRenderer $renderer) {
-    self.bless( :$renderer );
+    $renderer ?? self.bless( :$renderer ) !! Nil;
   }
   multi method new {
-    self.bless( renderer => cogl_renderer_new() );
+    my $renderer = cogl_renderer_new();
+
+    $renderer ?? self.bless( :$renderer ) !! Nil;
   }
 
   method driver is rw {
     Proxy.new(
       FETCH => sub ($) {
-        CoglDriver( cogl_renderer_get_driver($!cr) );
+        CoglDriverEnum( cogl_renderer_get_driver($!cr) );
       },
       STORE => sub ($, Int() $driver is copy) {
-        my guint $d = resolve-uint($driver);
+        my guint $d = $driver;
+
         cogl_renderer_set_driver($!cr, $d);
       }
     );
@@ -70,10 +71,10 @@ class COGL::Renderer is COGL::Output {
   method winsys_id is rw is also<winsys-id> {
     Proxy.new(
       FETCH => sub ($) {
-        CoglWinsysID( cogl_renderer_get_winsys_id($!cr) );
+        CoglWinsysIDEnum( cogl_renderer_get_winsys_id($!cr) );
       },
       STORE => sub ($, Int() $winsys_id is copy) {
-        my guint $w = resolve-uint($winsys_id);
+        my guint $w = $winsys_id;
 
         cogl_renderer_set_winsys_id($!cr, $w);
       }
@@ -81,12 +82,13 @@ class COGL::Renderer is COGL::Output {
   }
 
   method add_constraint (Int() $constraint) is also<add-constraint> {
-    my guint $c = resolve-uint($constraint);
+    my guint $c = $constraint;
+
     cogl_renderer_add_constraint($!cr, $c);
   }
 
   method check_onscreen_template (
-    CoglOnscreenTemplate $onscreen_template,
+    CoglOnscreenTemplate() $onscreen_template,
     CArray[Pointer[CoglError]] $error = gerror
   )
     is also<check-onscreen-template>
@@ -102,7 +104,7 @@ class COGL::Renderer is COGL::Output {
   }
 
   method is_renderer (gpointer $object) is also<is-renderer> {
-    cogl_is_renderer($object);
+    so cogl_is_renderer($object);
   }
 
   method connect (CArray[Pointer[CoglError]] $error = gerror) {
@@ -136,7 +138,8 @@ class COGL::Renderer is COGL::Output {
   }
 
   method remove_constraint (Int() $constraint) is also<remove-constraint> {
-    my guint $c = resolve-uint($constraint);
+    my guint $c = $constraint;
+
     cogl_renderer_remove_constraint($!cr, $c);
   }
 

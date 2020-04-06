@@ -3,9 +3,6 @@ use v6.c;
 # There will likely be no way around this at the end-user level.
 use NativeCall;
 
-use GTK::Compat::Types;
-use GTK::Compat::Timer;
-
 use COGL::Raw::Types;
 
 use COGL::Attribute;
@@ -18,6 +15,7 @@ use COGL::Source;
 use COGL::Texture2d;
 
 use GLib::MainLoop;
+use GLib::Timer;
 
 use GLib::Roles::TypedBuffer;
 
@@ -57,13 +55,15 @@ sub generate-round-texture($context) {
 }
 
 sub paint (%data) {
+  CATCH { default { .message.say } }
+
   my gfloat $diff-time;
   my gint $i;
 
   loop ($i = 0; $i < N_FIREWORKS; $i++) {
     my $firework := %data<fireworks>[$i];
 
-    if abs($firework.x - $firework.start-x) > 2e0 || $firework.y < 1e0 {
+    if abs($firework.x - $firework.start-x) > 2e0 || $firework.y < -1e0 {
       $firework.size = (0.001e0 ..^ 0.1e0).rand;
       $firework.start-x = 1e0 + $firework.size;
       $firework.start-y = -1e0;
@@ -93,11 +93,12 @@ sub paint (%data) {
 
     $firework.y = $firework.start-y +
                   $firework.initial-y-velocity * $diff-time +
-                  0.5 * GRAVITY * $diff-time * $diff-time;
+                  0.5 * GRAVITY * $diff-time²;
   }
 
   $diff-time = %data<last-spark-time>.elapsed;
   if $diff-time < 0 || $diff-time > TIME_PER_SPARK {
+
     loop ($i = 0; $i < N_FIREWORKS; $i++) {
       my $spark := %data<sparks>[%data<next-spark-num>];
       my $firework := %data<fireworks>[$i];
@@ -107,15 +108,20 @@ sub paint (%data) {
       $spark.y =
         $firework.y + (-$firework.size/2e0 ..^ $firework.size/2e0).rand;
 
-      $spark.base-color = $firework.color;
+      #$spark.base-color = $firework.color;
 
-      %data<next-spark-num> = %data<next-spark-num> +& (N_SPARKS - 1);
+      $spark.base-color.red   = $firework.color.red;
+      $spark.base-color.green = $firework.color.green;
+      $spark.base-color.blue  = $firework.color.blue;
+      $spark.base-color.alpha = $firework.color.alpha;
+
+      %data<next-spark-num> = (%data<next-spark-num> + 1) +& (N_SPARKS - 1);
     }
 
     # Update the colour of each spark
     loop (my gint $i = 0; $i < N_SPARKS; $i++) {
       my $spark := %data<sparks>[
-        %data<next-spark-num> + $i +& (N_SPARKS - 1)
+        (%data<next-spark-num> + $i) +& (N_SPARKS - 1)
       ];
 
       my gfloat $cv = $i / (N_SPARKS - 1e0);
@@ -189,7 +195,7 @@ sub MAIN {
   create-primitive(%data);
 
   %data<pipeline> = COGL::Pipeline.new(%data<context>);
-  %data<last-spark-time> = GTK::Compat::Timer.new;
+  %data<last-spark-time> = GLib::Timer.new;
   %data<next-spark-num> = 0;
   %data<pipeline>.point_size = TEXTURE_SIZE;
 
@@ -205,7 +211,7 @@ sub MAIN {
     %data<fireworks>[$i].x     = -FLT_MAX;
     %data<fireworks>[$i].y     = FLT_MAX;
     %data<fireworks>[$i].size  = 0e0;
-    %data<fireworks>[$i].timer = GTK::Compat::Timer.new;
+    %data<fireworks>[$i].timer = GLib::Timer.new;
   }
   loop ($i = 0; $i < N_SPARKS; $i++) {
     %data<sparks>.bind($i, Spark.new);
@@ -216,7 +222,7 @@ sub MAIN {
   %data<fb>.show;
   %data<fb>.add_frame_callback(-> *@a {
     # CoglOnscreen, CoglFrameEvent, CoglFrameInfo, Pointer
-    if CoglFrameEvent( @a[1] ) == COGL_FRAME_EVENT_SYNC {
+    if CoglFrameEventEnum( @a[1] ) == COGL_FRAME_EVENT_SYNC {
       paint(%data);
       $frame_cb++;
     }

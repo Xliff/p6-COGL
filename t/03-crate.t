@@ -1,14 +1,15 @@
 use v6.c;
 
-use GTK::Compat::Types;
-use Pango::Raw::Types;
 use COGL::Raw::Types;
+# Because Xliff doesn't want to put Pango defs in COGL::Raw::Types...
+use Pango::Raw::Definitions;
+use Pango::Raw::Subs;
 
 use Pango::FontDescription;
 use Pango::Layout;
 
 use GLib::MainLoop;
-use GTK::Compat::Timer;
+use GLib::Timer;
 
 use COGL::Color;
 use COGL::Context;
@@ -136,7 +137,7 @@ sub MAIN {
     .<fb> = COGL::Onscreen.new(.<ctx>, 640, 480);
     .<framebuffer-width framebuffer-height> = .<fb>.size;
 
-    .<timer> = GTK::Compat::Timer.new;
+    .<timer> = GLib::Timer.new;
     .<fb>.show;
     .<fb>.set-viewport(0, 0, |.<fb>.size);
 
@@ -231,7 +232,8 @@ sub MAIN {
     say ( .<hello-label-width>, .<hello-label-height> );
 
     .<fb>.add-frame-callback(-> *@a {
-      .<swap-ready> = True if CoglFrameEvent( @a[1] ) == COGL_FRAME_EVENT_SYNC;
+      .<swap-ready> = True
+        if CoglFrameEventEnum( @a[1] ) == COGL_FRAME_EVENT_SYNC;
     });
   }
 

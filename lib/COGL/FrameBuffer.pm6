@@ -3,13 +3,11 @@ use v6.c;
 use Method::Also;
 use NativeCall;
 
-use GTK::Raw::Utils;
-
-use GTK::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::FrameBuffer;
 
 use COGL::Object;
+use COGL::Context;
 
 use COGL::Roles::Buffer;
 
@@ -19,13 +17,13 @@ our subset FrameBufferAncestry of Mu
 class COGL::FrameBuffer is COGL::Object {
   also does COGL::Roles::Buffer;
 
-  has CoglFrameBuffer $!cf;
+  has CoglFrameBuffer $!cf is implementor;
 
   submethod BUILD (CoglFrameBuffer :$framebuffer) {
     self.setFramebuffer($framebuffer) if $framebuffer;
   }
 
-  method COGL::Raw::Types::CoglFrameBuffer
+  method COGL::Raw::Definitions::CoglFrameBuffer
     is also<CoglFrameBuffer>
   { $!cf }
 
@@ -48,21 +46,21 @@ class COGL::FrameBuffer is COGL::Object {
         cast(CoglFrameBuffer, $_);
       }
     };
+    self.roleInit-CoglBuffer unless $!cb;
     self.setObject($to-parent);
-    $!cb //= cast(CoglBuffer, $!cf);          # COGL::Roles::Buffer
   }
 
   method new (CoglFrameBuffer $framebuffer) {
-    self.bless( :$framebuffer );
+    $framebuffer ?? self.bless( :$framebuffer ) !! Nil;
   }
 
   method color_mask is rw is also<color-mask> {
     Proxy.new(
       FETCH => sub ($) {
-        CoglColorMask( cogl_framebuffer_get_color_mask($!cf) );
+        CoglColorMaskEnum( cogl_framebuffer_get_color_mask($!cf) );
       },
       STORE => sub ($, Int() $color_mask is copy) {
-        my guint $cm = resolve-uint($color_mask);
+        my guint $cm = $color_mask;
 
         cogl_framebuffer_set_color_mask($!cf, $cm);
       }
@@ -75,7 +73,7 @@ class COGL::FrameBuffer is COGL::Object {
         so cogl_framebuffer_get_depth_texture_enabled($!cf);
       },
       STORE => sub ($, Int() $enabled is copy) {
-        my gboolean $e = resolve-bool($enabled);
+        my gboolean $e = $enabled.so.Int;
 
         cogl_framebuffer_set_depth_texture_enabled($!cf, $e);
       }
@@ -88,7 +86,7 @@ class COGL::FrameBuffer is COGL::Object {
         so cogl_framebuffer_get_depth_write_enabled($!cf);
       },
       STORE => sub ($, Int() $depth_write_enabled is copy) {
-        my gboolean $e = resolve-bool($depth_write_enabled);
+        my gboolean $e = $depth_write_enabled.so.Int;
 
         cogl_framebuffer_set_depth_write_enabled($!cf, $e);
       }
@@ -101,7 +99,7 @@ class COGL::FrameBuffer is COGL::Object {
         so cogl_framebuffer_get_dither_enabled($!cf);
       },
       STORE => sub ($, $dither_enabled is copy) {
-        my gboolean $e = resolve-bool($dither_enabled);
+        my gboolean $e = $dither_enabled.so.Int;
 
         cogl_framebuffer_set_dither_enabled($!cf, $e);
       }
@@ -110,7 +108,7 @@ class COGL::FrameBuffer is COGL::Object {
 
   method modelview_matrix(:$raw = False) is rw is also<modelview-matrix> {
     Proxy.new:
-      FETCH => -> $ { self.get-modelview-matrix(:$raw) },
+      FETCH => sub ($) { self.get-modelview-matrix(:$raw) },
       STORE => -> $, CoglMatrix() \mm { self.set-modelview-matrix(mm) };
   }
 
@@ -120,7 +118,7 @@ class COGL::FrameBuffer is COGL::Object {
         cogl_framebuffer_get_samples_per_pixel($!cf);
       },
       STORE => sub ($, Int() $samples_per_pixel is copy) {
-        my gint $s = resolve-int($samples_per_pixel);
+        my gint $s = $samples_per_pixel;
 
         cogl_framebuffer_set_samples_per_pixel($!cf, $s);
       }
@@ -130,10 +128,10 @@ class COGL::FrameBuffer is COGL::Object {
   method stereo_mode is rw is also<stereo-mode> {
     Proxy.new(
       FETCH => sub ($) {
-        CoglStereoMode( cogl_framebuffer_get_stereo_mode($!cf) );
+        CoglStereoModeEnum( cogl_framebuffer_get_stereo_mode($!cf) );
       },
       STORE => sub ($, Int() $stereo_mode is copy) {
-        my guint $sm = resolve-uint($stereo_mode);
+        my guint $sm = $stereo_mode;
 
         cogl_framebuffer_set_stereo_mode($!cf, $sm);
       }
@@ -157,6 +155,7 @@ class COGL::FrameBuffer is COGL::Object {
     >
   {
     my $fb = cogl_get_draw_framebuffer();
+
     $fb ??
       ( $raw ?? $fb !! COGL::Framebuffer.new($fb) )
       !!
@@ -172,57 +171,59 @@ class COGL::FrameBuffer is COGL::Object {
     so cogl_is_framebuffer($candidate);
   }
 
-  method draw_attributes (
-    CoglPipeline() $pipeline,
-    Int() $mode,
-    Int() $first_vertex,
-    Int() $n_vertices,
-    CArray[Pointer[CoglAttribute]] $attributes,
-    Int() $n_attributes
-  )
-    is also<draw-attributes>
-  {
-    my guint $m = resolve-uint($mode);
-    my gint ($fv, $nv, $na) =
-      resolve-int($first_vertex, $n_vertices, $n_attributes);
+  # DEPRECATED
+  #
+  # method draw_attributes (
+  #   CoglPipeline() $pipeline,
+  #   Int() $mode,
+  #   Int() $first_vertex,
+  #   Int() $n_vertices,
+  #   CArray[CoglAttribute] $attributes,
+  #   Int() $n_attributes
+  # )
+  #   is also<draw-attributes>
+  # {
+  #   my guint $m = $mode;
+  #   my gint ($fv, $nv, $na) = ($first_vertex, $n_vertices, $n_attributes);
+  #
+  #   cogl_framebuffer_draw_attributes(
+  #     $!cf,
+  #     $pipeline,
+  #     $m,
+  #     $fv,
+  #     $nv,
+  #     $attributes,
+  #     $na
+  #   );
+  # }
 
-    cogl_framebuffer_draw_attributes(
-      $!cf,
-      $pipeline,
-      $m,
-      $fv,
-      $nv,
-      $attributes,
-      $na
-    );
-  }
-
-  method draw_indexed_attributes (
-    CoglPipeline() $pipeline,
-    Int() $mode,
-    Int() $first_vertex,
-    Int() $n_vertices,
-    Pointer $indices,
-    CArray[Pointer[CoglAttribute]] $attributes,
-    Int() $n_attributes
-  )
-    is also<draw-indexed-attributes>
-  {
-    my guint $m = resolve-uint($mode);
-    my gint ($fv, $nv, $na) =
-      resolve-int($first_vertex, $n_vertices, $n_attributes);
-
-    cogl_framebuffer_draw_indexed_attributes(
-      $!cf,
-      $pipeline,
-      $m,
-      $fv,
-      $nv,
-      $indices,
-      $attributes,
-      $na
-    );
-  }
+  # DEPRECATED
+  #
+  # method draw_indexed_attributes (
+  #   CoglPipeline() $pipeline,
+  #   Int() $mode,
+  #   Int() $first_vertex,
+  #   Int() $n_vertices,
+  #   Pointer $indices,
+  #   CArray[Pointer[CoglAttribute]] $attributes,
+  #   Int() $n_attributes
+  # )
+  #   is also<draw-indexed-attributes>
+  # {
+  #   my guint $m = $mode;
+  #   my gint ($fv, $nv, $na) = ($first_vertex, $n_vertices, $n_attributes);
+  #
+  #   cogl_framebuffer_draw_indexed_attributes(
+  #     $!cf,
+  #     $pipeline,
+  #     $m,
+  #     $fv,
+  #     $nv,
+  #     $indices,
+  #     $attributes,
+  #     $na
+  #   );
+  # }
 
   method draw_multitextured_rectangle (
     CoglPipeline() $pipeline,
@@ -236,7 +237,7 @@ class COGL::FrameBuffer is COGL::Object {
     is also<draw-multitextured-rectangle>
   {
     my gfloat ($x1, $y1, $x2, $y2) = ($x_1, $y_1, $x_2, $y_2);
-    my gint $l = resolve-int($tex_coords_len);
+    my gint $l = $tex_coords_len;
 
     cogl_framebuffer_draw_multitextured_rectangle(
       $!cf,
@@ -332,8 +333,13 @@ class COGL::FrameBuffer is COGL::Object {
     cogl_framebuffer_get_blue_bits($!cf);
   }
 
-  method get_context is also<get-context> {
-    cogl_framebuffer_get_context($!cf);
+  method get_context (:$raw = False) is also<get-context> {
+    my $c = cogl_framebuffer_get_context($!cf);
+
+    $c ??
+      ( $raw ?? $c !! COGL::Context.new($c) )
+      !!
+      Nil;
   }
 
   method get_depth_bits is also<get-depth-bits> {
@@ -350,6 +356,7 @@ class COGL::FrameBuffer is COGL::Object {
 
   method get_gtype is also<get-gtype> {
     state ($n, $t);
+
     unstable_get_type( self.^name, &cogl_framebuffer_get_gtype, $n, $t );
   }
 
@@ -378,17 +385,36 @@ class COGL::FrameBuffer is COGL::Object {
 
   multi method get_modelview_matrix(:$raw = False) {
     my CoglMatrix $matrix .= new;
+
+    die 'Could not allocate CoglMatrix!' unless $matrix;
+
     samewith($matrix, :$raw);
   }
   multi method get_modelview_matrix (CoglMatrix() $matrix, :$raw = False) {
+    return Nil unless $matrix;
+
     cogl_framebuffer_get_modelview_matrix($!cf, $matrix);
+
     $raw ?? $matrix !! COGL::Matrix.new($matrix);
   }
 
-  method get_projection_matrix (CoglMatrix() $matrix)
+  proto method get_projection_matrix (|)
     is also<get-projection-matrix>
-  {
+  { * }
+
+  multi method get_projection_matrix (:$raw = False) {
+    my CoglMatrix $matrix .= new;
+
+    die 'Could not allocate CoglMatrix!' unless $matrix;
+
+    samewith($matrix, :$raw);
+  }
+  multi method get_projection_matrix (CoglMatrix() $matrix, :$raw = False) {
+    return Nil unless $matrix;
+
     cogl_framebuffer_get_projection_matrix($!cf, $matrix);
+
+    $raw ?? $matrix !! COGL::Matrix.new($matrix);
   }
 
   method get_red_bits is also<get-red-bits> {
@@ -399,8 +425,19 @@ class COGL::FrameBuffer is COGL::Object {
     (self.get-width, self.get-height);
   }
 
-  method get_viewport4fv (Num() $viewport) is also<get-viewport4fv> {
-    my gfloat $v = $viewport;
+  proto method get_viewport4fv (|)
+    is also<get-viewport4fv>
+  { * }
+
+  multi method get_viewport4fv {
+    my $v = CArray[gfloat].new(0e0 xx 4);
+
+    samewith($v);
+  }
+  multi method get_viewport4fv (CArray[gfloat] $viewport) {
+    return Nil unless $viewport;
+
+    die 'Invalid number of elements. Must be 4' unless $viewport.elems == 4;
 
     cogl_framebuffer_get_viewport4fv($!cf, $viewport);
   }
@@ -506,7 +543,6 @@ class COGL::FrameBuffer is COGL::Object {
     cogl_framebuffer_push_rectangle_clip($!cf, $x1, $y1, $x2, $y2);
   }
 
-
   method push_scissor_clip (
     Int() $x,
     Int() $y,
@@ -515,11 +551,12 @@ class COGL::FrameBuffer is COGL::Object {
   )
     is also<push-scissor-clip>
   {
-    my gint ($xx, $yy, $w, $h) = resolve-int($x, $y, $width, $height);
+    my gint ($xx, $yy, $w, $h) = $x, $y, $width, $height;
 
     cogl_framebuffer_push_scissor_clip($!cf, $xx, $yy, $w, $h);
   }
 
+  # A multi for Buf and TypedBuffer might be better.
   method read_pixels (
     Int() $x,
     Int() $y,
@@ -530,8 +567,8 @@ class COGL::FrameBuffer is COGL::Object {
   )
     is also<read-pixels>
   {
-    my gint ($xx, $yy, $w, $h) = resolve-int($x, $y, $width, $height);
-    my guint $f = resolve-uint($format);
+    my gint ($xx, $yy, $w, $h) = $x, $y, $width, $height;
+    my guint $f = $format;
 
     cogl_framebuffer_read_pixels($!cf, $xx, $yy, $w, $h, $f, $pixels);
   }
@@ -544,8 +581,8 @@ class COGL::FrameBuffer is COGL::Object {
   )
     is also<read-pixels-into-bitmap>
   {
-    my gint ($xx, $yy) = resolve-int($x, $y);
-    my guint $s = resolve-uint($source);
+    my gint ($xx, $yy) = $x, $y;
+    my guint $s = $source;
 
     cogl_framebuffer_read_pixels_into_bitmap($!cf, $x, $y, $source, $bitmap);
   }
@@ -562,7 +599,7 @@ class COGL::FrameBuffer is COGL::Object {
   )
     is also<resolve-samples-region>
   {
-    my gint ($xx, $yy, $w, $h) = resolve-int($x, $y, $width, $height);
+    my gint ($xx, $yy, $w, $h) = $x, $y, $width, $height;
 
     cogl_framebuffer_resolve_samples_region($!cf, $xx, $yy, $w, $h);
   }
@@ -620,7 +657,7 @@ class COGL::FrameBuffer is COGL::Object {
   }
 
   # method clear (Int() $buffer_mask, CoglColor() $color) {
-  #   my uint64 $bm = resolve-ulong($buffer_mask);
+  #   my uint64 $bm = $buffer_mask;
   #
   #   cogl_color_clear($!cf, $bm, $color)
   # }
@@ -642,7 +679,7 @@ class COGL::FrameBuffer is COGL::Object {
     Num() $blue,
     Num() $alpha
   ) {
-    my uint64 $bm = resolve-ulong($buffer-mask);
+    my uint64 $bm = $buffer-mask;
     my gfloat ($r, $g, $b, $a) = ($red, $green, $blue, $alpha);
 
     cogl_framebuffer_clear4f($!cf, $bm, $r, $g, $b, $a);
@@ -655,7 +692,7 @@ class COGL::FrameBuffer is COGL::Object {
   )
     is also<draw-rectangles>
   {
-    my guint $nr = resolve-uint($n_rectangles);
+    my guint $nr = $n_rectangles;
 
     cogl_framebuffer_draw_rectangles($!cf, $pipeline, $coordinates, $nr);
   }
@@ -667,7 +704,7 @@ class COGL::FrameBuffer is COGL::Object {
   )
     is also<draw-textured-rectangles>
   {
-    my guint $nr = resolve-uint($n_rectangles);
+    my guint $nr = $n_rectangles;
 
     cogl_framebuffer_draw_textured_rectangles(
       $!cf,
@@ -680,7 +717,7 @@ class COGL::FrameBuffer is COGL::Object {
   method discard_buffers (Int() $buffer_mask)
     is also<discard-buffers>
   {
-    my uint64 $bm = resolve-ulong($buffer_mask);
+    my uint64 $bm = $buffer_mask;
 
     cogl_framebuffer_discard_buffers($!cf, $bm);
   }

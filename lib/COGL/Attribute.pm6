@@ -3,9 +3,6 @@ use v6.c;
 use NativeCall;
 use Method::Also;
 
-use GTK::Raw::Utils;
-
-use GTK::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::Attribute;
 
@@ -43,7 +40,7 @@ class COGL::Attribute is COGL::Object {
     }
   }
 
-  method COGL::Raw::Types::CoglAttribute
+  method COGL::Raw::Definitions::CoglAttribute
     is also<CoglAttribute>
   { $!ca }
 
@@ -55,20 +52,21 @@ class COGL::Attribute is COGL::Object {
     Int() $components,
     Int() $type
   ) {
-    my uint64 ($s, $o) = resolve-uint64($stride, $offset);
-    my gint $c = resolve-int($components);
-    my guint $t = resolve-uint($type);
-    self.bless( attribute => cogl_attribute_new($ab, $name, $s, $o, $c, $t) );
+    my uint64 ($s, $o) = ($stride, $offset);
+    my gint $c = $components;
+    my guint $t = $type;
+    my $attribute = cogl_attribute_new($ab, $name, $s, $o, $c, $t);
+
+    $attribute ?? self.bless(:$attribute) !! Nil;
   }
 
   method new_const_1f (CoglContext() $context, Str() $name, Num() $value)
     is also<new-const-1f>
   {
     my gfloat $v = $value;
+    my $attribute = cogl_attribute_new_const_1f($context, $name, $v);
 
-    self.bless(
-      attribute => cogl_attribute_new_const_1f($context, $name, $v)
-    );
+    $attribute ?? self.bless(:$attribute) !! Nil;
   }
 
   method new_const_2f (
@@ -80,18 +78,17 @@ class COGL::Attribute is COGL::Object {
     is also<new-const-2f>
   {
     my gfloat ($c0, $c1) = ($component0, $component1);
+    my $attribute = cogl_attribute_new_const_2f($context, $name, $c0, $c1);
 
-    self.bless(
-      attribute =>cogl_attribute_new_const_2f($context, $name, $c0, $c1)
-    );
+    $attribute ?? self.bless(:$attribute) !! Nil;
   }
 
   method new_const_2fv (CoglContext() $context, Str() $name, gfloat $value)
     is also<new-const-2fv>
   {
-    self.bless(
-      attribute => cogl_attribute_new_const_2fv($context, $name, $value)
-    );
+    my $attribute = cogl_attribute_new_const_2fv($context, $name, $value);
+
+    $attribute ?? self.bless(:$attribute) !! Nil;
   }
 
   method new_const_2x2fv (
@@ -102,13 +99,15 @@ class COGL::Attribute is COGL::Object {
   )
     is also<new-const-2x2fv>
   {
-    my gboolean $t = resolve-bool($transpose);
-
-    self.bless(
-      attribute => cogl_attribute_new_const_2x2fv(
-        $context, $name, $matrix2x2, $transpose
-      )
+    my gboolean $t = $transpose.so.Int;
+    my $attribute = cogl_attribute_new_const_2x2fv(
+      $context,
+      $name,
+      $matrix2x2,
+      $transpose
     );
+
+    $attribute ?? self.bless(:$attribute) !! Nil;
   }
 
   method new_const_3f (
@@ -121,20 +120,24 @@ class COGL::Attribute is COGL::Object {
     is also<new-const-3f>
   {
     my gfloat ($c0, $c1, $c2) = ($component0, $component1, $component2);
-
-    self.bless(
-      attribute => cogl_attribute_new_const_3f($context, $name, $c0, $c1, $c2)
+    my $attribute = cogl_attribute_new_const_3f(
+      $context,
+      $name,
+      $c0,
+      $c1,
+      $c2
     );
+
+    $attribute ?? self.bless(:$attribute) !! Nil;
   }
 
   method new_const_3fv (CoglContext() $context, Str() $name, Num() $value)
     is also<new-const-3fv>
   {
     my gfloat $v = $value;
+    my $attribute = cogl_attribute_new_const_3fv($context, $name, $v);
 
-    self.bless(
-      attribute => cogl_attribute_new_const_3fv($context, $name, $v)
-    );
+    $attribute ?? self.bless(:$attribute) !! Nil;
   }
 
   method new_const_3x3fv (
@@ -145,13 +148,15 @@ class COGL::Attribute is COGL::Object {
   )
     is also<new-const-3x3fv>
   {
-    my gboolean $t = resolve-bool($transpose);
-
-    self.bless(
-      attribute => cogl_attribute_new_const_3x3fv(
-        $context, $name, $matrix3x3, $t
-      )
+    my gboolean $t = $transpose.so.Int;
+    my $attribute = cogl_attribute_new_const_3x3fv(
+      $context,
+      $name,
+      $matrix3x3,
+      $t
     );
+
+    $attribute ?? self.bless(:$attribute) !! Nil;
   }
 
   method new_const_4f (
@@ -167,21 +172,25 @@ class COGL::Attribute is COGL::Object {
     my gfloat ($c0, $c1, $c2, $c3) =
       ($component0, $component1, $component2, $component3);
 
-    self.bless(
-      attribute => cogl_attribute_new_const_4f(
-        $context, $name, $c0, $c1, $c2, $c3
-      )
+    my $attribute = cogl_attribute_new_const_4f(
+      $context,
+      $name,
+      $c0,
+      $c1,
+      $c2,
+      $c3
     );
+
+    $attribute ?? self.bless(:$attribute) !! Nil;
   }
 
   method new_const_4fv (CoglContext() $context, Str() $name, Num() $value)
     is also<new-const-4fv>
   {
     my gfloat $v = $value;
+    my $attribute = cogl_attribute_new_const_4fv($context, $name, $v);
 
-    self.bless(
-      attribute =>cogl_attribute_new_const_4fv($context, $name, $v)
-    );
+    $attribute ?? self.bless(:$attribute) !! Nil;
   }
 
   method new_const_4x4fv (
@@ -192,19 +201,22 @@ class COGL::Attribute is COGL::Object {
   )
     is also<new-const-4x4fv>
   {
-    my gboolean $t = resolve-bool($transpose);
-
-    self.bless(
-      attribute => cogl_attribute_new_const_4x4fv(
-        $context, $name, $matrix4x4, $t
-      )
+    my gboolean $t = $transpose.so.Int;
+    my $attribute = cogl_attribute_new_const_4x4fv(
+      $context,
+      $name,
+      $matrix4x4,
+      $t
     );
+
+    $attribute ?? self.bless(:$attribute) !! Nil;
   }
 
   method buffer(:$raw = False) is rw {
     Proxy.new(
       FETCH => sub ($) {
         my $b = cogl_attribute_get_buffer($!ca);
+
         $b.defined ??
           ( $raw ?? $b !! COGL::AttributeBuffer.new($b) )
           !!
@@ -222,7 +234,8 @@ class COGL::Attribute is COGL::Object {
         so cogl_attribute_get_normalized($!ca);
       },
       STORE => sub ($, Int() $normalized is copy) {
-        my guint $n = resolve-bool($normalized);
+        my guint $n = $normalized.so.Int;
+
         cogl_attribute_set_normalized($!ca, $n);
       }
     );
@@ -236,6 +249,7 @@ class COGL::Attribute is COGL::Object {
 
   method get_gtype is also<get-gtype> {
     state ($n, $t);
+
     unstable_get_type( self.^name, &cogl_attribute_get_gtype, $n, $t );
   }
 

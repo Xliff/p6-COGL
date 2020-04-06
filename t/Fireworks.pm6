@@ -1,9 +1,6 @@
 use v6.c;
 
-use GTK::Raw::Utils;
-
-use GTK::Compat::Types;
-use GTK::Roles::Pointers;
+use GLib::Roles::Pointers;
 use COGL::Raw::Types;
 
 use GLib::Timer;
@@ -17,7 +14,7 @@ constant TIME_PER_SPARK is export = 0.1             ;
 constant GRAVITY        is export = -1.5            ;
 constant FLT_MAX        is export = 3.402823e38     ;   # C define value
 
-class Color is repr<CStruct> is export does GTK::Roles::Pointers {
+class Color is repr<CStruct> is export does GLib::Roles::Pointers {
   has uint8 $!red  ;
   has uint8 $!green;
   has uint8 $!blue ;
@@ -27,7 +24,7 @@ class Color is repr<CStruct> is export does GTK::Roles::Pointers {
     Proxy.new:
       FETCH => -> $s { $!red },
       STORE => -> $, Int() $red {
-        my uint8 $c = resolve-uint8($red);
+        my uint8 $c = $red;
 
         $!red = $c;
       };
@@ -37,7 +34,7 @@ class Color is repr<CStruct> is export does GTK::Roles::Pointers {
     Proxy.new:
       FETCH => -> $s { $!green },
       STORE => -> $, Int() $green {
-        my uint8 $c = resolve-uint8($green);
+        my uint8 $c = $green;
 
         $!green = $c;
       };
@@ -47,7 +44,7 @@ class Color is repr<CStruct> is export does GTK::Roles::Pointers {
     Proxy.new:
       FETCH => -> $s { $!blue },
       STORE => -> $, Int() $blue {
-        my uint8 $c = resolve-uint8($blue);
+        my uint8 $c = $blue;
 
         $!blue = $c;
       };
@@ -57,7 +54,7 @@ class Color is repr<CStruct> is export does GTK::Roles::Pointers {
     Proxy.new:
       FETCH => -> $s { $!alpha },
       STORE => -> $, Int() $alpha {
-        my uint8 $c = resolve-uint8($alpha);
+        my uint8 $c = $alpha;
 
         $!alpha = $c;
       };
@@ -65,7 +62,7 @@ class Color is repr<CStruct> is export does GTK::Roles::Pointers {
 
 }
 
-class Firework is repr<CStruct> is export does GTK::Roles::Pointers {
+class Firework is repr<CStruct> is export does GLib::Roles::Pointers {
   my $timer-attr = Firework.^attributes[* - 1];
 
   has gfloat $!size              ;
@@ -159,7 +156,7 @@ class Firework is repr<CStruct> is export does GTK::Roles::Pointers {
 
 }
 
-class Spark is repr<CStruct> is export {
+class Spark is repr<CStruct> is export does GLib::Roles::Pointers {
   my $color-attr      = Spark.^attributes[* - 2];
   my $base-color-attr = Spark.^attributes[* - 1];
 

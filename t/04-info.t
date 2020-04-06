@@ -1,6 +1,5 @@
 use v6.c;
 
-use GTK::Compat::Types;
 use COGL::Raw::Types;
 
 use COGL::Context;
@@ -199,6 +198,7 @@ sub output-cb ($r, $s is rw) {
   say qq:to/OUTPUT/;
    Output{ $outputNo++ }:
     » Position        = { $r.x }, { $r.y }
+    » Position        = { $r.x }, { $r.y }
     » Resolution      = { $r.width } x { $r.height }
     » Physical Size   = { $r.mm-width }mm x { $r.mm-height }mm
     » Sub pixel order = { $so }
@@ -221,7 +221,7 @@ sub MAIN {
   say "Renderer: { $winsys-name }";
   $ctx.foreach-feature(-> $f, $u {
     CATCH { default { .message.say } }
-    say " » { %features{ CoglFeatureID($f).Str }<short> //
+    say " » { %features{ CoglFeatureIDEnum($f).Str }<short> //
               "unknown feature { $f }" }";
   });
 

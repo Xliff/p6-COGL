@@ -3,9 +3,6 @@ use v6.c;
 use Method::Also;
 use NativeCall;
 
-use GTK::Raw::Utils;
-
-use GTK::Compat::Types;
 use COGL::Raw::Types;
 use COGL::Raw::Context;
 
@@ -45,21 +42,32 @@ class COGL::Context is COGL::Object {
     }
   }
 
-  method COGL::Raw::Types::CoglContext
+  method COGL::Raw::Definitions::CoglContext
     is also<CoglContext>
   { $!cc }
 
+  multi method new (CoglContext $context) {
+    $context ?? self.bless(:$context) !! Nil;
+  }
   multi method new {
     samewith(CoglDisplay);
   }
   multi method new (
-    CoglDisplay() $display,
+    $display is copy,
     CArray[Pointer[CoglError]] $error = gerror
   ) {
+    my $compatible = $display ~~ CoglDisplay;
+    my $coercible  = $display.^lookup('CoglDisplay');
+
+    die '$display must be a CoglDisplay-compatible value'
+      unless $compatible || $coercible;
+
+    $display .= CoglDisplay if $coercible;
+
     clear_error;
-    my $rc = cogl_context_new($display, $error);
+    my $context = cogl_context_new($display, $error);
     set_error($error);
-    self.bless( context => $rc );
+    $context ?? self.bless(:$context) !! Nil;
   }
 
   method foreach_feature (
@@ -82,7 +90,8 @@ class COGL::Context is COGL::Object {
   }
 
   method has_feature (Int() $feature) is also<has-feature> {
-    my guint $f = resolve-uint($feature);
+    my guint $f = $feature;
+
     so cogl_has_feature($!cc, $f);
   }
 
@@ -99,6 +108,7 @@ class COGL::Context is COGL::Object {
     >
   {
     my $d = cogl_context_get_display($!cc);
+
     $d ??
       ( $raw ?? $d !! COGL::Display.new($d) )
       !!
@@ -107,6 +117,7 @@ class COGL::Context is COGL::Object {
 
   method get_gtype is also<get-gtype> {
     state ($n, $t);
+
     unstable_get_type( self.^name, &cogl_context_get_gtype, $n, $t );
   }
 
