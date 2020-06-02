@@ -24,6 +24,12 @@ class CoglEuler is repr<CStruct>             does GLib::Roles::Pointers is expor
   has gfloat $.heading is rw;
   has gfloat $.pitch   is rw;
   has gfloat $.roll    is rw;
+
+  has gfloat $!padding0;
+  has gfloat $!padding1;
+  has gfloat $!padding2;
+  has gfloat $!padding3;
+  has gfloat $!padding4;
 }
 
 class CoglPollFD is repr<CStruct>            does GLib::Roles::Pointers is export {
@@ -202,7 +208,10 @@ class CoglMatrix is repr<CStruct>            does GLib::Roles::Pointers is expor
   has gfloat $.zw is rw;
   has gfloat $.ww is rw;
 
-  has guint $!private;
+  HAS gfloat @!inv[16] is CArray;
+  has gulong $!type;
+  has gulong $!flags;
+  has gulong $!padding3;
 }
 
 class CoglQuaternion is repr<CStruct>        does GLib::Roles::Pointers is export {
@@ -210,4 +219,9 @@ class CoglQuaternion is repr<CStruct>        does GLib::Roles::Pointers is expor
   has gfloat $.x;
   has gfloat $.y;
   has gfloat $.z;
-};
+
+  has gfloat $!padding0;
+  has gfloat $!padding1;
+  has gfloat $!padding2;
+  has gfloat $!padding3;
+}
