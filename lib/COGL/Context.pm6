@@ -31,7 +31,7 @@ class COGL::Context is COGL::Object {
             cast(CoglContext, $_);
           }
         }
-        self.setObject($to-parent);
+        self.setCoglObject($to-parent);
       }
 
       when COGL::Context {

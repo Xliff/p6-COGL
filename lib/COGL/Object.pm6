@@ -12,7 +12,7 @@ class COGL::Object {
     is also<CoglObject>
   { $!co }
 
-  method setObject (CoglObject $o) {
+  method setCoglObject (CoglObject $o) {
     $!co = $o;
   }
 
@@ -67,7 +67,7 @@ class COGL::Object {
   }
   multi method unref (COGL::Object:U: $obj) {
     return Nil unless $obj;
-    
+
     die '$obj must be a CPointer!' unless $obj.REPR eq 'CPointer';
     my $o = $obj;
     $o = cast(gpointer, $obj) unless $o ~~ gpointer;

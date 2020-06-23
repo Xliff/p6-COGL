@@ -39,7 +39,7 @@ class COGL::AttributeBuffer is COGL::Object {
           }
         };
         self.roleInit-CoglBuffer unless $!cb;       # COGL::Roles::Buffer
-        self.setObject($to-parent);
+        self.setCoglObject($to-parent);
       }
 
       when COGL::AttributeBuffer {

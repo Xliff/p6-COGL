@@ -29,7 +29,7 @@ class COGL::Attribute is COGL::Object {
             cast(CoglAttribute, $_);
           }
         }
-        self.setObject($to-parent);
+        self.setCoglObject($to-parent);
       }
 
       when COGL::Attribute {

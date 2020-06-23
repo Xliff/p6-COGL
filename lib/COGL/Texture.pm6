@@ -27,7 +27,7 @@ class COGL::Texture is COGL::Object {
         cast(CoglTexture, $_);
       }
     }
-    self.setObject($to-parent);
+    self.setCoglObject($to-parent);
   }
 
   method COGL::Raw::Definitions::CoglTexture

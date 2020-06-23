@@ -47,7 +47,7 @@ class COGL::FrameBuffer is COGL::Object {
       }
     };
     self.roleInit-CoglBuffer unless $!cb;
-    self.setObject($to-parent);
+    self.setCoglObject($to-parent);
   }
 
   method new (CoglFrameBuffer $framebuffer) {

@@ -31,7 +31,7 @@ class COGL::Pipeline is COGL::Object {
             cast(CoglPipeline, $_);
           }
         }
-        self.setObject($to-parent);
+        self.setCoglObject($to-parent);
       }
 
       when COGL::Pipeline {

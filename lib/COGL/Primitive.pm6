@@ -31,7 +31,7 @@ class COGL::Primitive is COGL::Object {
             cast(CoglPrimitive, $_);
           }
         }
-        self.setObject($to-parent);
+        self.setCoglObject($to-parent);
       }
 
       when COGL::Primitive {
