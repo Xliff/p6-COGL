@@ -9,7 +9,7 @@ use GLib::Roles::Pointers;
 unit package COGL::Raw::Definitions;
 
 # Number of times I've had to force compile the whole project.
-my constant forced = 9;
+my constant forced = 11;
 
 constant cogl       is export := 'cogl';
 constant cogl-pango is export := 'cogl-pango';
