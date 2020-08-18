@@ -1,7 +1,5 @@
 use v6;
 
-use CompUnit::Util :re-export;
-
 use GLib::Raw::Exports;
 use COGL::Raw::Exports;
 
@@ -19,7 +17,6 @@ need COGL::Raw::Structs;
 need COGL::Compat::Types;
 
 BEGIN {
-  re-export($_) for
-    |@glib-exports,
-    |@cogl-exports;
+  glib-re-export($_) for |@glib-exports,
+                         |@cogl-exports;
 }
