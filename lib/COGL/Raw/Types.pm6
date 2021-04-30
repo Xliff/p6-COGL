@@ -7,10 +7,12 @@ unit package COGL::Raw::Types;
 
 need GLib::Raw::Definitions;
 need GLib::Raw::Enums;
+need GLib::Raw::Exceptions;
 need GLib::Raw::Object;
 need GLib::Raw::Structs;
-need GLib::Raw::Struct_Subs;
 need GLib::Raw::Subs;
+need GLib::Raw::Struct_Subs;
+need GLib::Roles::Pointers;
 need COGL::Raw::Definitions;
 need COGL::Raw::Enums;
 need COGL::Raw::Structs;
