@@ -1,38 +1,38 @@
 Dependency Generation
 =====================
-real 1.03
-user 1.66
-sys 0.03
+real 0.94
+user 1.49
+sys 0.04
  === GLib::Raw::Definitions === (1/79)
 Stage start      :   0.000
-Stage parse      :   1.767
+Stage parse      :   1.606
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
-Stage optimize   :   0.001
+Stage optimize   :   0.009
 Stage mast       :   0.003
 Stage mbc        :   0.001
 Stage moar       :   0.000
  === GLib::Raw::Enums === (2/79)
 Stage start      :   0.000
-Stage parse      :   1.889
+Stage parse      :   1.698
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.004
-Stage mast       :   0.007
+Stage mast       :   0.008
 Stage mbc        :   0.003
 Stage moar       :   0.000
  === GLib::Raw::Exceptions === (3/79)
 Stage start      :   0.000
-Stage parse      :   1.537
+Stage parse      :   1.402
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
-Stage mast       :   0.007
+Stage mast       :   0.006
 Stage mbc        :   0.001
 Stage moar       :   0.000
  === GLib::Raw::Exports === (4/79)
 Stage start      :   0.000
-Stage parse      :   1.592
+Stage parse      :   1.449
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.001
@@ -41,7 +41,7 @@ Stage mbc        :   0.000
 Stage moar       :   0.000
  === GLib::Raw::Main === (5/79)
 Stage start      :   0.000
-Stage parse      :   2.122
+Stage parse      :   1.894
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.001
@@ -50,16 +50,16 @@ Stage mbc        :   0.001
 Stage moar       :   0.000
  === GLib::Raw::Object === (6/79)
 Stage start      :   0.000
-Stage parse      :   1.840
+Stage parse      :   1.690
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
-Stage optimize   :   0.001
+Stage optimize   :   0.000
 Stage mast       :   0.002
 Stage mbc        :   0.001
 Stage moar       :   0.000
  === GLib::Raw::Struct_Subs === (7/79)
 Stage start      :   0.000
-Stage parse      :   1.744
+Stage parse      :   1.600
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.001
@@ -68,7 +68,7 @@ Stage mbc        :   0.001
 Stage moar       :   0.000
  === GLib::Raw::Structs === (8/79)
 Stage start      :   0.000
-Stage parse      :   2.042
+Stage parse      :   1.839
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.001
@@ -77,7 +77,7 @@ Stage mbc        :   0.001
 Stage moar       :   0.000
  === GLib::Raw::Subs === (9/79)
 Stage start      :   0.000
-Stage parse      :   1.966
+Stage parse      :   1.771
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.001
@@ -86,7 +86,7 @@ Stage mbc        :   0.001
 Stage moar       :   0.000
  === GLib::Roles::Pointers === (10/79)
 Stage start      :   0.000
-Stage parse      :   1.702
+Stage parse      :   1.576
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.001
@@ -95,7 +95,7 @@ Stage mbc        :   0.001
 Stage moar       :   0.000
  === GLib::Roles::StaticClass === (11/79)
 Stage start      :   0.000
-Stage parse      :   2.050
+Stage parse      :   1.873
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.000
@@ -104,7 +104,7 @@ Stage mbc        :   0.001
 Stage moar       :   0.000
  === GLib::Roles::TypedBuffer === (12/79)
 Stage start      :   0.000
-Stage parse      :   2.051
+Stage parse      :   1.880
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.000
@@ -113,16 +113,16 @@ Stage mbc        :   0.001
 Stage moar       :   0.000
  === GLib::Source === (13/79)
 Stage start      :   0.000
-Stage parse      :   2.104
+Stage parse      :   1.895
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.000
 Stage mast       :   0.002
-Stage mbc        :   0.001
+Stage mbc        :   0.002
 Stage moar       :   0.000
  === Method::Also === (14/79)
 Stage start      :   0.000
-Stage parse      :   1.587
+Stage parse      :   1.395
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
@@ -131,7 +131,7 @@ Stage mbc        :   0.001
 Stage moar       :   0.000
  === NativeCall === (15/79)
 Stage start      :   0.000
-Stage parse      :   1.685
+Stage parse      :   1.564
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.001
@@ -140,16 +140,16 @@ Stage mbc        :   0.001
 Stage moar       :   0.000
  === Pango::FontMap === (16/79)
 Stage start      :   0.000
-Stage parse      :   2.640
+Stage parse      :   2.451
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.000
-Stage mast       :   0.001
+Stage mast       :   0.002
 Stage mbc        :   0.003
 Stage moar       :   0.000
  === Pango::Raw::Definitions === (17/79)
 Stage start      :   0.000
-Stage parse      :   1.812
+Stage parse      :   1.688
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.001
@@ -158,25 +158,25 @@ Stage mbc        :   0.001
 Stage moar       :   0.000
  === Pango::Raw::Types === (18/79)
 Stage start      :   0.000
-Stage parse      :   2.213
+Stage parse      :   1.973
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.004
 Stage mast       :   0.005
-Stage mbc        :   0.025
+Stage mbc        :   0.005
 Stage moar       :   0.000
  === COGL::Compat::Types === (19/79)
 Stage start      :   0.000
 
     precomp lib/COGL/Compat/Types.pm6
     Stage start      :   0.000
-    Stage parse      :   1.743
+    Stage parse      :   1.614
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
     Stage optimize   :   0.001
     Stage mast       :   0.008
     Stage mbc        :   0.001
-Stage parse      :   3.365
+Stage parse      :   3.105
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
@@ -188,13 +188,13 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Definitions.pm6
     Stage start      :   0.000
-    Stage parse      :   2.431
+    Stage parse      :   2.116
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
     Stage optimize   :   0.006
     Stage mast       :   0.017
     Stage mbc        :   0.003
-Stage parse      :   4.148
+Stage parse      :   3.716
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
@@ -206,13 +206,13 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Structs.pm6
     Stage start      :   0.000
-    Stage parse      :   2.263
+    Stage parse      :   2.146
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.036
-    Stage mast       :   0.073
-    Stage mbc        :   0.005
-Stage parse      :   4.102
+    Stage optimize   :   0.047
+    Stage mast       :   0.065
+    Stage mbc        :   0.004
+Stage parse      :   3.837
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
@@ -224,17 +224,17 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Exports.pm6
     Stage start      :   0.000
-    Stage parse      :   0.151
+    Stage parse      :   0.140
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
     Stage optimize   :   0.003
-    Stage mast       :   0.006
-    Stage mbc        :   0.001
-Stage parse      :   1.748
+    Stage mast       :   0.005
+    Stage mbc        :   0.002
+Stage parse      :   1.640
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
-Stage mast       :   0.007
+Stage mast       :   0.012
 Stage mbc        :   0.001
 Stage moar       :   0.000
  === COGL::Raw::Enums === (23/79)
@@ -242,17 +242,17 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Enums.pm6
     Stage start      :   0.000
-    Stage parse      :   2.682
+    Stage parse      :   2.447
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
     Stage optimize   :   0.032
     Stage mast       :   0.047
     Stage mbc        :   0.017
-Stage parse      :   4.411
+Stage parse      :   4.047
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
-Stage optimize   :   0.004
-Stage mast       :   0.015
+Stage optimize   :   0.003
+Stage mast       :   0.009
 Stage mbc        :   0.003
 Stage moar       :   0.000
  === COGL::Raw::Types === (24/79)
@@ -260,17 +260,17 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Types.pm6
     Stage start      :   0.000
-    Stage parse      :   2.571
+    Stage parse      :   2.292
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
     Stage optimize   :   0.002
     Stage mast       :   0.013
     Stage mbc        :   0.003
-Stage parse      :   4.346
+Stage parse      :   3.913
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.008
-Stage mast       :   0.013
+Stage mast       :   0.014
 Stage mbc        :   0.007
 Stage moar       :   0.000
  === COGL::Source === (25/79)
@@ -278,17 +278,17 @@ Stage start      :   0.000
 
     precomp lib/COGL/Source.pm6
     Stage start      :   0.000
-    Stage parse      :   2.593
+    Stage parse      :   2.449
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.013
-    Stage mast       :   0.060
-    Stage mbc        :   0.005
-Stage parse      :   4.402
+    Stage optimize   :   0.014
+    Stage mast       :   0.058
+    Stage mbc        :   0.007
+Stage parse      :   4.164
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
-Stage mast       :   0.004
+Stage mast       :   0.005
 Stage mbc        :   0.001
 Stage moar       :   0.000
  === COGL::SwapChain === (26/79)
@@ -296,16 +296,16 @@ Stage start      :   0.000
 
     precomp lib/COGL/SwapChain.pm6
     Stage start      :   0.000
-    Stage parse      :   2.201
+    Stage parse      :   2.059
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.024
+    Stage optimize   :   0.023
     Stage mast       :   0.033
-    Stage mbc        :   0.014
-Stage parse      :   4.011
+    Stage mbc        :   0.008
+Stage parse      :   3.694
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
-Stage optimize   :   0.002
+Stage optimize   :   0.013
 Stage mast       :   0.004
 Stage mbc        :   0.001
 Stage moar       :   0.000
@@ -314,53 +314,53 @@ Stage start      :   0.000
 
     precomp lib/COGL/IndexBuffer.pm6
     Stage start      :   0.000
-    Stage parse      :   2.150
+    Stage parse      :   1.983
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.015
+    Stage optimize   :   0.014
     Stage mast       :   0.024
     Stage mbc        :   0.006
-Stage parse      :   3.932
+Stage parse      :   3.634
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
-Stage mast       :   0.005
-Stage mbc        :   0.001
+Stage mast       :   0.016
+Stage mbc        :   0.000
 Stage moar       :   0.000
  === COGL::Poll === (28/79)
 Stage start      :   0.000
 
     precomp lib/COGL/Poll.pm6
     Stage start      :   0.000
-    Stage parse      :   2.586
+    Stage parse      :   2.410
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.010
-    Stage mast       :   0.031
+    Stage optimize   :   0.017
+    Stage mast       :   0.037
     Stage mbc        :   0.008
 R: GLib::Roles::StaticClass
-Stage parse      :   4.418
+Stage parse      :   4.080
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
-Stage mast       :   0.005
-Stage mbc        :   0.001
+Stage mast       :   0.004
+Stage mbc        :   0.000
 Stage moar       :   0.000
  === COGL::Raw::Attribute === (29/79)
 Stage start      :   0.000
 
     precomp lib/COGL/Raw/Attribute.pm6
     Stage start      :   0.000
-    Stage parse      :   2.572
+    Stage parse      :   2.284
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.029
-    Stage mast       :   0.055
-    Stage mbc        :   0.021
-Stage parse      :   4.471
+    Stage optimize   :   0.031
+    Stage mast       :   0.044
+    Stage mbc        :   0.019
+Stage parse      :   3.987
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
-Stage optimize   :   0.002
+Stage optimize   :   0.013
 Stage mast       :   0.005
 Stage mbc        :   0.001
 Stage moar       :   0.000
@@ -369,17 +369,17 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Bitmap.pm6
     Stage start      :   0.000
-    Stage parse      :   2.592
+    Stage parse      :   2.151
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.019
-    Stage mast       :   0.059
-    Stage mbc        :   0.017
-Stage parse      :   4.565
+    Stage optimize   :   0.015
+    Stage mast       :   0.042
+    Stage mbc        :   0.014
+Stage parse      :   3.799
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
-Stage mast       :   0.005
+Stage mast       :   0.008
 Stage mbc        :   0.001
 Stage moar       :   0.000
  === COGL::Raw::Buffer === (31/79)
@@ -387,31 +387,31 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Buffer.pm6
     Stage start      :   0.000
-    Stage parse      :   2.449
+    Stage parse      :   2.020
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.081
-    Stage mast       :   0.031
-    Stage mbc        :   0.013
-Stage parse      :   4.489
+    Stage optimize   :   0.013
+    Stage mast       :   0.028
+    Stage mbc        :   0.010
+Stage parse      :   3.657
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
-Stage optimize   :   0.003
-Stage mast       :   0.005
-Stage mbc        :   0.001
+Stage optimize   :   0.014
+Stage mast       :   0.004
+Stage mbc        :   0.000
 Stage moar       :   0.000
  === COGL::Raw::Color === (32/79)
 Stage start      :   0.000
 
     precomp lib/COGL/Raw/Color.pm6
     Stage start      :   0.000
-    Stage parse      :   3.160
+    Stage parse      :   2.790
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.041
-    Stage mast       :   0.090
-    Stage mbc        :   0.044
-Stage parse      :   5.189
+    Stage optimize   :   0.039
+    Stage mast       :   0.101
+    Stage mbc        :   0.041
+Stage parse      :   4.605
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
@@ -423,13 +423,13 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Context.pm6
     Stage start      :   0.000
-    Stage parse      :   2.279
+    Stage parse      :   2.059
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.020
-    Stage mast       :   0.024
+    Stage optimize   :   0.011
+    Stage mast       :   0.030
     Stage mbc        :   0.011
-Stage parse      :   4.094
+Stage parse      :   3.698
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
@@ -441,17 +441,17 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/DepthState.pm6
     Stage start      :   0.000
-    Stage parse      :   2.345
+    Stage parse      :   2.082
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.013
-    Stage mast       :   0.049
-    Stage mbc        :   0.011
-Stage parse      :   4.189
+    Stage optimize   :   0.014
+    Stage mast       :   0.025
+    Stage mbc        :   0.012
+Stage parse      :   3.724
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
-Stage optimize   :   0.002
-Stage mast       :   0.005
+Stage optimize   :   0.012
+Stage mast       :   0.004
 Stage mbc        :   0.001
 Stage moar       :   0.000
  === COGL::Raw::Display === (35/79)
@@ -459,16 +459,16 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Display.pm6
     Stage start      :   0.000
-    Stage parse      :   2.237
+    Stage parse      :   2.043
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
     Stage optimize   :   0.011
-    Stage mast       :   0.025
-    Stage mbc        :   0.010
-Stage parse      :   4.115
+    Stage mast       :   0.022
+    Stage mbc        :   0.008
+Stage parse      :   3.659
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
-Stage optimize   :   0.002
+Stage optimize   :   0.014
 Stage mast       :   0.004
 Stage mbc        :   0.001
 Stage moar       :   0.000
@@ -477,17 +477,17 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Euler.pm6
     Stage start      :   0.000
-    Stage parse      :   2.218
+    Stage parse      :   1.951
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.011
-    Stage mast       :   0.023
-    Stage mbc        :   0.010
-Stage parse      :   4.001
+    Stage optimize   :   0.016
+    Stage mast       :   0.024
+    Stage mbc        :   0.009
+Stage parse      :   3.567
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
-Stage mast       :   0.004
+Stage mast       :   0.016
 Stage mbc        :   0.001
 Stage moar       :   0.000
  === COGL::Raw::FrameBuffer === (37/79)
@@ -495,16 +495,16 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/FrameBuffer.pm6
     Stage start      :   0.000
-    Stage parse      :   3.785
+    Stage parse      :   3.604
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.072
-    Stage mast       :   0.262
-    Stage mbc        :   0.068
-Stage parse      :   5.935
+    Stage optimize   :   0.073
+    Stage mast       :   0.148
+    Stage mbc        :   0.120
+Stage parse      :   5.578
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
-Stage optimize   :   0.003
+Stage optimize   :   0.002
 Stage mast       :   0.005
 Stage mbc        :   0.001
 Stage moar       :   0.000
@@ -513,17 +513,17 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Indices.pm6
     Stage start      :   0.000
-    Stage parse      :   2.244
+    Stage parse      :   2.029
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
     Stage optimize   :   0.013
-    Stage mast       :   0.033
+    Stage mast       :   0.047
     Stage mbc        :   0.011
-Stage parse      :   4.010
+Stage parse      :   3.676
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
-Stage mast       :   0.004
+Stage mast       :   0.016
 Stage mbc        :   0.001
 Stage moar       :   0.000
  === COGL::Raw::Matrix === (39/79)
@@ -531,13 +531,13 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Matrix.pm6
     Stage start      :   0.000
-    Stage parse      :   2.790
+    Stage parse      :   2.628
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.042
-    Stage mast       :   0.084
-    Stage mbc        :   0.040
-Stage parse      :   4.666
+    Stage optimize   :   0.043
+    Stage mast       :   0.077
+    Stage mbc        :   0.033
+Stage parse      :   4.398
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
@@ -549,17 +549,17 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Object.pm6
     Stage start      :   0.000
-    Stage parse      :   2.235
+    Stage parse      :   2.104
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
     Stage optimize   :   0.016
-    Stage mast       :   0.022
+    Stage mast       :   0.021
     Stage mbc        :   0.009
-Stage parse      :   3.997
+Stage parse      :   3.739
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
-Stage mast       :   0.004
+Stage mast       :   0.016
 Stage mbc        :   0.001
 Stage moar       :   0.000
  === COGL::Raw::Offscreen === (41/79)
@@ -567,13 +567,13 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Offscreen.pm6
     Stage start      :   0.000
-    Stage parse      :   2.132
+    Stage parse      :   1.959
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
     Stage optimize   :   0.010
-    Stage mast       :   0.026
-    Stage mbc        :   0.008
-Stage parse      :   3.880
+    Stage mast       :   0.019
+    Stage mbc        :   0.009
+Stage parse      :   3.574
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
@@ -585,13 +585,13 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Onscreen.pm6
     Stage start      :   0.000
-    Stage parse      :   2.818
+    Stage parse      :   2.664
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.033
-    Stage mast       :   0.063
+    Stage optimize   :   0.036
+    Stage mast       :   0.067
     Stage mbc        :   0.033
-Stage parse      :   4.671
+Stage parse      :   4.405
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
@@ -603,13 +603,13 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/OnscreenTemplate.pm6
     Stage start      :   0.000
-    Stage parse      :   2.133
+    Stage parse      :   1.987
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
     Stage optimize   :   0.011
-    Stage mast       :   0.029
-    Stage mbc        :   0.008
-Stage parse      :   3.862
+    Stage mast       :   0.020
+    Stage mbc        :   0.009
+Stage parse      :   3.609
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
@@ -621,17 +621,17 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Output.pm6
     Stage start      :   0.000
-    Stage parse      :   2.187
+    Stage parse      :   2.089
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.016
-    Stage mast       :   0.023
+    Stage optimize   :   0.012
+    Stage mast       :   0.028
     Stage mbc        :   0.012
-Stage parse      :   3.964
+Stage parse      :   3.705
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
-Stage mast       :   0.005
+Stage mast       :   0.017
 Stage mbc        :   0.001
 Stage moar       :   0.000
  === COGL::Raw::Pango === (45/79)
@@ -639,17 +639,17 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Pango.pm6
     Stage start      :   0.000
-    Stage parse      :   2.816
+    Stage parse      :   2.631
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.020
-    Stage mast       :   0.052
-    Stage mbc        :   0.017
-Stage parse      :   4.656
+    Stage optimize   :   0.021
+    Stage mast       :   0.034
+    Stage mbc        :   0.034
+Stage parse      :   4.348
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
-Stage mast       :   0.015
+Stage mast       :   0.005
 Stage mbc        :   0.001
 Stage moar       :   0.000
  === COGL::Raw::Pipeline === (46/79)
@@ -657,13 +657,13 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Pipeline.pm6
     Stage start      :   0.000
-    Stage parse      :   3.122
+    Stage parse      :   2.974
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.046
-    Stage mast       :   0.102
-    Stage mbc        :   0.046
-Stage parse      :   5.084
+    Stage optimize   :   0.050
+    Stage mast       :   0.114
+    Stage mbc        :   0.050
+Stage parse      :   4.797
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
@@ -675,17 +675,17 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Pipeline/LayerState.pm6
     Stage start      :   0.000
-    Stage parse      :   2.520
+    Stage parse      :   2.384
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.029
-    Stage mast       :   0.052
-    Stage mbc        :   0.022
-Stage parse      :   4.347
+    Stage optimize   :   0.031
+    Stage mast       :   0.051
+    Stage mbc        :   0.023
+Stage parse      :   4.059
 Stage syntaxcheck:   0.000
-Stage ast        :   0.000
+Stage ast        :   0.001
 Stage optimize   :   0.002
-Stage mast       :   0.005
+Stage mast       :   0.004
 Stage mbc        :   0.001
 Stage moar       :   0.000
  === COGL::Raw::Primitive === (48/79)
@@ -693,17 +693,17 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Primitive.pm6
     Stage start      :   0.000
-    Stage parse      :   2.605
+    Stage parse      :   2.461
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.026
-    Stage mast       :   0.073
-    Stage mbc        :   0.024
-Stage parse      :   4.435
+    Stage optimize   :   0.029
+    Stage mast       :   0.060
+    Stage mbc        :   0.114
+Stage parse      :   4.261
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
-Stage optimize   :   0.002
-Stage mast       :   0.005
+Stage optimize   :   0.004
+Stage mast       :   0.004
 Stage mbc        :   0.001
 Stage moar       :   0.000
  === COGL::Raw::Quaternion === (49/79)
@@ -711,17 +711,17 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Quaternion.pm6
     Stage start      :   0.000
-    Stage parse      :   2.593
+    Stage parse      :   2.478
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.031
-    Stage mast       :   0.058
-    Stage mbc        :   0.027
-Stage parse      :   4.423
+    Stage optimize   :   0.032
+    Stage mast       :   0.063
+    Stage mbc        :   0.032
+Stage parse      :   4.219
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
-Stage mast       :   0.005
+Stage mast       :   0.004
 Stage mbc        :   0.001
 Stage moar       :   0.000
  === COGL::Raw::Renderer === (50/79)
@@ -729,16 +729,16 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Renderer.pm6
     Stage start      :   0.000
-    Stage parse      :   2.373
+    Stage parse      :   2.175
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
     Stage optimize   :   0.015
-    Stage mast       :   0.046
-    Stage mbc        :   0.030
-Stage parse      :   4.172
+    Stage mast       :   0.042
+    Stage mbc        :   0.017
+Stage parse      :   3.818
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
-Stage optimize   :   0.002
+Stage optimize   :   0.013
 Stage mast       :   0.005
 Stage mbc        :   0.001
 Stage moar       :   0.000
@@ -747,13 +747,13 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Texture.pm6
     Stage start      :   0.000
-    Stage parse      :   2.376
+    Stage parse      :   2.190
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.022
-    Stage mast       :   0.034
+    Stage optimize   :   0.018
+    Stage mast       :   0.040
     Stage mbc        :   0.016
-Stage parse      :   4.167
+Stage parse      :   3.851
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
@@ -765,16 +765,16 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Texture2d.pm6
     Stage start      :   0.000
-    Stage parse      :   2.125
+    Stage parse      :   1.933
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.012
-    Stage mast       :   0.046
+    Stage optimize   :   0.013
+    Stage mast       :   0.089
     Stage mbc        :   0.009
-Stage parse      :   3.906
+Stage parse      :   3.639
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
-Stage optimize   :   0.002
+Stage optimize   :   0.004
 Stage mast       :   0.004
 Stage mbc        :   0.001
 Stage moar       :   0.000
@@ -783,16 +783,16 @@ Stage start      :   0.000
 
     precomp lib/COGL/Raw/Texture3d.pm6
     Stage start      :   0.000
-    Stage parse      :   2.112
+    Stage parse      :   2.008
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.026
-    Stage mast       :   0.022
+    Stage optimize   :   0.022
+    Stage mast       :   0.023
     Stage mbc        :   0.008
-Stage parse      :   3.868
+Stage parse      :   3.631
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
-Stage optimize   :   0.002
+Stage optimize   :   0.014
 Stage mast       :   0.004
 Stage mbc        :   0.001
 Stage moar       :   0.000
@@ -801,35 +801,35 @@ Stage start      :   0.000
 
     precomp lib/COGL/Roles/Buffer.pm6
     Stage start      :   0.000
-    Stage parse      :   2.172
+    Stage parse      :   1.945
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.020
-    Stage mast       :   0.031
-    Stage mbc        :   0.009
-Stage parse      :   3.936
+    Stage optimize   :   0.046
+    Stage mast       :   0.024
+    Stage mbc        :   0.008
+Stage parse      :   3.574
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
 Stage mast       :   0.004
-Stage mbc        :   0.000
+Stage mbc        :   0.001
 Stage moar       :   0.000
  === COGL::Bitmap === (55/79)
 Stage start      :   0.000
 
     precomp lib/COGL/Bitmap.pm6
     Stage start      :   0.000
-    Stage parse      :   2.066
+    Stage parse      :   1.970
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.084
+    Stage optimize   :   0.027
     Stage mast       :   0.041
     Stage mbc        :   0.005
-Stage parse      :   3.873
+Stage parse      :   3.641
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
-Stage mast       :   0.005
+Stage mast       :   0.004
 Stage mbc        :   0.000
 Stage moar       :   0.000
  === COGL::Color === (56/79)
@@ -837,17 +837,17 @@ Stage start      :   0.000
 
     precomp lib/COGL/Color.pm6
     Stage start      :   0.000
-    Stage parse      :   2.297
+    Stage parse      :   2.160
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
     Stage optimize   :   0.046
-    Stage mast       :   0.093
+    Stage mast       :   0.073
     Stage mbc        :   0.006
-Stage parse      :   4.149
+Stage parse      :   3.855
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
-Stage optimize   :   0.002
-Stage mast       :   0.005
+Stage optimize   :   0.013
+Stage mast       :   0.004
 Stage mbc        :   0.000
 Stage moar       :   0.000
  === COGL::DepthState === (57/79)
@@ -855,13 +855,13 @@ Stage start      :   0.000
 
     precomp lib/COGL/DepthState.pm6
     Stage start      :   0.000
-    Stage parse      :   1.930
+    Stage parse      :   1.782
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.081
+    Stage optimize   :   0.026
     Stage mast       :   0.039
     Stage mbc        :   0.005
-Stage parse      :   3.767
+Stage parse      :   3.442
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
@@ -873,25 +873,31 @@ Stage start      :   0.000
 
     precomp lib/COGL/Indices.pm6
     Stage start      :   0.000
-Stage parse      :   3.783
+    Stage parse      :   1.783
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.027
+    Stage mast       :   0.039
+    Stage mbc        :   0.004
+Stage parse      :   3.414
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
-Stage optimize   :   0.000
-Stage mast       :   0.001
-Stage mbc        :   0.004
+Stage optimize   :   0.012
+Stage mast       :   0.004
+Stage mbc        :   0.000
 Stage moar       :   0.000
  === COGL::Matrix === (59/79)
 Stage start      :   0.000
 
     precomp lib/COGL/Matrix.pm6
     Stage start      :   0.000
-    Stage parse      :   2.392
+    Stage parse      :   2.142
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.069
-    Stage mast       :   0.096
-    Stage mbc        :   0.008
-Stage parse      :   4.250
+    Stage optimize   :   0.132
+    Stage mast       :   0.101
+    Stage mbc        :   0.011
+Stage parse      :   4.016
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
@@ -903,13 +909,13 @@ Stage start      :   0.000
 
     precomp lib/COGL/Object.pm6
     Stage start      :   0.000
-    Stage parse      :   1.932
+    Stage parse      :   1.785
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
     Stage optimize   :   0.018
-    Stage mast       :   0.054
+    Stage mast       :   0.041
     Stage mbc        :   0.005
-Stage parse      :   3.702
+Stage parse      :   3.432
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
@@ -921,13 +927,13 @@ Stage start      :   0.000
 
     precomp lib/COGL/OnscreenTemplate.pm6
     Stage start      :   0.000
-    Stage parse      :   1.964
+    Stage parse      :   1.843
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.028
-    Stage mast       :   0.041
+    Stage optimize   :   0.033
+    Stage mast       :   0.042
     Stage mbc        :   0.005
-Stage parse      :   3.742
+Stage parse      :   3.527
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
@@ -939,72 +945,72 @@ Stage start      :   0.000
 
     precomp lib/COGL/Output.pm6
     Stage start      :   0.000
-    Stage parse      :   2.068
+    Stage parse      :   1.913
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
     Stage optimize   :   0.017
-    Stage mast       :   0.030
-    Stage mbc        :   0.010
-Stage parse      :   3.872
+    Stage mast       :   0.028
+    Stage mbc        :   0.009
+Stage parse      :   3.552
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
-Stage mast       :   0.004
-Stage mbc        :   0.000
+Stage mast       :   0.016
+Stage mbc        :   0.001
 Stage moar       :   0.000
  === COGL::Pango === (63/79)
 Stage start      :   0.000
 
     precomp lib/COGL/Pango.pm6
     Stage start      :   0.000
-    Stage parse      :   2.541
+    Stage parse      :   2.428
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.017
-    Stage mast       :   0.055
+    Stage optimize   :   0.018
+    Stage mast       :   0.052
     Stage mbc        :   0.005
 R: GLib::Roles::StaticClass
-Stage parse      :   4.366
+Stage parse      :   4.162
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
 Stage mast       :   0.004
-Stage mbc        :   0.001
+Stage mbc        :   0.000
 Stage moar       :   0.000
  === COGL::Primitive === (64/79)
 Stage start      :   0.000
 
     precomp lib/COGL/Primitive.pm6
     Stage start      :   0.000
-    Stage parse      :   2.708
+    Stage parse      :   2.583
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.032
-    Stage mast       :   0.102
-    Stage mbc        :   0.005
-Stage parse      :   4.595
+    Stage optimize   :   0.034
+    Stage mast       :   0.100
+    Stage mbc        :   0.007
+Stage parse      :   4.330
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
 Stage mast       :   0.004
-Stage mbc        :   0.001
+Stage mbc        :   0.000
 Stage moar       :   0.000
  === COGL::Quaternion === (65/79)
 Stage start      :   0.000
 
     precomp lib/COGL/Quaternion.pm6
     Stage start      :   0.000
-    Stage parse      :   2.319
+    Stage parse      :   2.138
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.040
-    Stage mast       :   0.076
+    Stage optimize   :   0.042
+    Stage mast       :   0.093
     Stage mbc        :   0.006
-Stage parse      :   4.166
+Stage parse      :   3.869
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
-Stage mast       :   0.004
+Stage mast       :   0.005
 Stage mbc        :   0.000
 Stage moar       :   0.000
  === COGL::Renderer === (66/79)
@@ -1012,13 +1018,13 @@ Stage start      :   0.000
 
     precomp lib/COGL/Renderer.pm6
     Stage start      :   0.000
-    Stage parse      :   2.152
+    Stage parse      :   2.045
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
     Stage optimize   :   0.031
-    Stage mast       :   0.063
+    Stage mast       :   0.078
     Stage mbc        :   0.005
-Stage parse      :   3.964
+Stage parse      :   3.770
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
@@ -1030,68 +1036,68 @@ Stage start      :   0.000
 
     precomp lib/COGL/Texture.pm6
     Stage start      :   0.000
-    Stage parse      :   2.172
+    Stage parse      :   2.055
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.025
-    Stage mast       :   0.081
-    Stage mbc        :   0.006
-Stage parse      :   4.000
+    Stage optimize   :   0.032
+    Stage mast       :   0.096
+    Stage mbc        :   0.005
+Stage parse      :   3.765
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
 Stage mast       :   0.004
-Stage mbc        :   0.001
+Stage mbc        :   0.000
 Stage moar       :   0.000
  === COGL::Texture2d === (68/79)
 Stage start      :   0.000
 
     precomp lib/COGL/Texture2d.pm6
     Stage start      :   0.000
-    Stage parse      :   2.195
+    Stage parse      :   2.093
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.029
-    Stage mast       :   0.056
+    Stage optimize   :   0.028
+    Stage mast       :   0.077
     Stage mbc        :   0.005
-Stage parse      :   3.999
+Stage parse      :   3.803
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
 Stage mast       :   0.004
-Stage mbc        :   0.001
+Stage mbc        :   0.000
 Stage moar       :   0.000
  === COGL::Texture3d === (69/79)
 Stage start      :   0.000
 
     precomp lib/COGL/Texture3d.pm6
     Stage start      :   0.000
-    Stage parse      :   2.234
+    Stage parse      :   2.104
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.028
+    Stage optimize   :   0.027
     Stage mast       :   0.037
     Stage mbc        :   0.007
-Stage parse      :   4.014
+Stage parse      :   3.818
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
 Stage mast       :   0.004
-Stage mbc        :   0.001
+Stage mbc        :   0.000
 Stage moar       :   0.000
  === COGL::AttributeBuffer === (70/79)
 Stage start      :   0.000
 
     precomp lib/COGL/AttributeBuffer.pm6
     Stage start      :   0.000
-    Stage parse      :   2.264
+    Stage parse      :   2.132
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.018
+    Stage optimize   :   0.026
     Stage mast       :   0.040
     Stage mbc        :   0.007
 R: COGL::Roles::Buffer
-Stage parse      :   4.048
+Stage parse      :   3.847
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
@@ -1103,85 +1109,85 @@ Stage start      :   0.000
 
     precomp lib/COGL/Display.pm6
     Stage start      :   0.000
-    Stage parse      :   2.229
+    Stage parse      :   2.163
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
     Stage optimize   :   0.021
-    Stage mast       :   0.042
+    Stage mast       :   0.038
     Stage mbc        :   0.008
-Stage parse      :   4.025
+Stage parse      :   3.890
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
 Stage mast       :   0.004
-Stage mbc        :   0.000
+Stage mbc        :   0.001
 Stage moar       :   0.000
  === COGL::Euler === (72/79)
 Stage start      :   0.000
 
     precomp lib/COGL/Euler.pm6
     Stage start      :   0.000
-    Stage parse      :   2.033
+    Stage parse      :   1.893
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
     Stage optimize   :   0.030
-    Stage mast       :   0.045
+    Stage mast       :   0.046
     Stage mbc        :   0.005
-Stage parse      :   3.826
+Stage parse      :   3.589
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
-Stage mast       :   0.005
-Stage mbc        :   0.001
+Stage mast       :   0.004
+Stage mbc        :   0.000
 Stage moar       :   0.000
  === COGL::Attribute === (73/79)
 Stage start      :   0.000
 
     precomp lib/COGL/Attribute.pm6
     Stage start      :   0.000
-    Stage parse      :   2.310
+    Stage parse      :   2.101
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.037
-    Stage mast       :   0.063
-    Stage mbc        :   0.005
-Stage parse      :   4.140
+    Stage optimize   :   0.038
+    Stage mast       :   0.069
+    Stage mbc        :   0.006
+Stage parse      :   3.822
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
 Stage mast       :   0.004
-Stage mbc        :   0.001
+Stage mbc        :   0.000
 Stage moar       :   0.000
  === COGL::Context === (74/79)
 Stage start      :   0.000
 
     precomp lib/COGL/Context.pm6
     Stage start      :   0.000
-    Stage parse      :   2.283
+    Stage parse      :   2.183
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.021
-    Stage mast       :   0.039
-    Stage mbc        :   0.006
-Stage parse      :   4.097
+    Stage optimize   :   0.026
+    Stage mast       :   0.033
+    Stage mbc        :   0.013
+Stage parse      :   3.843
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
-Stage mast       :   0.017
-Stage mbc        :   0.001
+Stage mast       :   0.004
+Stage mbc        :   0.000
 Stage moar       :   0.000
  === COGL::FontMap === (75/79)
 Stage start      :   0.000
 
     precomp lib/COGL/FontMap.pm6
     Stage start      :   0.000
-    Stage parse      :   3.325
+    Stage parse      :   3.108
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
     Stage optimize   :   0.013
-    Stage mast       :   0.040
+    Stage mast       :   0.039
     Stage mbc        :   0.008
-Stage parse      :   5.308
+Stage parse      :   4.963
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
@@ -1193,32 +1199,32 @@ Stage start      :   0.000
 
     precomp lib/COGL/FrameBuffer.pm6
     Stage start      :   0.000
-    Stage parse      :   2.752
+    Stage parse      :   2.692
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.091
-    Stage mast       :   0.137
-    Stage mbc        :   0.010
+    Stage optimize   :   0.086
+    Stage mast       :   0.149
+    Stage mbc        :   0.008
 R: COGL::Roles::Buffer
-Stage parse      :   4.772
+Stage parse      :   4.613
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
 Stage mast       :   0.004
-Stage mbc        :   0.000
+Stage mbc        :   0.001
 Stage moar       :   0.000
  === COGL::Offscreen === (77/79)
 Stage start      :   0.000
 
     precomp lib/COGL/Offscreen.pm6
     Stage start      :   0.000
-    Stage parse      :   2.022
+    Stage parse      :   1.869
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.018
-    Stage mast       :   0.045
+    Stage optimize   :   0.019
+    Stage mast       :   0.081
     Stage mbc        :   0.005
-Stage parse      :   3.915
+Stage parse      :   3.611
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
@@ -1230,38 +1236,38 @@ Stage start      :   0.000
 
     precomp lib/COGL/Onscreen.pm6
     Stage start      :   0.000
-    Stage parse      :   2.278
+    Stage parse      :   2.153
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.039
-    Stage mast       :   0.074
+    Stage optimize   :   0.046
+    Stage mast       :   0.082
     Stage mbc        :   0.006
-Stage parse      :   4.172
+Stage parse      :   3.920
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
 Stage mast       :   0.004
-Stage mbc        :   0.001
+Stage mbc        :   0.000
 Stage moar       :   0.000
  === COGL::Pipeline === (79/79)
 Stage start      :   0.000
 
     precomp lib/COGL/Pipeline.pm6
     Stage start      :   0.000
-    Stage parse      :   2.580
+    Stage parse      :   2.449
     Stage syntaxcheck:   0.000
     Stage ast        :   0.000
-    Stage optimize   :   0.091
-    Stage mast       :   0.132
-    Stage mbc        :   0.007
-Stage parse      :   4.562
+    Stage optimize   :   0.078
+    Stage mast       :   0.121
+    Stage mbc        :   0.009
+Stage parse      :   4.304
 Stage syntaxcheck:   0.000
 Stage ast        :   0.000
 Stage optimize   :   0.002
-Stage mast       :   0.005
-Stage mbc        :   0.001
+Stage mast       :   0.004
+Stage mbc        :   0.000
 Stage moar       :   0.000
 
-real 309.37
-user 368.30
-sys 23.42
+real 286.95
+user 346.06
+sys 23.05
