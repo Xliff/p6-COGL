@@ -8,7 +8,7 @@ use COGL::Raw::Types;
 unit package COGL::Raw::Texture;
 
 sub cogl_texture_allocate (
-  CoglTexture $texture,
+  CoglTexture                $texture,
   CArray[Pointer[CoglError]] $error
 )
   returns CoglBool
@@ -59,11 +59,11 @@ sub cogl_texture_is_sliced (CoglTexture $texture)
 { * }
 
 sub cogl_texture_set_data (
-  CoglTexture $texture,
-  guint $format, # CoglPixelFormat $format,
-  gint $rowstride,
-  CArray[uint8] $data,
-  gint $level,
+  CoglTexture                $texture,
+  guint                      $format, # CoglPixelFormat $format,
+  gint                       $rowstride,
+  CArray[uint8]              $data,
+  gint                       $level,
   CArray[Pointer[CoglError]] $error
 )
   returns CoglBool
@@ -85,7 +85,7 @@ sub cogl_texture_get_premultiplied (CoglTexture $texture)
 
 sub cogl_texture_set_components (
   CoglTexture $texture,
-  guint $components # CoglTextureComponents $components
+  guint       $components # CoglTextureComponents $components
 )
   is native(cogl)
   is export
@@ -93,25 +93,25 @@ sub cogl_texture_set_components (
 
 sub cogl_texture_set_premultiplied (
   CoglTexture $texture,
-  CoglBool $premultiplied
+  CoglBool    $premultiplied
 )
   is native(cogl)
   is export
 { * }
 
 sub cogl_texture_set_region (
-  CoglTexture $texture,
-  gint $src_x,
-  gint $src_y,
-  gint $dst_x,
-  gint $dst_y,
-  guint $dst_width,
-  guint $dst_height,
-  gint $width,
-  gint $height,
+  CoglTexture     $texture,
+  gint            $src_x,
+  gint            $src_y,
+  gint            $dst_x,
+  gint            $dst_y,
+  guint           $dst_width,
+  guint           $dst_height,
+  gint            $width,
+  gint            $height,
   CoglPixelFormat $format,
-  guint $rowstride,
-  CArray[uint8] $data
+  guint           $rowstride,
+  CArray[uint8]   $data
 )
   returns CoglBool
   is native(cogl)
