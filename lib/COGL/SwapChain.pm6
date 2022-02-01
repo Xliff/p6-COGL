@@ -91,13 +91,13 @@ sub cogl_swap_chain_new ()
 
 sub cogl_swap_chain_set_has_alpha (
   CoglSwapChain $swap_chain,
-  CoglBool $has_alpha
+  CoglBool      $has_alpha
 )
   is native(cogl)
   is export
 { * }
 
-sub cogl_swap_chain_set_length (CoglSwapChain $swap_chain, gint $length)
+sub cogl_swap_chain_set_length (CoglSwapChain $swap_chain, guint $length)
   is native(cogl)
   is export
 { * }
