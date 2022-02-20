@@ -8,7 +8,7 @@ use COGL::Raw::Types;
 unit package COGL::Raw::FrameBuffer;
 
 sub cogl_framebuffer_allocate (
-  CoglFrameBuffer $framebuffer,
+  CoglFrameBuffer            $framebuffer,
   CArray[Pointer[CoglError]] $error
 )
   returns CoglBool
@@ -30,12 +30,12 @@ sub cogl_is_framebuffer (Pointer $object)
 
 sub cogl_framebuffer_draw_attributes (
   CoglFrameBuffer $framebuffer,
-  CoglPipeline $pipeline,
-  guint $mode, # CoglVerticesMode $mode,
-  gint $first_vertex,
-  gint $n_vertices,
-  CoglAttribute $attributes,
-  gint $n_attributes
+  CoglPipeline    $pipeline,
+  guint           $mode, # CoglVerticesMode $mode,
+  gint            $first_vertex,
+  gint            $n_vertices,
+  CoglAttribute   $attributes,
+  gint            $n_attributes
 )
   is native(cogl)
   is export
@@ -43,13 +43,13 @@ sub cogl_framebuffer_draw_attributes (
 
 sub cogl_framebuffer_draw_indexed_attributes (
   CoglFrameBuffer $framebuffer,
-  CoglPipeline $pipeline,
-  guint $mode, # CoglVerticesMode $mode,
-  gint $first_vertex,
-  gint $n_vertices,
-  CoglIndices $indices,
-  CoglAttribute $attributes,
-  gint $n_attributes
+  CoglPipeline    $pipeline,
+  guint           $mode, # CoglVerticesMode $mode,
+  gint            $first_vertex,
+  gint            $n_vertices,
+  CoglIndices     $indices,
+  CoglAttribute   $attributes,
+  gint            $n_attributes
 )
   is native(cogl)
   is export
@@ -57,13 +57,13 @@ sub cogl_framebuffer_draw_indexed_attributes (
 
 sub cogl_framebuffer_draw_multitextured_rectangle (
   CoglFrameBuffer $framebuffer,
-  CoglPipeline $pipeline,
-  gfloat $x_1,
-  gfloat $y_1,
-  gfloat $x_2,
-  gfloat $y_2,
-  gfloat $tex_coords,
-  gint $tex_coords_len
+  CoglPipeline    $pipeline,
+  gfloat          $x_1,
+  gfloat          $y_1,
+  gfloat          $x_2,
+  gfloat          $y_2,
+  gfloat          $tex_coords,
+  gint            $tex_coords_len
 )
   is native(cogl)
   is export
@@ -71,8 +71,8 @@ sub cogl_framebuffer_draw_multitextured_rectangle (
 
 sub cogl_framebuffer_draw_primitive (
   CoglFrameBuffer $framebuffer,
-  CoglPipeline $pipeline,
-  CoglPrimitive $primitive
+  CoglPipeline    $pipeline,
+  CoglPrimitive   $primitive
 )
   is native(cogl)
   is export
@@ -80,11 +80,11 @@ sub cogl_framebuffer_draw_primitive (
 
 sub cogl_framebuffer_draw_rectangle (
   CoglFrameBuffer $framebuffer,
-  CoglPipeline $pipeline,
-  gfloat $x_1,
-  gfloat $y_1,
-  gfloat $x_2,
-  gfloat $y_2
+  CoglPipeline    $pipeline,
+  gfloat          $x_1,
+  gfloat          $y_1,
+  gfloat          $x_2,
+  gfloat          $y_2
 )
   is native(cogl)
   is export
@@ -92,15 +92,15 @@ sub cogl_framebuffer_draw_rectangle (
 
 sub cogl_framebuffer_draw_textured_rectangle (
   CoglFrameBuffer $framebuffer,
-  CoglPipeline $pipeline,
-  gfloat $x_1,
-  gfloat $y_1,
-  gfloat $x_2,
-  gfloat $y_2,
-  gfloat $s_1,
-  gfloat $t_1,
-  gfloat $s_2,
-  gfloat $t_2
+  CoglPipeline    $pipeline,
+  gfloat          $x_1,
+  gfloat          $y_1,
+  gfloat          $x_2,
+  gfloat          $y_2,
+  gfloat          $s_1,
+  gfloat          $t_1,
+  gfloat          $s_2,
+  gfloat          $t_2
 )
   is native(cogl)
   is export
@@ -119,12 +119,12 @@ sub cogl_framebuffer_finish (CoglFrameBuffer $framebuffer)
 
 sub cogl_framebuffer_frustum (
   CoglFrameBuffer $framebuffer,
-  gfloat $left,
-  gfloat $right,
-  gfloat $bottom,
-  gfloat $top,
-  gfloat $z_near,
-  gfloat $z_far
+  gfloat          $left,
+  gfloat          $right,
+  gfloat          $bottom,
+  gfloat          $top,
+  gfloat          $z_near,
+  gfloat          $z_far
 )
   is native(cogl)
   is export
@@ -186,7 +186,7 @@ sub cogl_framebuffer_get_is_stereo (CoglFrameBuffer $framebuffer)
 
 sub cogl_framebuffer_get_modelview_matrix (
   CoglFrameBuffer $framebuffer,
-  CoglMatrix $matrix
+  CoglMatrix      $matrix
 )
   is native(cogl)
   is export
@@ -194,7 +194,7 @@ sub cogl_framebuffer_get_modelview_matrix (
 
 sub cogl_framebuffer_get_projection_matrix (
   CoglFrameBuffer $framebuffer,
-  CoglMatrix $matrix
+  CoglMatrix      $matrix
 )
   is native(cogl)
   is export
@@ -208,7 +208,7 @@ sub cogl_framebuffer_get_red_bits (CoglFrameBuffer $framebuffer)
 
 sub cogl_framebuffer_get_viewport4fv (
   CoglFrameBuffer $framebuffer,
-  gfloat $viewport
+  gfloat          $viewport
 )
   is native(cogl)
   is export
@@ -251,12 +251,12 @@ sub cogl_framebuffer_identity_matrix (CoglFrameBuffer $framebuffer)
 
 sub cogl_framebuffer_orthographic (
   CoglFrameBuffer $framebuffer,
-  gfloat $x_1,
-  gfloat $y_1,
-  gfloat $x_2,
-  gfloat $y_2,
-  gfloat $near,
-  gfloat $far
+  gfloat          $x_1,
+  gfloat          $y_1,
+  gfloat          $x_2,
+  gfloat          $y_2,
+  gfloat          $near,
+  gfloat          $far
 )
   is native(cogl)
   is export
@@ -264,10 +264,10 @@ sub cogl_framebuffer_orthographic (
 
 sub cogl_framebuffer_perspective (
   CoglFrameBuffer $framebuffer,
-  gfloat $fov_y,
-  gfloat $aspect,
-  gfloat $z_near,
-  gfloat $z_far
+  gfloat          $fov_y,
+  gfloat          $aspect,
+  gfloat          $z_near,
+  gfloat          $z_far
 )
   is native(cogl)
   is export
@@ -290,11 +290,11 @@ sub cogl_framebuffer_push_matrix (CoglFrameBuffer $framebuffer)
 
 sub cogl_framebuffer_push_primitive_clip (
   CoglFrameBuffer $framebuffer,
-  CoglPrimitive $primitive,
-  gfloat $bounds_x1,
-  gfloat $bounds_y1,
-  gfloat $bounds_x2,
-  gfloat $bounds_y2
+  CoglPrimitive   $primitive,
+  gfloat          $bounds_x1,
+  gfloat          $bounds_y1,
+  gfloat          $bounds_x2,
+  gfloat          $bounds_y2
 )
   is native(cogl)
   is export
@@ -302,10 +302,10 @@ sub cogl_framebuffer_push_primitive_clip (
 
 sub cogl_framebuffer_push_rectangle_clip (
   CoglFrameBuffer $framebuffer,
-  gfloat $x_1,
-  gfloat $y_1,
-  gfloat $x_2,
-  gfloat $y_2
+  gfloat          $x_1,
+  gfloat          $y_1,
+  gfloat          $x_2,
+  gfloat          $y_2
 )
   is native(cogl)
   is export
@@ -324,12 +324,12 @@ sub cogl_framebuffer_push_scissor_clip (
 
 sub cogl_framebuffer_read_pixels (
   CoglFrameBuffer $framebuffer,
-  gint $x,
-  gint $y,
-  gint $width,
-  gint $height,
-  guint $format, # CoglPixelFormat $format,
-  CArray[uint8] $pixels
+  gint            $x,
+  gint            $y,
+  gint            $width,
+  gint            $height,
+  guint           $format, # CoglPixelFormat $format,
+  CArray[uint8]   $pixels
 )
   returns CoglBool
   is native(cogl)
@@ -338,10 +338,10 @@ sub cogl_framebuffer_read_pixels (
 
 sub cogl_framebuffer_read_pixels_into_bitmap (
   CoglFrameBuffer $framebuffer,
-  gint $x,
-  gint $y,
-  guint $source, # CoglReadPixelsFlags $source,
-  CoglBitmap $bitmap
+  gint            $x,
+  gint            $y,
+  guint           $source, # CoglReadPixelsFlags $source,
+  CoglBitmap      $bitmap
 )
   returns CoglBool
   is native(cogl)
@@ -355,10 +355,10 @@ sub cogl_framebuffer_resolve_samples (CoglFrameBuffer $framebuffer)
 
 sub cogl_framebuffer_resolve_samples_region (
   CoglFrameBuffer $framebuffer,
-  gint $x,
-  gint $y,
-  gint $width,
-  gint $height
+  gint            $x,
+  gint            $y,
+  gint            $width,
+  gint            $height
 )
   is native(cogl)
   is export
@@ -366,10 +366,10 @@ sub cogl_framebuffer_resolve_samples_region (
 
 sub cogl_framebuffer_rotate (
   CoglFrameBuffer $framebuffer,
-  gfloat $angle,
-  gfloat $x,
-  gfloat $y,
-  gfloat $z
+  gfloat          $angle,
+  gfloat          $x,
+  gfloat          $y,
+  gfloat          $z
 )
   is native(cogl)
   is export
@@ -377,7 +377,7 @@ sub cogl_framebuffer_rotate (
 
 sub cogl_framebuffer_rotate_euler (
   CoglFrameBuffer $framebuffer,
-  CoglEuler $euler
+  CoglEuler       $euler
 )
   is native(cogl)
   is export
@@ -385,7 +385,7 @@ sub cogl_framebuffer_rotate_euler (
 
 sub cogl_framebuffer_rotate_quaternion (
   CoglFrameBuffer $framebuffer,
-  CoglQuaternion $quaternion
+  CoglQuaternion  $quaternion
 )
   is native(cogl)
   is export
@@ -393,9 +393,9 @@ sub cogl_framebuffer_rotate_quaternion (
 
 sub cogl_framebuffer_scale (
   CoglFrameBuffer $framebuffer,
-  gfloat $x,
-  gfloat $y,
-  gfloat $z
+  gfloat          $x,
+  gfloat          $y,
+  gfloat          $z
 )
   is native(cogl)
   is export
@@ -403,7 +403,7 @@ sub cogl_framebuffer_scale (
 
 sub cogl_framebuffer_set_modelview_matrix (
   CoglFrameBuffer $framebuffer,
-  CoglMatrix $matrix
+  CoglMatrix      $matrix
 )
   is native(cogl)
   is export
@@ -411,7 +411,7 @@ sub cogl_framebuffer_set_modelview_matrix (
 
 sub cogl_framebuffer_set_projection_matrix (
   CoglFrameBuffer $framebuffer,
-  CoglMatrix $matrix
+  CoglMatrix      $matrix
 )
   is native(cogl)
   is export
@@ -419,10 +419,10 @@ sub cogl_framebuffer_set_projection_matrix (
 
 sub cogl_framebuffer_set_viewport (
   CoglFrameBuffer $framebuffer,
-  gfloat $x,
-  gfloat $y,
-  gfloat $width,
-  gfloat $height
+  gfloat          $x,
+  gfloat          $y,
+  gfloat          $width,
+  gfloat          $height
 )
   is native(cogl)
   is export
@@ -430,7 +430,7 @@ sub cogl_framebuffer_set_viewport (
 
 sub cogl_framebuffer_transform (
   CoglFrameBuffer $framebuffer,
-  CoglMatrix $matrix
+  CoglMatrix      $matrix
 )
   is native(cogl)
   is export
@@ -484,7 +484,7 @@ sub cogl_framebuffer_get_stereo_mode (CoglFrameBuffer $framebuffer)
 
 sub cogl_framebuffer_set_color_mask (
   CoglFrameBuffer $framebuffer,
-  int64 $color_mask # CoglColorMask $color_mask
+  uint64          $color_mask # CoglColorMask $color_mask
 )
   is native(cogl)
   is export
@@ -492,7 +492,7 @@ sub cogl_framebuffer_set_color_mask (
 
 sub cogl_framebuffer_set_depth_texture_enabled (
   CoglFrameBuffer $framebuffer,
-  CoglBool $enabled
+  CoglBool        $enabled
 )
   is native(cogl)
   is export
@@ -500,7 +500,7 @@ sub cogl_framebuffer_set_depth_texture_enabled (
 
 sub cogl_framebuffer_set_depth_write_enabled (
   CoglFrameBuffer $framebuffer,
-  CoglBool $depth_write_enabled
+  CoglBool        $depth_write_enabled
 )
   is native(cogl)
   is export
@@ -508,7 +508,7 @@ sub cogl_framebuffer_set_depth_write_enabled (
 
 sub cogl_framebuffer_set_dither_enabled (
   CoglFrameBuffer $framebuffer,
-  CoglBool $dither_enabled
+  CoglBool        $dither_enabled
 )
   is native(cogl)
   is export
@@ -516,7 +516,7 @@ sub cogl_framebuffer_set_dither_enabled (
 
 sub cogl_framebuffer_set_samples_per_pixel (
   CoglFrameBuffer $framebuffer,
-  gint $samples_per_pixel
+  gint            $samples_per_pixel
 )
   is native(cogl)
   is export
@@ -524,7 +524,7 @@ sub cogl_framebuffer_set_samples_per_pixel (
 
 sub cogl_framebuffer_set_stereo_mode (
   CoglFrameBuffer $framebuffer,
-  guint $stereo_mode # CoglStereoMode $stereo_mode
+  guint           $stereo_mode # CoglStereoMode $stereo_mode
 )
   is native(cogl)
   is export
@@ -532,8 +532,8 @@ sub cogl_framebuffer_set_stereo_mode (
 
 sub cogl_framebuffer_clear(
   CoglFrameBuffer $framebuffer,
-  gulong $buffer_mask,
-  CoglColor $color
+  gulong          $buffer_mask,
+  CoglColor       $color
 )
   is native(cogl)
   is export
@@ -541,11 +541,11 @@ sub cogl_framebuffer_clear(
 
 sub cogl_framebuffer_clear4f (
   CoglFrameBuffer $framebuffer,
-  gulong $buffers,
-  gfloat $red,
-  gfloat $green,
-  gfloat $blue,
-  gfloat $alpha
+  gulong          $buffers,
+  gfloat          $red,
+  gfloat          $green,
+  gfloat          $blue,
+  gfloat          $alpha
 )
   is native(cogl)
   is export
@@ -553,9 +553,9 @@ sub cogl_framebuffer_clear4f (
 
 sub cogl_framebuffer_draw_rectangles (
   CoglFrameBuffer $framebuffer,
-  CoglPipeline $pipeline,
-  CArray[gfloat] $coordinates,
-  guint $n_rectangles
+  CoglPipeline    $pipeline,
+  CArray[gfloat]  $coordinates,
+  guint           $n_rectangles
 )
   is native(cogl)
   is export
@@ -563,9 +563,9 @@ sub cogl_framebuffer_draw_rectangles (
 
 sub cogl_framebuffer_draw_textured_rectangles (
   CoglFrameBuffer $framebuffer,
-  CoglPipeline $pipeline,
-  CArray[gfloat] $coordinates,
-  guint $n_rectangles
+  CoglPipeline    $pipeline,
+  CArray[gfloat]  $coordinates,
+  guint           $n_rectangles
 )
   is native(cogl)
   is export
@@ -573,7 +573,7 @@ sub cogl_framebuffer_draw_textured_rectangles (
 
 sub cogl_framebuffer_discard_buffers (
   CoglFrameBuffer $framebuffer,
-  gulong $buffer_mask
+  gulong          $buffer_mask
 )
   is native(cogl)
   is export
