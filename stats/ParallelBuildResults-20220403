@@ -1,0 +1,1335 @@
+
+Parallel build started for Raku 2022.03.125.g.94.f.2.ba.5.d.4 on MoarVM 2022.03.8.g.35453.e.9.e.1
+ === COGL::Raw::Exports (1/61) === 
+
+Stage start      :   0.000
+Stage parse      :   2.992
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.005
+Stage mast       :   0.025
+Stage mbc        :   0.011
+Stage moar       :   0.000
+
+COGL::Raw::Exports compile time: 4.99082163
+ === COGL::Compat::Types (2/61) === 
+
+Stage start      :   0.004
+Stage parse      :   3.564
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.002
+Stage mast       :   0.033
+Stage mbc        :   0.021
+Stage moar       :   0.000
+
+COGL::Compat::Types compile time: 5.29790362
+ === COGL::Raw::Definitions (3/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Raw/Definitions.pm6
+    Stage start      :   0.002
+    Stage parse      :   6.270
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.015
+    Stage mast       :   0.056
+    Stage mbc        :   0.005
+Stage parse      :   9.952
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.003
+Stage mast       :   0.024
+Stage mbc        :   0.001
+Stage moar       :   0.000
+
+COGL::Raw::Definitions compile time: 12.20003738
+ === COGL::Raw::Enums (4/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Raw/Enums.pm6
+    Stage start      :   0.000
+    Stage parse      :   6.465
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.027
+    Stage mast       :   0.043
+    Stage mbc        :   0.018
+Stage parse      :  10.790
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.002
+Stage mast       :   0.008
+Stage mbc        :   0.002
+Stage moar       :   0.000
+
+COGL::Raw::Enums compile time: 12.5289446
+ === COGL::Raw::Structs (5/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Raw/Structs.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Raw/Definitions.pm6
+    Stage parse      :   6.644
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.028
+    Stage mast       :   0.062
+    Stage mbc        :   0.004
+Stage parse      :  11.123
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.002
+Stage mbc        :   0.001
+Stage moar       :   0.000
+
+COGL::Raw::Structs compile time: 12.70347187
+ === COGL::Raw::Types (6/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Raw/Types.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Raw/Enums.pm6
+    Stage parse      :   6.743
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.002
+    Stage mast       :   0.016
+    Stage mbc        :   0.003
+Stage parse      :  11.188
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.007
+Stage mast       :   0.009
+Stage mbc        :   0.004
+Stage moar       :   0.000
+
+COGL::Raw::Types compile time: 12.90075494
+ === COGL::Raw::Attribute (7/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Raw/Attribute.pm6
+    Stage start      :   0.001
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :   7.595
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.026
+    Stage mast       :   0.026
+    Stage mbc        :   0.021
+Stage parse      :  11.932
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.004
+Stage mbc        :   0.003
+Stage moar       :   0.000
+
+COGL::Raw::Attribute compile time: 13.78936474
+ === COGL::Raw::Object (8/61) === 
+
+Stage start      :   0.001
+
+    precomp lib/COGL/Raw/Object.pm6
+    Stage start      :   0.001
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :   6.881
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.019
+    Stage mast       :   0.062
+    Stage mbc        :   0.011
+Stage parse      :  11.578
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.002
+Stage mbc        :   0.001
+Stage moar       :   0.000
+
+COGL::Raw::Object compile time: 13.6845783
+ === COGL::Raw::Texture2d (9/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Raw/Texture2d.pm6
+    Stage start      :   0.000
+    Stage parse      :   1.756
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.015
+    Stage mast       :   0.027
+    Stage mbc        :   0.013
+Stage parse      :   6.387
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.004
+Stage mbc        :   0.002
+Stage moar       :   0.000
+
+COGL::Raw::Texture2d compile time: 8.81130957
+ === COGL::Source (10/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Source.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :   7.700
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.019
+    Stage mast       :   0.043
+    Stage mbc        :   0.010
+Stage parse      :  12.530
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.002
+Stage mbc        :   0.001
+Stage moar       :   0.000
+
+COGL::Source compile time: 14.1477094
+ === COGL::Raw::Buffer (11/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Raw/Buffer.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :   7.342
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.016
+    Stage mast       :   0.023
+    Stage mbc        :   0.012
+Stage parse      :  11.959
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.002
+Stage mast       :   0.006
+Stage mbc        :   0.002
+Stage moar       :   0.000
+
+COGL::Raw::Buffer compile time: 14.14334029
+ === COGL::Raw::Texture (12/61) === 
+
+Stage start      :   0.001
+
+    precomp lib/COGL/Raw/Texture.pm6
+    Stage start      :   0.000
+    Stage parse      :   2.109
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.024
+    Stage mast       :   0.028
+    Stage mbc        :   0.019
+Stage parse      :   6.841
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.003
+Stage mbc        :   0.002
+Stage moar       :   0.000
+
+COGL::Raw::Texture compile time: 9.3232832
+ === COGL::Raw::Euler (13/61) === 
+
+Stage start      :   0.001
+
+    precomp lib/COGL/Raw/Euler.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :   7.294
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.018
+    Stage mast       :   0.049
+    Stage mbc        :   0.013
+Stage parse      :  11.857
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.003
+Stage mbc        :   0.002
+Stage moar       :   0.000
+
+COGL::Raw::Euler compile time: 14.1939277
+ === COGL::Raw::Bitmap (14/61) === 
+
+Stage start      :   0.001
+
+    precomp lib/COGL/Raw/Bitmap.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :   7.605
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.018
+    Stage mast       :   0.037
+    Stage mbc        :   0.017
+Stage parse      :  12.301
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.002
+Stage mast       :   0.005
+Stage mbc        :   0.004
+Stage moar       :   0.000
+
+COGL::Raw::Bitmap compile time: 14.3790054
+ === COGL::Raw::Indices (15/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Raw/Indices.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :   7.220
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.023
+    Stage mast       :   0.056
+    Stage mbc        :   0.019
+Stage parse      :  12.088
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.004
+Stage mbc        :   0.002
+Stage moar       :   0.000
+
+COGL::Raw::Indices compile time: 14.6460429
+ === COGL::Raw::Context (16/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Raw/Context.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :   7.938
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.022
+    Stage mast       :   0.041
+    Stage mbc        :   0.021
+Stage parse      :  13.195
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.003
+Stage mbc        :   0.001
+Stage moar       :   0.000
+
+COGL::Raw::Context compile time: 15.4456681
+ === COGL::Raw::Renderer (17/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Raw/Renderer.pm6
+    Stage start      :   0.001
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :   8.103
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.033
+    Stage mast       :   0.064
+    Stage mbc        :   0.028
+Stage parse      :  12.879
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.004
+Stage mbc        :   0.002
+Stage moar       :   0.000
+
+COGL::Raw::Renderer compile time: 15.10559309
+ === COGL::SwapChain (18/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/SwapChain.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :   9.276
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.037
+    Stage mast       :   0.095
+    Stage mbc        :   0.018
+Stage parse      :  14.081
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.002
+Stage mast       :   0.004
+Stage mbc        :   0.005
+Stage moar       :   0.000
+
+COGL::SwapChain compile time: 15.9584845
+ === COGL::IndexBuffer (19/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/IndexBuffer.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :   8.420
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.037
+    Stage mast       :   0.060
+    Stage mbc        :   0.013
+Stage parse      :  13.720
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.004
+Stage mbc        :   0.002
+Stage moar       :   0.000
+
+COGL::IndexBuffer compile time: 16.1051942
+ === COGL::Raw::OnscreenTemplate (20/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Raw/OnscreenTemplate.pm6
+    Stage start      :   0.005
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :   8.775
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.031
+    Stage mast       :   0.031
+    Stage mbc        :   0.011
+Stage parse      :  13.779
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.002
+Stage mast       :   0.007
+Stage mbc        :   0.004
+Stage moar       :   0.000
+
+COGL::Raw::OnscreenTemplate compile time: 16.24416666
+ === COGL::Poll (21/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Poll.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :   9.484
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.040
+    Stage mast       :   0.051
+    Stage mbc        :   0.016
+Stage parse      :  14.879
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.002
+Stage mast       :   0.006
+Stage mbc        :   0.002
+Stage moar       :   0.000
+
+COGL::Poll compile time: 16.6517146
+ === COGL::Raw::Output (22/61) === 
+
+Stage start      :   0.001
+
+    precomp lib/COGL/Raw/Output.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :  10.156
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.021
+    Stage mast       :   0.046
+    Stage mbc        :   0.034
+Stage parse      :  15.035
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.003
+Stage mast       :   0.005
+Stage mbc        :   0.005
+Stage moar       :   0.000
+
+COGL::Raw::Output compile time: 18.05467187
+ === COGL::Raw::Texture3d (23/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Raw/Texture3d.pm6
+    Stage start      :   0.000
+    Stage parse      :   3.643
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.061
+    Stage mast       :   0.068
+    Stage mbc        :   0.013
+Stage parse      :   5.990
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.002
+Stage mast       :   0.006
+Stage mbc        :   0.005
+Stage moar       :   0.000
+
+COGL::Raw::Texture3d compile time: 6.59401933
+ === COGL::Raw::Primitive (24/61) === 
+
+Stage start      :   0.001
+
+    precomp lib/COGL/Raw/Primitive.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :  10.641
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.048
+    Stage mast       :   0.121
+    Stage mbc        :   0.045
+Stage parse      :  16.272
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.002
+Stage mast       :   0.009
+Stage mbc        :   0.020
+Stage moar       :   0.000
+
+COGL::Raw::Primitive compile time: 18.6255475
+ === COGL::Raw::Matrix (25/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Raw/Matrix.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :  10.717
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.084
+    Stage mast       :   0.130
+    Stage mbc        :   0.091
+Stage parse      :  16.224
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.002
+Stage mast       :   0.008
+Stage mbc        :   0.004
+Stage moar       :   0.000
+
+COGL::Raw::Matrix compile time: 19.12666598
+ === COGL::Raw::DepthState (26/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Raw/DepthState.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :  11.082
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.029
+    Stage mast       :   0.122
+    Stage mbc        :   0.024
+Stage parse      :  16.974
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.007
+Stage mbc        :   0.020
+Stage moar       :   0.000
+
+COGL::Raw::DepthState compile time: 19.6479959
+ === COGL::Raw::Display (27/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Raw/Display.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :  11.528
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.034
+    Stage mast       :   0.126
+    Stage mbc        :   0.020
+Stage parse      :  17.330
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.003
+Stage mast       :   0.006
+Stage mbc        :   0.003
+Stage moar       :   0.000
+
+COGL::Raw::Display compile time: 20.08264013
+ === COGL::Roles::Buffer (28/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Roles/Buffer.pm6
+    Stage start      :   0.000
+    Stage parse      :   4.316
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.041
+    Stage mast       :   0.092
+    Stage mbc        :   0.018
+Stage parse      :   7.109
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.003
+Stage mast       :   0.017
+Stage mbc        :   0.016
+Stage moar       :   0.000
+
+COGL::Roles::Buffer compile time: 7.80643302
+ === COGL::Raw::FrameBuffer (29/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Raw/FrameBuffer.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :  12.263
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.161
+    Stage mast       :   0.327
+    Stage mbc        :   0.124
+Stage parse      :  18.211
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.002
+Stage mast       :   0.014
+Stage mbc        :   0.023
+Stage moar       :   0.000
+
+COGL::Raw::FrameBuffer compile time: 20.38083661
+ === COGL::Raw::Quaternion (30/61) === 
+
+Stage start      :   0.001
+
+    precomp lib/COGL/Raw/Quaternion.pm6
+    Stage start      :   0.002
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :  11.545
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.100
+    Stage mast       :   0.069
+    Stage mbc        :   0.331
+Stage parse      :  17.378
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.003
+Stage mast       :   0.008
+Stage mbc        :   0.019
+Stage moar       :   0.000
+
+COGL::Raw::Quaternion compile time: 20.27178598
+ === COGL::Raw::Color (31/61) === 
+
+Stage start      :   0.001
+
+    precomp lib/COGL/Raw/Color.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :  12.380
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.047
+    Stage mast       :   0.107
+    Stage mbc        :   0.069
+Stage parse      :  18.337
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.002
+Stage mast       :   0.006
+Stage mbc        :   0.014
+Stage moar       :   0.000
+
+COGL::Raw::Color compile time: 20.79695258
+ === COGL::Bitmap (32/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Bitmap.pm6
+    Stage start      :   0.000
+    Stage parse      :   4.470
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.093
+    Stage mast       :   0.100
+    Stage mbc        :   0.088
+Stage parse      :   7.539
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.007
+Stage mast       :   0.014
+Stage mbc        :   0.008
+Stage moar       :   0.000
+
+COGL::Bitmap compile time: 8.2493161
+ === COGL::Raw::Offscreen (33/61) === 
+
+Stage start      :   0.001
+
+    precomp lib/COGL/Raw/Offscreen.pm6
+    Stage start      :   0.001
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :  12.187
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.032
+    Stage mast       :   0.138
+    Stage mbc        :   0.054
+Stage parse      :  18.233
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.002
+Stage mast       :   0.004
+Stage mbc        :   0.003
+Stage moar       :   0.000
+
+COGL::Raw::Offscreen compile time: 21.29226266
+ === COGL::Raw::Onscreen (34/61) === 
+
+Stage start      :   0.001
+
+    precomp lib/COGL/Raw/Onscreen.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :  12.996
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.074
+    Stage mast       :   0.157
+    Stage mbc        :   0.064
+Stage parse      :  18.468
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.002
+Stage mast       :   0.008
+Stage mbc        :   0.003
+Stage moar       :   0.000
+
+COGL::Raw::Onscreen compile time: 21.42068147
+ === COGL::Raw::Pipeline::LayerState (35/61) === 
+
+Stage start      :   0.001
+
+    precomp lib/COGL/Raw/Pipeline/LayerState.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :  12.800
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.037
+    Stage mast       :   0.084
+    Stage mbc        :   0.044
+Stage parse      :  18.610
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.003
+Stage mast       :   0.009
+Stage mbc        :   0.003
+Stage moar       :   0.000
+
+COGL::Raw::Pipeline::LayerState compile time: 21.58613581
+ === COGL::Color (36/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Color.pm6
+    Stage start      :   0.000
+    Stage parse      :   5.393
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.117
+    Stage mast       :   0.129
+    Stage mbc        :   0.109
+Stage parse      :   9.034
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.003
+Stage mbc        :   0.002
+Stage moar       :   0.000
+
+COGL::Color compile time: 9.7459034
+ === COGL::Raw::Pango (37/61) === 
+
+Stage start      :   0.001
+
+    precomp lib/COGL/Raw/Pango.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :  14.178
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.077
+    Stage mast       :   0.089
+    Stage mbc        :   0.039
+Stage parse      :  19.936
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.002
+Stage mast       :   0.007
+Stage mbc        :   0.003
+Stage moar       :   0.000
+
+COGL::Raw::Pango compile time: 22.35769267
+ === COGL::Indices (38/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Indices.pm6
+    Stage start      :   0.000
+    Stage parse      :   4.010
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.062
+    Stage mast       :   0.073
+    Stage mbc        :   0.011
+Stage parse      :   8.094
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.002
+Stage mast       :   0.008
+Stage mbc        :   0.003
+Stage moar       :   0.000
+
+COGL::Indices compile time: 9.09055821
+ === COGL::DepthState (39/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/DepthState.pm6
+    Stage start      :   0.001
+    Stage parse      :   4.553
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.056
+    Stage mast       :   0.069
+    Stage mbc        :   0.023
+Stage parse      :   8.592
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.010
+Stage mbc        :   0.002
+Stage moar       :   0.000
+
+COGL::DepthState compile time: 9.70390835
+ === COGL::Object (40/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Object.pm6
+    Stage start      :   0.000
+    Stage parse      :   3.947
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.050
+    Stage mast       :   0.057
+    Stage mbc        :   0.007
+Stage parse      :   8.166
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.005
+Stage mbc        :   0.004
+Stage moar       :   0.000
+
+COGL::Object compile time: 9.44766157
+ === COGL::OnscreenTemplate (41/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/OnscreenTemplate.pm6
+    Stage start      :   0.001
+    Stage parse      :   4.374
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.055
+    Stage mast       :   0.145
+    Stage mbc        :   0.014
+Stage parse      :   8.390
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.004
+Stage mbc        :   0.003
+Stage moar       :   0.000
+
+COGL::OnscreenTemplate compile time: 9.64062643
+ === COGL::Output (42/61) === 
+
+Stage start      :   0.001
+
+    precomp lib/COGL/Output.pm6
+    Stage start      :   0.000
+    Stage parse      :   4.306
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.062
+    Stage mast       :   0.059
+    Stage mbc        :   0.020
+Stage parse      :   8.283
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.002
+Stage mast       :   0.005
+Stage mbc        :   0.004
+Stage moar       :   0.000
+
+COGL::Output compile time: 9.56625254
+ === COGL::Matrix (43/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Matrix.pm6
+    Stage start      :   0.001
+    Stage parse      :   5.004
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.118
+    Stage mast       :   0.139
+    Stage mbc        :   0.017
+Stage parse      :   9.148
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.006
+Stage mbc        :   0.003
+Stage moar       :   0.000
+
+COGL::Matrix compile time: 10.2482445
+ === COGL::Raw::Pipeline (44/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Raw/Pipeline.pm6
+    Stage start      :   0.001
+    
+        load    lib/COGL/Raw/Types.pm6
+    Stage parse      :  15.052
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.059
+    Stage mast       :   0.068
+    Stage mbc        :   0.062
+Stage parse      :  20.990
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.002
+Stage mast       :   0.006
+Stage mbc        :   0.004
+Stage moar       :   0.000
+
+COGL::Raw::Pipeline compile time: 24.21598029
+ === COGL::Quaternion (45/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Quaternion.pm6
+    Stage start      :   0.000
+    Stage parse      :   4.600
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.071
+    Stage mast       :   0.118
+    Stage mbc        :   0.014
+Stage parse      :   8.993
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.003
+Stage mbc        :   0.001
+Stage moar       :   0.000
+
+COGL::Quaternion compile time: 10.3785559
+ === COGL::Pango (46/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Pango.pm6
+    Stage start      :   0.000
+    Stage parse      :   5.220
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.037
+    Stage mast       :   0.167
+    Stage mbc        :   0.007
+Stage parse      :   9.758
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.005
+Stage mbc        :   0.002
+Stage moar       :   0.000
+
+COGL::Pango compile time: 10.96696755
+ === COGL::Renderer (47/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Renderer.pm6
+    Stage start      :   0.000
+    Stage parse      :   3.932
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.059
+    Stage mast       :   0.070
+    Stage mbc        :   0.009
+Stage parse      :   8.481
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.004
+Stage mbc        :   0.001
+Stage moar       :   0.000
+
+COGL::Renderer compile time: 9.84566426
+ === COGL::Texture (48/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Texture.pm6
+    Stage start      :   0.000
+    Stage parse      :   3.910
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.060
+    Stage mast       :   0.072
+    Stage mbc        :   0.009
+Stage parse      :   8.521
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.004
+Stage mbc        :   0.002
+Stage moar       :   0.000
+
+COGL::Texture compile time: 9.9856358
+ === COGL::Primitive (49/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Primitive.pm6
+    Stage start      :   0.000
+    Stage parse      :   5.628
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.194
+    Stage mast       :   0.117
+    Stage mbc        :   0.010
+Stage parse      :   9.952
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.003
+Stage mbc        :   0.002
+Stage moar       :   0.000
+
+COGL::Primitive compile time: 11.23404442
+ === COGL::AttributeBuffer (50/61) === 
+
+Stage start      :   0.001
+
+    precomp lib/COGL/AttributeBuffer.pm6
+    Stage start      :   0.000
+    Stage parse      :   3.203
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.025
+    Stage mast       :   0.030
+    Stage mbc        :   0.007
+Stage parse      :   7.871
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.002
+Stage mbc        :   0.001
+Stage moar       :   0.000
+
+COGL::AttributeBuffer compile time: 9.40382438
+ === COGL::Texture3d (51/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Texture3d.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Texture.pm6
+    Stage parse      :   3.544
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.030
+    Stage mast       :   0.053
+    Stage mbc        :   0.005
+Stage parse      :   8.405
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.003
+Stage mbc        :   0.001
+Stage moar       :   0.000
+
+COGL::Texture3d compile time: 9.93393203
+ === COGL::Display (52/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Display.pm6
+    Stage start      :   0.004
+    Stage parse      :   3.212
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.026
+    Stage mast       :   0.048
+    Stage mbc        :   0.007
+Stage parse      :   7.896
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.003
+Stage mbc        :   0.001
+Stage moar       :   0.000
+
+COGL::Display compile time: 9.50069581
+ === COGL::Texture2d (53/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Texture2d.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Texture.pm6
+    Stage parse      :   4.066
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.033
+    Stage mast       :   0.056
+    Stage mbc        :   0.008
+Stage parse      :   8.787
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.004
+Stage mbc        :   0.002
+Stage moar       :   0.000
+
+COGL::Texture2d compile time: 10.23018675
+ === COGL::Euler (54/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Euler.pm6
+    Stage start      :   0.000
+    Stage parse      :   2.180
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.028
+    Stage mast       :   0.039
+    Stage mbc        :   0.009
+Stage parse      :   6.273
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.002
+Stage mbc        :   0.001
+Stage moar       :   0.000
+
+COGL::Euler compile time: 8.24784666
+ === COGL::Attribute (55/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Attribute.pm6
+    Stage start      :   0.000
+    Stage parse      :   2.188
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.037
+    Stage mast       :   0.072
+    Stage mbc        :   0.005
+Stage parse      :   6.206
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.002
+Stage mbc        :   0.002
+Stage moar       :   0.000
+
+COGL::Attribute compile time: 8.3234409
+ === COGL::Context (56/61) === 
+
+Stage start      :   0.001
+
+    precomp lib/COGL/Context.pm6
+    Stage start      :   0.001
+    Stage parse      :   2.206
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.020
+    Stage mast       :   0.035
+    Stage mbc        :   0.006
+Stage parse      :   6.033
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.001
+Stage moar       :   0.000
+
+COGL::Context compile time: 8.14581555
+ === COGL::Pipeline (57/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Pipeline.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Context.pm6
+    Stage parse      :   2.269
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.060
+    Stage mast       :   0.086
+    Stage mbc        :   0.006
+Stage parse      :   5.401
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.010
+Stage mbc        :   0.001
+Stage moar       :   0.000
+
+COGL::Pipeline compile time: 7.25488
+ === COGL::FrameBuffer (58/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/FrameBuffer.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/Context.pm6
+    Stage parse      :   2.472
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.075
+    Stage mast       :   0.100
+    Stage mbc        :   0.009
+Stage parse      :   5.831
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.002
+Stage mbc        :   0.001
+Stage moar       :   0.000
+
+COGL::FrameBuffer compile time: 8.2736553
+ === COGL::FontMap (59/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/FontMap.pm6
+    Stage start      :   0.000
+    Stage parse      :   3.390
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.017
+    Stage mast       :   0.028
+    Stage mbc        :   0.006
+Stage parse      :   6.790
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.002
+Stage mbc        :   0.001
+Stage moar       :   0.000
+
+COGL::FontMap compile time: 8.759603
+ === COGL::Offscreen (60/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Offscreen.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/FrameBuffer.pm6
+    Stage parse      :   2.931
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.019
+    Stage mast       :   0.026
+    Stage mbc        :   0.003
+Stage parse      :   6.098
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.001
+Stage mast       :   0.002
+Stage mbc        :   0.002
+Stage moar       :   0.000
+
+COGL::Offscreen compile time: 8.1276698
+ === COGL::Onscreen (61/61) === 
+
+Stage start      :   0.000
+
+    precomp lib/COGL/Onscreen.pm6
+    Stage start      :   0.000
+    
+        load    lib/COGL/FrameBuffer.pm6
+    Stage parse      :   3.112
+    Stage syntaxcheck:   0.000
+    Stage ast        :   0.000
+    Stage optimize   :   0.032
+    Stage mast       :   0.051
+    Stage mbc        :   0.004
+Stage parse      :   6.276
+Stage syntaxcheck:   0.000
+Stage ast        :   0.000
+Stage optimize   :   0.000
+Stage mast       :   0.001
+Stage mbc        :   0.001
+Stage moar       :   0.000
+
+COGL::Onscreen compile time: 8.09224269
+
+Total compile time: 28.5136489s
