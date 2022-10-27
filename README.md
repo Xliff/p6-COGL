@@ -8,7 +8,7 @@ Make a directory to contain the p6-Gtk-based projects. Once made, then set the P
 $ export P6_GTK_HOME=/path/to/projects
 ```
 
-Switch to that directory and clone both p6-GtkPlus and p6-COGL
+Switch to that directory and clone the dependencies...
 
 ```
 $ git clone https://github.com/Xliff/p6-GLib.git
