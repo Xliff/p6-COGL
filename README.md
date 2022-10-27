@@ -11,17 +11,21 @@ $ export P6_GTK_HOME=/path/to/projects
 Switch to that directory and clone both p6-GtkPlus and p6-COGL
 
 ```
+$ git clone https://github.com/Xliff/p6-GLib.git
+$ git clone https://github.com/Xliff/p6-GIO.git
 $ git clone https://github.com/Xliff/p6-Pango.git
+$ git clone https://github.com/Xliff/p6-GDK.git
 $ git clone https://github.com/Xliff/p6-GtkPlus.git
 $ git clone https://github.com/Xliff/p6-COGL.git
-$ cd p6-GtkPlus
-$ zef install --deps-only .
+$ cd p6-GLib
+$ sh ./install-prereqs.sh
 ```
 
 [Optional] To build all of COGL and the required GTK modules, you can change to the p6-COGL directory and do:
 
 ```
-./build.sh
+$ cd p6-COGL
+$ ./build.sh
 ```
 
 If you just want to run the examples, you can do:
