@@ -9,12 +9,12 @@ use GLib::Roles::Pointers;
 unit package COGL::Raw::Definitions;
 
 # Number of times I've had to force compile the whole project.
-my constant forced = 19;
+my constant forced = 203;
 
 constant cogl       is export := 'cogl';
 constant cogl-pango is export := 'cogl-pango';
 
-constant CoglBool      is export := int32;
+constant CoglBool      is export := uint32;
 constant CoglError     is export := GError;
 
 constant CoglDebugObjectForeachTypeCallback is export := Pointer;

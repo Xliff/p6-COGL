@@ -115,6 +115,8 @@ sub paint(%d) {
       %d<white>
     )
   }
+
+  %d<frames>++;
 }
 
 sub MAIN {
@@ -235,8 +237,15 @@ sub MAIN {
       .<swap-ready> = True
         if CoglFrameEventEnum( @a[1] ) == COGL_FRAME_EVENT_SYNC;
     });
+
+    my $lock = Lock.new;
+    $*SCHEDULER.cue(in => 1, every => 1, {
+      say "FPS: { .<frames> }";
+      $lock.protect: { .<frames> = 0 }
+    });
   }
 
+  %data<frames> = 0;
   loop {
     state $f = False;
     use NativeCall;
